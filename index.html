@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Satwik Raj — CSE Student & Developer. Building modern web applications, IoT systems, and real-world software." />
+  <meta name="keywords" content="Satwik Raj, Developer, Portfolio, Python, IoT, Web Development" />
+  <title>SATWIK RAJ // DEV LAB</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ── SCROLL PROGRESS ────────────────────────── -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- ── THREE.JS CANVAS ─────────────────────────── -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ── SCAN LINE OVERLAY ───────────────────── -->
+  <div class="scanlines"></div>
+  <div class="vignette"></div>
+
+  <!-- ═══════════════════════════════════════════
+    HUD CORNERS
+  ═══════════════════════════════════════════ -->
+  <!-- Removed hud-tl as logo moved to nav -->
+
+  <div class="hud-corner hud-tr">
+    <span class="hud-stat" id="hudTime">--:--:--</span>
+    <span class="hud-stat">STATUS: <span class="hud-green">ONLINE</span></span>
+    <span class="hud-stat">BUILD: <span class="hud-purple">0x1A4F</span></span>
+  </div>
+
+  <div class="hud-corner hud-bl">
+    <span class="hud-stat">LAT: 28.6139° N</span>
+    <span class="hud-stat">LNG: 77.2090° E</span>
+    <span class="hud-stat">ENV: <span class="hud-green">INDIA</span></span>
+  </div>
+
+  <div class="hud-corner hud-br">
+    <span class="hud-stat" id="hudFrames">FPS: --</span>
+    <span class="hud-stat">PARTICLES: <span class="hud-purple">1024</span></span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+    MAIN NAV
+  ═══════════════════════════════════════════ -->
+  <nav class="main-nav" id="mainNav">
+    <div class="nav-brand">
+      <span class="hud-logo">SR_</span>
+      <span class="hud-sub">DEV LAB v2.3</span>
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn active" data-section="home" id="navHome">[ HOME ]</button>
+      <button class="nav-btn" data-section="about" id="navAbout">[ ABOUT ]</button>
+      <button class="nav-btn" data-section="skills" id="navSkills">[ SKILLS ]</button>
+      <button class="nav-btn" data-section="projects" id="navProjects">[ PROJECTS ]</button>
+      <button class="nav-btn" data-section="certs" id="navCerts">[ CERTIFICATIONS ]</button>
+      <button class="nav-btn" data-section="contact" id="navContact">[ CONTACT ]</button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+    PANEL CONTAINER
+  ═══════════════════════════════════════════ -->
+  <main class="panel-container" id="panelContainer">
+
+    <!-- ── HOME ─────────────────────────────── -->
+    <section class="panel active" id="panel-home">
+      <div class="panel-inner home-inner">
+        <p class="pre-title">////// INITIALIZING PORTFOLIO</p>
+        <h1 class="hero-name">
+          <span class="name-line">SATWIK</span>
+          <span class="name-line accent">RAJ</span>
+        </h1>
+        <div class="role-line">
+          <span class="bracket">[</span>
+          <span class="typed-out" id="typedRole"></span>
+          <span class="typed-cursor">_</span>
+          <span class="bracket">]</span>
+        </div>
+        <p class="hero-desc">
+          Building modern web applications, IoT systems &amp;<br />
+          real-world software — with code, creativity &amp; innovation.
+        </p>
+        <div class="hero-actions">
+          <button class="action-btn" onclick="switchSection('projects')" id="exploreBtn">
+            <span class="btn-bracket">[</span> EXPLORE PROJECTS <span class="btn-bracket">]</span>
+          </button>
+          <a href="https://github.com/satwik88" target="_blank" class="action-btn action-ghost" id="githubHeroBtn">
+            <span class="btn-bracket">[</span> GITHUB <span class="btn-bracket">]</span>
+          </a>
+          <a href="assets/resume.pdf" download class="action-btn action-ghost" id="resumeHeroBtn">
+            <span class="btn-bracket">[</span> RESUME <span class="btn-bracket">]</span>
+          </a>
+        </div>
+        <div class="scroll-hint">SCROLL OR USE NAV ↑</div>
+      </div>
+    </section>
+
+    <!-- ── ABOUT ─────────────────────────────── -->
+    <section class="panel" id="panel-about">
+      <div class="panel-inner">
+        <p class="section-pre">////// ABOUT.EXE</p>
+        <h2 class="section-title">WHO_AM_I<span class="cursor-blink">|</span></h2>
+        <div class="about-grid">
+          <div class="about-bio">
+            <p>I'm <strong>Satwik Raj</strong> — a Computer Science &amp; Engineering student passionate about turning
+              ideas into real software. I work across the stack, from backend Python scripts to IoT hardware, from CLI
+              tools to browser games.</p>
+            <p>Currently deep-diving into <span class="hl">AI &amp; automation</span>, and the intersection of <span
+                class="hl">hardware + software</span>.</p>
+            <div class="meta-table">
+              <div class="meta-row"><span class="meta-key">ROLE</span><span class="meta-val">CSE Student &amp;
+                  Developer</span></div>
+              <div class="meta-row"><span class="meta-key">LOCATION</span><span class="meta-val">India 🇮🇳</span></div>
+              <div class="meta-row"><span class="meta-key">FOCUS</span><span class="meta-val">IoT · Web · Python ·
+                  AI</span></div>
+              <div class="meta-row"><span class="meta-key">STATUS</span><span class="meta-val hud-green">Open to
+                  Opportunities</span></div>
+            </div>
+          </div>
+          <div class="about-modules">
+            <div class="module-card" data-aos-like>
+              <span class="module-icon">🤖</span>
+              <span class="module-label">AI &amp; AUTOMATION</span>
+              <p>Machine learning, intelligent systems, and automating everyday tasks.</p>
+            </div>
+            <div class="module-card">
+              <span class="module-icon">📡</span>
+              <span class="module-label">IOT SYSTEMS</span>
+              <p>Connecting physical &amp; digital via sensors and microcontrollers.</p>
+            </div>
+            <div class="module-card">
+              <span class="module-icon">🌐</span>
+              <span class="module-label">FULL STACK</span>
+              <p>End-to-end web apps from backend APIs to polished front-ends.</p>
+            </div>
+            <div class="module-card">
+              <span class="module-icon">🎮</span>
+              <span class="module-label">GAME DEV</span>
+              <p>Interactive browser games with vanilla HTML, CSS &amp; JavaScript.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SKILLS ─────────────────────────────── -->
+    <section class="panel" id="panel-skills">
+      <div class="panel-inner">
+        <p class="section-pre">////// SKILL_MATRIX.JSON</p>
+        <h2 class="section-title">TECH_STACK<span class="cursor-blink">|</span></h2>
+        <div class="skills-grid">
+          <div class="skill-block">
+            <div class="skill-block-header">&gt; PROGRAMMING</div>
+            <div class="skill-bars">
+              <div class="bar-item"><span>PYTHON</span>
+                <div class="bar-track">
+                  <div class="bar-fill" style="--w:90%">90%</div>
+                </div>
+              </div>
+              <div class="bar-item"><span>JAVASCRIPT</span>
+                <div class="bar-track">
+                  <div class="bar-fill" style="--w:80%">80%</div>
+                </div>
+              </div>
+              <div class="bar-item"><span>JAVA</span>
+                <div class="bar-track">
+                  <div class="bar-fill" style="--w:75%">75%</div>
+                </div>
+              </div>
+              <div class="bar-item"><span>C</span>
+                <div class="bar-track">
+                  <div class="bar-fill" style="--w:70%">70%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-block">
+            <div class="skill-block-header">&gt; WEB &amp; DATABASE</div>
+            <div class="skill-bars">
+              <div class="bar-item"><span>HTML5 / CSS3</span>
+                <div class="bar-track">
+                  <div class="bar-fill" style="--w:88%">88%</div>
+                </div>
+              </div>
+              <div class="bar-item"><span>NODE.JS</span>
+                <div class="bar-track">
+                  <div class="bar-fill" style="--w:65%">65%</div>
+                </div>
+              </div>
+              <div class="bar-item"><span>MYSQL</span>
+                <div class="bar-track">
+                  <div class="bar-fill" style="--w:78%">78%</div>
+                </div>
+              </div>
+              <div class="bar-item"><span>MONGODB</span>
+                <div class="bar-track">
+                  <div class="bar-fill" style="--w:60%">60%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-block">
+            <div class="skill-block-header">&gt; IOT &amp; HARDWARE</div>
+            <div class="skill-bars">
+              <div class="bar-item"><span>ARDUINO</span>
+                <div class="bar-track">
+                  <div class="bar-fill" style="--w:85%">85%</div>
+                </div>
+              </div>
+              <div class="bar-item"><span>NODEMCU / ESP8266</span>
+                <div class="bar-track">
+                  <div class="bar-fill" style="--w:82%">82%</div>
+                </div>
+              </div>
+              <div class="bar-item"><span>SENSORS</span>
+                <div class="bar-track">
+                  <div class="bar-fill" style="--w:80%">80%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-block">
+            <div class="skill-block-header">&gt; TOOLS &amp; DEVOPS</div>
+            <div class="tag-cloud">
+              <span class="skill-chip">Git</span>
+              <span class="skill-chip">GitHub</span>
+              <span class="skill-chip">VS Code</span>
+              <span class="skill-chip">Linux</span>
+              <span class="skill-chip learning">React ↗</span>
+              <span class="skill-chip learning">ML ↗</span>
+              <span class="skill-chip learning">Docker ↗</span>
+            </div>
+          </div>
+
+          <div class="skill-block skill-block-wide">
+            <div class="skill-block-header">&gt; WEB &amp; INTERACTIVE</div>
+            <div class="tag-cloud">
+              <span class="skill-chip skill-chip-accent">Animation</span>
+              <span class="skill-chip skill-chip-accent">Infinite Scroll</span>
+              <span class="skill-chip skill-chip-accent">Transitions</span>
+              <span class="skill-chip skill-chip-accent">3D</span>
+              <span class="skill-chip skill-chip-accent">Canvas API</span>
+              <span class="skill-chip skill-chip-accent">Three.js</span>
+              <span class="skill-chip skill-chip-accent">CSS FX</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PROJECTS ─────────────────────────────── -->
+    <section class="panel" id="panel-projects">
+      <div class="panel-inner">
+        <p class="section-pre">////// PROJECT_REGISTRY</p>
+        <h2 class="section-title">MY_PROJECTS<span class="cursor-blink">|</span></h2>
+        <div class="projects-grid">
+
+          <div class="proj-card" id="projCard1" onclick="openProject(0)">
+            <div class="proj-img-wrap">
+              <img src="assets/project1.png" alt="Smart Plant Monitoring" class="proj-img" />
+              <div class="proj-overlay-hud">
+                <span class="proj-id">// PROJECT_001</span>
+                <span class="proj-prompt">[ CLICK TO EXPLORE ]</span>
+              </div>
+            </div>
+            <div class="proj-meta">
+              <span class="proj-tag">IoT</span>
+              <h3 class="proj-name">Smart Plant Monitoring</h3>
+              <p class="proj-brief">NodeMCU + soil sensors auto-watering system with real-time Wi-Fi data.</p>
+              <div class="proj-chips">
+                <span>NodeMCU</span><span>ESP8266</span><span>Arduino</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj-card" id="projCard2" onclick="openProject(1)">
+            <div class="proj-img-wrap">
+              <img src="assets/project2.png" alt="Food Ordering System" class="proj-img" />
+              <div class="proj-overlay-hud">
+                <span class="proj-id">// PROJECT_002</span>
+                <span class="proj-prompt">[ CLICK TO EXPLORE ]</span>
+              </div>
+            </div>
+            <div class="proj-meta">
+              <span class="proj-tag">Python</span>
+              <h3 class="proj-name">Food Ordering System</h3>
+              <p class="proj-brief">CLI food ordering app with Python &amp; MySQL for full database persistence.</p>
+              <div class="proj-chips">
+                <span>Python</span><span>MySQL</span><span>CLI</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj-card" id="projCard3" onclick="openProject(2)">
+            <div class="proj-img-wrap">
+              <img src="assets/project3.png" alt="Snake Game" class="proj-img" />
+              <div class="proj-overlay-hud">
+                <span class="proj-id">// PROJECT_003</span>
+                <span class="proj-prompt">[ CLICK TO EXPLORE ]</span>
+              </div>
+            </div>
+            <div class="proj-meta">
+              <span class="proj-tag">Live</span>
+              <h3 class="proj-name">Snake Game</h3>
+              <p class="proj-brief">Browser-based Snake clone — neon UI, high scores, multiple speeds.</p>
+              <div class="proj-chips">
+                <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CERTIFICATIONS ─────────────────────────────── -->
+    <section class="panel" id="panel-certs">
+      <div class="panel-inner">
+        <p class="section-pre">////// AWARDS_&amp;_CERTS</p>
+        <h2 class="section-title">CERTIFICATIONS<span class="cursor-blink">|</span></h2>
+
+        <div class="cert-grid">
+          <!-- Cert 1 -->
+          <div class="cert-card">
+            <div class="cert-img-placeholder"
+              style="position: relative; border: none; background: transparent; overflow: hidden; border-radius: 16px;">
+              <img src="assets/agentic_ai_cert.jpg.jpeg" alt="Agentic AI Saksham Certificate"
+                style="position: absolute; top: 50%; left: 50%; height: 142%; width: auto; transform: translate(-50%, -50%) rotate(-90deg); border-radius: 16px; border: 1px solid var(--border);" />
+            </div>
+            <div>
+              <h3 class="cert-title">Agentic AI Saksham</h3>
+              <p class="cert-org">CAPABL & RV INSTITUTE OF MANAGEMENT</p>
+            </div>
+            <p class="cert-desc">
+              I am pleased to announce my successful participation in the two-day Agentic AI Saksham workshop, a
+              collaborative initiative with RV Institute of Management and Capabl.<br><br>
+              This workshop offered significant insights into Generative AI, Agentic AI concepts, and contemporary AI
+              technologies.<br><br>
+              I am eager to further my exploration in the fields of AI and software development.<br><br>
+              <span style="color: var(--purple); font-size: 0.75rem;">#ArtificialIntelligence #GenerativeAI #AgenticAI
+                #AI #Learning</span>
+            </p>
+          </div>
+
+          <!-- Cert 2 -->
+          <div class="cert-card">
+            <div class="cert-img-placeholder">
+              [ CERT_IMAGE_2_PLACEHOLDER ]
+              <!-- <img src="assets/cert2.jpg" alt="Certificate 2" /> -->
+            </div>
+            <div>
+              <h3 class="cert-title">Certification Title 2</h3>
+              <p class="cert-org">ISSUING ORGANIZATION</p>
+            </div>
+            <p class="cert-desc">Write a short paragraph here explaining what this certification covers, the skills you
+              demonstrated to earn it, and how it applies to your development work.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ─────────────────────────────── -->
+    <section class="panel" id="panel-contact">
+      <div class="panel-inner">
+        <p class="section-pre">////// ESTABLISH_CONNECTION</p>
+        <h2 class="section-title">CONTACT<span class="cursor-blink">|</span></h2>
+        <div class="contact-layout">
+          <div class="contact-info">
+            <p class="contact-intro">Open to internships, collaborations and exciting builds. Ping me — let's create
+              something.</p>
+            <div class="contact-links">
+              <a href="mailto:satwikraj707@gmail.com" class="contact-row" id="emailLink">
+                <span class="contact-key">EMAIL</span>
+                <span class="contact-arrow">──▶</span>
+                <span class="contact-val">satwikraj707@gmail.com</span>
+              </a>
+              <a href="https://github.com/satwik88" target="_blank" class="contact-row" id="githubLink">
+                <span class="contact-key">GITHUB</span>
+                <span class="contact-arrow">──▶</span>
+                <span class="contact-val">github.com/satwik88</span>
+              </a>
+              <a href="https://www.linkedin.com/in/satwik-raj-35b6a9343/" target="_blank" class="contact-row"
+                id="linkedinLink">
+                <span class="contact-key">LINKEDIN</span>
+                <span class="contact-arrow">──▶</span>
+                <span class="contact-val">Satwik Raj</span>
+              </a>
+              <a href="https://www.instagram.com/satwik._23/" target="_blank" class="contact-row" id="instagramLink">
+                <span class="contact-key">INSTAGRAM</span>
+                <span class="contact-arrow">──▶</span>
+                <span class="contact-val">@satwik._23</span>
+              </a>
+            </div>
+          </div>
+          <form class="contact-form" id="contactForm">
+            <div class="form-row">
+              <label>// NAME</label>
+              <input type="text" id="formName" placeholder="ENTER_NAME" required />
+            </div>
+            <div class="form-row">
+              <label>// EMAIL</label>
+              <input type="email" id="formEmail" placeholder="ENTER_EMAIL" required />
+            </div>
+            <div class="form-row">
+              <label>// MESSAGE</label>
+              <textarea id="formMessage" placeholder="ENTER_MESSAGE..." rows="5" required></textarea>
+            </div>
+            <button type="submit" class="action-btn" id="formSubmitBtn">
+              <span class="btn-bracket">[</span> TRANSMIT MESSAGE <span class="btn-bracket">]</span>
+            </button>
+            <p class="form-note" id="formNote"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+    PROJECT DETAIL OVERLAY
+  ═══════════════════════════════════════════ -->
+  <div class="project-overlay-panel" id="projectOverlay">
+    <div class="overlay-inner">
+      <div class="overlay-left">
+        <p class="overlay-pre" id="overlayPre"></p>
+        <h2 class="overlay-title" id="overlayTitle"></h2>
+        <p class="overlay-desc" id="overlayDesc"></p>
+        <div class="overlay-tech" id="overlayTech"></div>
+        <div class="overlay-links" id="overlayLinks"></div>
+      </div>
+      <div class="overlay-right">
+        <img class="overlay-img" id="overlayImg" src="" alt="" />
+      </div>
+    </div>
+    <button class="close-btn" onclick="closeProject()" id="closeOverlayBtn">[ CLOSE ]</button>
+  </div>
+
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
