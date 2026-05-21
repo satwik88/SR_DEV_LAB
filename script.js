@@ -385,7 +385,7 @@ const projects = [
   {
     pre: '// PROJECT_002 — PYTHON',
     title: 'FOOD_ORDERING_SYSTEM',
-    desc: 'A command-line food ordering system built with Python and MySQL. Users can browse restaurant menus, add items to cart, place orders, and view order history — all backed by a relational database.',
+    desc: 'Built a CLI-based food ordering app in Python with full MySQL persistence. Handles menu browsing, order placement, and order history. Designed the full database schema — tables for users, menu items, orders, and order items with relational integrity.',
     tech: ['Python', 'MySQL', 'CLI', 'DBMS', 'OOP'],
     img: 'assets/project2.png',
     github: 'https://github.com/satwik88',
@@ -394,7 +394,7 @@ const projects = [
   {
     pre: '// PROJECT_003 — WEB / LIVE',
     title: 'SNAKE_GAME',
-    desc: 'A feature-complete browser Snake game clone with smooth 60fps Canvas rendering, neon retro UI, local high-score persistence, multiple speed levels, wall-collision toggle, and a particle death animation.',
+    desc: 'Browser Snake clone built in vanilla JS — no frameworks. Features neon UI, local high score storage, and 3 difficulty speeds. Focused on clean game loop logic and smooth canvas rendering.',
     tech: ['HTML5', 'CSS3', 'JavaScript', 'Canvas API', 'localStorage'],
     img: 'assets/project3.png',
     github: 'https://github.com/satwik88/Snake',
