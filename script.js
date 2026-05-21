@@ -1,4 +1,84 @@
 /* ═══════════════════════════════════════════════════
+   THEME TOGGLE — dark / light mode
+═══════════════════════════════════════════════════ */
+(function initTheme() {
+  const root    = document.documentElement;
+  const btn     = document.getElementById('themeToggle');
+
+  const BG_LIGHT = 0xf4f4f5;
+  const BG_DARK  = 0x0d0d12;
+
+  window.__threeSetBg = null;
+
+  function applyTheme(dark) {
+    if (dark) {
+      root.setAttribute('data-theme', 'dark');
+    } else {
+      root.removeAttribute('data-theme');
+    }
+    if (window.__threeSetBg) window.__threeSetBg(dark ? BG_DARK : BG_LIGHT);
+  }
+
+  /* ── Restore saved preference ── */
+  let dark = localStorage.getItem('theme') === 'dark';
+  applyTheme(dark);
+
+  window.__applyTheme = applyTheme;
+  window.__isDark = () => dark;
+
+  /* ── Circle-wipe transition ── */
+  let animating = false;
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      if (animating) return;
+
+      // Get overlay lazily so it's always found regardless of DOM order
+      const overlay = document.getElementById('theme-transition-overlay');
+
+      animating = true;
+      dark = !dark;
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+
+      if (!overlay) {
+        // Fallback: no overlay, just apply theme directly
+        applyTheme(dark);
+        animating = false;
+        return;
+      }
+
+      /* Get button center as percentage of viewport */
+      const rect = btn.getBoundingClientRect();
+      const ox = ((rect.left + rect.width  / 2) / window.innerWidth  * 100).toFixed(2) + '%';
+      const oy = ((rect.top  + rect.height / 2) / window.innerHeight * 100).toFixed(2) + '%';
+
+      /* Setup overlay — plain background, no icon */
+      overlay.style.background = dark ? '#0d0d12' : '#f4f4f5';
+      overlay.innerHTML = '';
+
+      /* ── Expand from button → full screen (280ms) ── */
+      overlay.style.transition = 'none';
+      overlay.style.clipPath = `circle(0% at ${ox} ${oy})`;
+
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        overlay.style.transition = 'clip-path 0.28s cubic-bezier(0.25, 0, 0.35, 1)';
+        overlay.style.clipPath   = `circle(150% at ${ox} ${oy})`;
+      }));
+
+      /* Apply theme once screen is fully covered */
+      setTimeout(() => {
+        applyTheme(dark);
+        overlay.style.transition = 'none';
+        overlay.style.clipPath   = 'circle(0% at 50% 50%)';
+        animating = false;
+      }, 290);
+    });
+  }
+})();
+
+
+
+/* ═══════════════════════════════════════════════════
    THREE.JS PARTICLE BACKGROUND
 ═══════════════════════════════════════════════════ */
 (function initThree() {
@@ -7,6 +87,11 @@
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0xf4f4f5, 1);
+
+  // Register background-colour setter for theme toggle
+  window.__threeSetBg = (hex) => renderer.setClearColor(hex, 1);
+  // Apply current theme immediately (in case theme was already set)
+  if (window.__isDark && window.__isDark()) renderer.setClearColor(0x0d0d12, 1);
 
   const scene  = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
@@ -289,13 +374,13 @@ function animateBars() {
 ═══════════════════════════════════════════════════ */
 const projects = [
   {
-    pre: '// PROJECT_001 — IOT',
-    title: 'SMART_PLANT_MONITOR',
-    desc: 'An IoT system using NodeMCU ESP8266 and soil moisture sensors that automatically monitors plant health and triggers a water pump when moisture drops below threshold. Sensor data transmitted in real-time via Wi-Fi.',
-    tech: ['NodeMCU', 'ESP8266', 'Soil Sensor', 'Arduino IDE', 'IoT', 'C++'],
+    pre: '// PROJECT_001 — WEB / LIVE',
+    title: 'SR_DEV_LAB_v2.3',
+    desc: 'My personal developer portfolio and interactive laboratory. Built from scratch with Vanilla JS, Glassmorphism UI, a reactive 3D WebGL particle field using Three.js, and smooth continuous scroll architectures.',
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'Three.js', 'UI/UX'],
     img: 'assets/project1.png',
-    github: 'https://github.com/satwik88',
-    demo: null,
+    github: 'https://github.com/satwik88/SR_DEV_LAB',
+    demo: 'https://satwik88.github.io/SR_DEV_LAB',
   },
   {
     pre: '// PROJECT_002 — PYTHON',
