@@ -134,7 +134,18 @@ a { text-decoration: none; color: inherit; }
 }
 
 .nav-brand {
-  display: flex; align-items: baseline; gap: 0.5rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+.nav-logo-img {
+  height: 2.4rem;
+  width: auto;
+  display: block;
+  transition: filter 0.3s ease;
+}
+
+[data-theme="dark"] .nav-logo-img {
+  filter: invert(1) brightness(2);
 }
 
 .nav-links {
