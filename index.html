@@ -330,34 +330,55 @@
         <p class="section-pre">////// AWARDS_&amp;_CERTIFICATIONS</p>
         <h2 class="section-title">CERTIFICATIONS<span class="cursor-blink">|</span></h2>
 
-        <div class="cert-grid" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;">
-          <!-- Cert 1 -->
-          <div class="cert-card">
-            <div class="cert-img-placeholder"
-              style="border: none; background: transparent; overflow: hidden; border-radius: 16px;">
-              <img src="assets/agentic_ai_cert.jpg.jpeg" alt="Agentic AI Saksham Certificate"
-                style="width: 100%; height: auto; display: block; border-radius: 16px; border: 1px solid var(--border); object-fit: contain;" />
+        <div class="certs-list">
+
+          <!-- Cert 01 -->
+          <div class="cert-row">
+            <div class="cert-row-left">
+              <div class="cert-row-img-wrap" onclick="openCertLightbox('assets/agentic_ai_cert.jpg.jpeg')" title="Click to view full certificate">
+                <img src="assets/agentic_ai_cert.jpg.jpeg" alt="Agentic AI Saksham Certificate" class="cert-row-img" />
+                <div class="cert-img-hover-hint">🔍 View Full</div>
+              </div>
+              <div class="proj-row-actions" style="margin-top: 1rem;">
+                <a href="assets/agentic_ai_cert.jpg.jpeg" target="_blank" class="proj-action-btn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  View Certificate
+                </a>
+              </div>
             </div>
-            <div>
-              <h3 class="cert-title">Agentic AI Saksham</h3>
-              <p class="cert-org">CAPABL & RV INSTITUTE OF MANAGEMENT</p>
+            <div class="cert-row-right">
+              <div>
+                <p class="proj-num">CERTIFICATION 01</p>
+                <h3 class="cert-row-title">Agentic AI Saksham</h3>
+                <p class="cert-row-org">CAPABL &amp; RV INSTITUTE OF MANAGEMENT</p>
+              </div>
+              <p class="cert-row-desc">
+                Successfully participated in the two-day Agentic AI Saksham workshop — a collaborative initiative with RV Institute of Management and Capabl. The program offered deep insights into Generative AI, Agentic AI architectures, and contemporary AI technologies with hands-on exposure to real-world applications.
+              </p>
+              <div class="proj-row-stack">
+                <p class="proj-stack-label">Topics Covered</p>
+                <div class="proj-row-chips">
+                  <span>#ArtificialIntelligence</span>
+                  <span>#GenerativeAI</span>
+                  <span>#AgenticAI</span>
+                  <span>#AI</span>
+                  <span>#Learning</span>
+                </div>
+              </div>
             </div>
-            <p class="cert-desc">
-              I am pleased to announce my successful participation in the two-day Agentic AI Saksham workshop, a
-              collaborative initiative with RV Institute of Management and Capabl.<br><br>
-              This workshop offered significant insights into Generative AI, Agentic AI concepts, and contemporary AI
-              technologies.<br><br>
-              I am eager to further my exploration in the fields of AI and software development.<br><br>
-              <span style="color: var(--purple); font-size: 0.75rem;">#ArtificialIntelligence #GenerativeAI #AgenticAI
-                #AI #Learning</span>
-            </p>
           </div>
 
         </div>
       </div>
     </section>
 
-    <!-- ── CONTACT ─────────────────────────────── -->
+    <!-- ── CERT LIGHTBOX ─────────────────────────────── -->
+    <div id="certLightbox" class="cert-lightbox" onclick="closeCertLightbox(event)">
+      <button class="cert-lightbox-close" onclick="closeCertLightbox()">&times; Close</button>
+      <img id="certLightboxImg" src="" alt="" class="cert-lightbox-img" />
+    </div>
+
+
     <section class="panel" id="panel-contact">
       <div class="panel-inner">
         <p class="section-pre">////// ESTABLISHING_CONNECTION</p>

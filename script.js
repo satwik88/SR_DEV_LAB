@@ -461,3 +461,26 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     setTimeout(() => { note.textContent = ''; note.className = 'form-note'; }, 5000);
   }, 800);
 });
+
+/* ═══════════════════════════════════════════════════
+   CERT LIGHTBOX
+═══════════════════════════════════════════════════ */
+function openCertLightbox(src) {
+  const lb  = document.getElementById('certLightbox');
+  const img = document.getElementById('certLightboxImg');
+  img.src = src;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCertLightbox(e) {
+  // Close if clicking the backdrop (not the image itself)
+  if (e && e.target === document.getElementById('certLightboxImg')) return;
+  const lb = document.getElementById('certLightbox');
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeCertLightbox();
+});
