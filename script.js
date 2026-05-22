@@ -375,10 +375,10 @@ function animateBars() {
 const projects = [
   {
     pre: '// PROJECT_001 — WEB / LIVE',
-    title: 'SR_DEV_LAB_v2.3',
+    title: 'PERSONAL_WEBSITE',
     desc: 'My personal developer portfolio and interactive laboratory. Built from scratch with Vanilla JS, Glassmorphism UI, a reactive 3D WebGL particle field using Three.js, and smooth continuous scroll architectures.',
     tech: ['HTML5', 'CSS3', 'JavaScript', 'Three.js', 'UI/UX'],
-    img: 'assets/project1.png',
+    img: 'assets/personal_website.png',
     github: 'https://github.com/satwik88/SR_DEV_LAB',
     demo: 'https://satwik88.github.io/SR_DEV_LAB',
   },
