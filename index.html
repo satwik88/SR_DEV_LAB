@@ -12,9 +12,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2" />
 </head>
 
 <body>
@@ -107,7 +107,7 @@
     <section class="panel" id="panel-about">
       <div class="panel-inner">
         <p class="section-pre">////// ABOUT</p>
-        <h2 class="section-title">WHO_AM_I<span class="cursor-blink">|</span></h2>
+        <h2 class="section-title">WHO_AM_I</h2>
         <div class="about-grid">
           <div class="about-bio">
             <p>I'm <strong>Satwik Raj</strong> — a Computer Science &amp; Engineering student passionate about turning
@@ -155,7 +155,7 @@
     <section class="panel" id="panel-skills">
       <div class="panel-inner">
         <p class="section-pre">////// SKILLS</p>
-        <h2 class="section-title">TECH_STACK<span class="cursor-blink">|</span></h2>
+        <h2 class="section-title">TECH_STACK</h2>
         <div class="skills-grid">
           <div class="skill-block">
             <div class="skill-block-header">&gt; PROGRAMMING</div>
@@ -212,123 +212,16 @@
       </div>
     </section>
 
-    <!-- ── PROJECTS ─────────────────────────────── -->
-    <section class="panel" id="panel-projects">
-      <div class="panel-inner">
-        <p class="section-pre">////// PROJECTS</p>
-        <h2 class="section-title">MY_PROJECTS<span class="cursor-blink">|</span></h2>
-        <div class="projects-list">
-
-          <!-- Project 01 -->
-          <div class="proj-row">
-            <div class="proj-row-left">
-              <p class="proj-num">PROJECT 01</p>
-              <h3 class="proj-row-name">Personal Website</h3>
-              <div class="proj-row-img-wrap">
-                <img src="assets/personal_website.png" alt="Personal Website" class="proj-row-img" />
-              </div>
-              <div class="proj-row-actions">
-                <a href="https://satwik88.github.io/SR_DEV_LAB" target="_blank" class="proj-action-btn">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                  Live
-                </a>
-                <a href="https://github.com/satwik88/SR_DEV_LAB" target="_blank" class="proj-action-btn proj-action-gh">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                  GitHub
-                </a>
-              </div>
-            </div>
-            <div class="proj-row-right">
-              <ul class="proj-bullets">
-                <li>Interactive developer portfolio with a reactive 3D WebGL particle field using Three.js</li>
-                <li>Glassmorphism UI with dark/light mode toggle and smooth circle-wipe transition animation</li>
-                <li>Smooth single-page panel architecture with custom navigation and scroll progress</li>
-              </ul>
-              <div class="proj-row-stack">
-                <p class="proj-stack-label">Tech Stack</p>
-                <div class="proj-row-chips">
-                  <span>HTML5</span><span>CSS3</span><span>Vanilla JS</span><span>Three.js</span><span>UI/UX</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="proj-row-divider"></div>
-
-          <!-- Project 02 -->
-          <div class="proj-row">
-            <div class="proj-row-left">
-              <p class="proj-num">PROJECT 02</p>
-              <h3 class="proj-row-name">Food Ordering System</h3>
-              <div class="proj-row-img-wrap">
-                <img src="assets/project2.png" alt="Food Ordering System" class="proj-row-img" />
-              </div>
-              <div class="proj-row-actions">
-                <span class="proj-action-btn proj-action-disabled">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                  Private Repo
-                </span>
-              </div>
-            </div>
-            <div class="proj-row-right">
-              <ul class="proj-bullets">
-                <li>CLI-based food ordering app in Python with full MySQL persistence</li>
-                <li>Handles menu browsing, order placement, and order history end-to-end</li>
-                <li>Designed the full database schema — users, menu items, orders, and order items with relational integrity</li>
-              </ul>
-              <div class="proj-row-stack">
-                <p class="proj-stack-label">Tech Stack</p>
-                <div class="proj-row-chips">
-                  <span>Python</span><span>MySQL</span><span>CLI</span><span>DBMS</span><span>OOP</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="proj-row-divider"></div>
-
-          <!-- Project 03 -->
-          <div class="proj-row">
-            <div class="proj-row-left">
-              <p class="proj-num">PROJECT 03</p>
-              <h3 class="proj-row-name">Snake Game</h3>
-              <div class="proj-row-img-wrap">
-                <img src="assets/project3.png" alt="Snake Game" class="proj-row-img" />
-              </div>
-              <div class="proj-row-actions">
-                <a href="https://satwik88.github.io/Snake" target="_blank" class="proj-action-btn">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                  Live
-                </a>
-                <a href="https://github.com/satwik88/Snake" target="_blank" class="proj-action-btn proj-action-gh">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                  GitHub
-                </a>
-              </div>
-            </div>
-            <div class="proj-row-right">
-              <ul class="proj-bullets">
-                <li>Browser Snake clone built in vanilla JS — no frameworks, pure canvas rendering</li>
-                <li>Features neon UI, local high score storage, and 3 selectable difficulty speeds</li>
-                <li>Focused on clean game loop logic and smooth 60fps canvas animation</li>
-              </ul>
-              <div class="proj-row-stack">
-                <p class="proj-stack-label">Tech Stack</p>
-                <div class="proj-row-chips">
-                  <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Canvas API</span><span>localStorage</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-      </div>
+    <!-- ── PROJECTS (React + Framer Motion) ─────────────────────────── -->
+    <section class="panel-projects-react" id="panel-projects">
+      <div id="react-projects-root"></div>
     </section>
 
     <!-- ── CERTIFICATIONS ─────────────────────────────── -->
     <section class="panel" id="panel-certs">
       <div class="panel-inner">
         <p class="section-pre">////// AWARDS_&amp;_CERTIFICATIONS</p>
-        <h2 class="section-title">CERTIFICATIONS<span class="cursor-blink">|</span></h2>
+        <h2 class="section-title">CERTIFICATIONS</h2>
 
         <div class="certs-list">
 
@@ -382,7 +275,7 @@
     <section class="panel" id="panel-contact">
       <div class="panel-inner">
         <p class="section-pre">////// ESTABLISHING_CONNECTION</p>
-        <h2 class="section-title">Let's build something.<span class="cursor-blink">|</span></h2>
+        <h2 class="section-title">Let's build something.</h2>
         <div class="contact-layout">
           <div class="contact-info">
             <p class="contact-intro">Open to internships, collabs, and interesting problems. I reply fast.</p>
@@ -459,6 +352,10 @@
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="script.js"></script>
+  <!-- Babel for in-browser JSX compilation -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- React + Framer Motion Projects Stacking Component -->
+  <script type="text/babel" data-type="module" src="projects-component.js"></script>
 
 </body>
 

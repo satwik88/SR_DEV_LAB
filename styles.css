@@ -245,8 +245,9 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 0.6rem;
 }
 .section-title {
-  font-family: var(--mono); font-size: clamp(1.8rem, 4vw, 3rem);
-  font-weight: 700; letter-spacing: 0.05em; color: var(--text);
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 12vw, 9rem);
+  font-weight: 400; letter-spacing: -0.02em; text-transform: uppercase;
+  color: transparent; -webkit-text-stroke: 2px var(--text);
   margin-bottom: 2.5rem;
 }
 .cursor-blink { animation: blink 1s step-end infinite; color: var(--purple); }
@@ -389,7 +390,7 @@ a { text-decoration: none; color: inherit; }
 }
 .module-card:hover {
   border-color: rgba(124,58,237,0.35);
-  background: rgba(255,255,255,0.8);
+  background: var(--surface);
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(56,62,78,0.12);
 }
@@ -433,7 +434,7 @@ a { text-decoration: none; color: inherit; }
   font-size: 0.68rem; letter-spacing: 0.1em;
   border: 1px solid var(--border); border-radius: 100px;
   padding: 0.3rem 0.6rem; color: var(--muted); transition: all 0.2s;
-  background: rgba(56,62,78,0.4);
+  background: transparent;
 }
 .skill-chip:hover { border-color: var(--purple); color: var(--purple); }
 .skill-chip.learning { border-color: rgba(96,165,250,0.3); color: var(--blue); background: rgba(96,165,250,0.05); }
@@ -802,3 +803,382 @@ a { text-decoration: none; color: inherit; }
   cursor: not-allowed;
   color: var(--muted);
 }
+
+/* ═══════════════════════════════════════════════
+   REACT STICKY STACKING PROJECTS SECTION
+   Premium dark theme UI elements
+   Color palette: #0C0C0C, #D7E2EA accents
+   Rounded top corners, margin-top overlap
+   And sticky layout per design requirements
+═══════════════════════════════════════════════ */
+.panel-projects-react {
+  --proj-bg: #f4f4f5;
+  --proj-card-bg: #ffffff;
+  --proj-card-border: #000000;
+  --proj-text: #000000;
+  --proj-accent: #6552D0;
+  --proj-accent-dim: rgba(101, 82, 208, 0.3);
+  --proj-muted: #555555;
+  --proj-pill-bg: rgba(0, 0, 0, 0.05);
+  --proj-pill-hover: rgba(101, 82, 208, 0.1);
+  --proj-shadow: 0 35px 80px -20px rgba(0, 0, 0, 0.15);
+  --proj-img-wrap-bg: #e5e5e5;
+  --proj-badge-bg: rgba(0, 0, 0, 0.03);
+  --proj-badge-text: #6552D0;
+  --proj-badge-border: rgba(0, 0, 0, 0.2);
+
+  background-color: transparent !important;
+  border-top-left-radius: 60px !important;
+  border-top-right-radius: 60px !important;
+  margin-top: -3.5rem !important; /* -mt-14 */
+  z-index: 10 !important;
+  position: relative;
+  padding: 7rem 2rem 10rem !important;
+  width: 100%;
+  min-height: calc(85vh * 3 + 400px);
+  transition: background-color 0.35s ease;
+}
+
+[data-theme="dark"] .panel-projects-react {
+  --proj-bg: #0C0C0C;
+  --proj-card-bg: #0C0C0C;
+  --proj-card-border: #ffffff;
+  --proj-text: #FFFFFF;
+  --proj-accent: #D7E2EA;
+  --proj-accent-dim: rgba(215, 226, 234, 0.3);
+  --proj-muted: rgba(215, 226, 234, 0.85);
+  --proj-pill-bg: rgba(255, 255, 255, 0.03);
+  --proj-pill-hover: rgba(215, 226, 234, 0.06);
+  --proj-shadow: 0 35px 80px -20px rgba(0, 0, 0, 0.8);
+  --proj-img-wrap-bg: #121212;
+  --proj-badge-bg: rgba(215, 226, 234, 0.03);
+  --proj-badge-text: #D7E2EA;
+  --proj-badge-border: rgba(215, 226, 234, 0.3);
+}
+
+.react-projects-inner {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: calc(85vh * 3 + 400px);
+}
+
+/* Metallic dark typography for heading */
+.react-projects-title-wrap {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.react-projects-pre {
+  font-size: 0.72rem;
+  color: var(--proj-muted);
+  letter-spacing: 0.22em;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.react-projects-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 12vw, 9rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--text);
+  display: inline-block;
+  margin: 0;
+}
+
+.react-projects-title .cursor-blink-react {
+  color: var(--proj-accent);
+  margin-left: 4px;
+  animation: blink 1s step-end infinite;
+}
+
+/* Stacking cards container */
+.sticky-cards-stack {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+}
+
+/* Card container is sticky */
+.card-sticky-container {
+  height: 85vh;
+  position: sticky;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Inside Card details */
+.react-project-card {
+  width: 100%;
+  max-width: 1100px;
+  border-radius: 60px;
+  border: 2px solid var(--proj-card-border);
+  background: radial-gradient(circle at 100% 0%, var(--proj-pill-bg) 0%, transparent 60%), var(--proj-card-bg);
+  padding: 3rem;
+  color: var(--proj-text);
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  box-shadow: var(--proj-shadow),
+              inset 0 0 20px var(--proj-pill-bg);
+  transform-origin: top center;
+  will-change: transform;
+}
+
+/* Top Row styling */
+.card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--proj-card-border);
+  padding-bottom: 1.25rem;
+}
+
+.card-top-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.card-num {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  font-family: var(--mono);
+  color: var(--proj-card-border);
+  line-height: 1;
+}
+
+.card-category-tag {
+  border: 1px solid var(--proj-badge-border);
+  border-radius: 100px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--proj-accent);
+  background: rgba(215, 226, 234, 0.03);
+}
+
+.card-project-name {
+  font-family: var(--sans);
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--proj-text);
+  margin: 0;
+}
+
+/* Bottom Row Grid layout */
+.card-bottom-row {
+  display: grid;
+  grid-template-columns: 4.2fr 5.8fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+/* Left column screenshot */
+.card-left-col {
+  width: 100%;
+}
+
+.card-img-wrap {
+  width: 100%;
+  border-radius: 36px;
+  overflow: hidden;
+  border: 1px solid var(--proj-card-border);
+  box-shadow: var(--proj-shadow);
+  background: var(--proj-img-wrap-bg);
+  position: relative;
+  aspect-ratio: 16/10;
+  display: block;
+}
+
+.card-screenshot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.card-img-wrap:hover .card-screenshot {
+  transform: scale(1.05);
+}
+
+/* Right column details */
+.card-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  justify-content: space-between;
+}
+
+.card-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.card-bullets li {
+  font-family: var(--sans);
+  font-size: clamp(0.85rem, 1.2vw, 0.98rem);
+  color: var(--proj-muted);
+  line-height: 1.6;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.card-bullets li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--proj-accent);
+  font-size: 0.8rem;
+}
+
+/* Tech pills section */
+.card-tech-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card-tech-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.card-tech-pill {
+  font-size: 0.72rem;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--proj-card-border);
+  border-radius: 100px;
+  color: var(--proj-muted);
+  background: var(--proj-pill-bg);
+  font-family: var(--mono);
+  transition: all 0.25s ease;
+}
+
+.card-tech-pill:hover {
+  border-color: var(--proj-accent);
+  color: var(--proj-text);
+  background: rgba(215, 226, 234, 0.06);
+}
+
+/* Buttons and Action elements */
+.card-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* GitHub Ghost Pill */
+.github-ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border: 2px solid var(--proj-card-border);
+  border-radius: 9999px;
+  padding: 0.75rem 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--proj-text);
+  background: transparent;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.github-ghost-btn:hover {
+  background: #FFFFFF;
+  color: #0C0C0C;
+  border-color: var(--proj-text);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.github-ghost-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+/* Locked badge */
+.private-repo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border: 2px dashed var(--proj-card-border);
+  border-radius: 9999px;
+  padding: 0.75rem 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--proj-muted);
+  background: var(--proj-pill-bg);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.private-repo-badge svg {
+  width: 13px;
+  height: 13px;
+  fill: currentColor;
+}
+
+/* Responsive query for stacking */
+@media (max-width: 900px) {
+  .panel-projects-react {
+    padding: 5rem 1rem 6rem !important;
+    min-height: auto;
+  }
+  .react-projects-inner {
+    min-height: auto;
+  }
+  .react-projects-title-wrap {
+    margin-bottom: 3.5rem;
+  }
+  .card-sticky-container {
+    height: auto;
+    position: relative;
+    top: 0 !important;
+    margin-bottom: 2.5rem;
+  }
+  .react-project-card {
+    padding: 2rem;
+    border-radius: 40px;
+    gap: 1.5rem;
+  }
+  .card-top-row {
+    padding-bottom: 1rem;
+  }
+  .card-bottom-row {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+  .card-right-col {
+    gap: 1.5rem;
+  }
+  .card-bullets {
+    gap: 0.65rem;
+  }
+}
+
