@@ -1412,6 +1412,27 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ═══════════════════════════════════════════════
+   MOBILE FIXES (<= 768px)
+═══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Fix 2: Certifications stack vertically — image on top, text below */
+  .cert-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .cert-row-right { padding-top: 0; }
+
+  /* Fix 3: Reduce hero section bottom whitespace on mobile */
+  #panel-home {
+    padding-bottom: 1.5rem;
+    min-height: auto;
+  }
+
+  /* Fix 4: Dim 3D globe canvas on mobile */
+  #bg-canvas { opacity: 0.15; }
+}
+
+/* ═══════════════════════════════════════════════
    SITE FOOTER
 ═══════════════════════════════════════════════ */
 .site-footer {
