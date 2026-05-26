@@ -27,7 +27,7 @@ const projects = [
       "Designed the full database schema — users, menu items, orders, and order items with relational integrity",
     ],
     tech: ["Python", "MySQL", "CLI", "DBMS", "OOP"],
-    github: null, // private
+    github: "https://github.com/satwik88/Food-Ordering-System",
   },
   {
     number: "03",

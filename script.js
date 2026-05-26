@@ -388,7 +388,7 @@ const projects = [
     desc: 'Built a CLI-based food ordering app in Python with full MySQL persistence. Handles menu browsing, order placement, and order history. Designed the full database schema — tables for users, menu items, orders, and order items with relational integrity.',
     tech: ['Python', 'MySQL', 'CLI', 'DBMS', 'OOP'],
     img: 'assets/project2.png',
-    github: 'https://github.com/satwik88',
+    github: 'https://github.com/satwik88/Food-Ordering-System',
     demo: null,
   },
   {
