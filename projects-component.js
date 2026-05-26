@@ -7,7 +7,7 @@ const projects = [
     number: "01",
     category: "Personal",
     name: "Personal Website",
-    image: "https://sr-dev-lab.vercel.app/og-preview.png",
+    image: "assets/portfolio.png",
     bullets: [
       "Interactive developer portfolio with a reactive 3D WebGL particle field using Three.js",
       "Glassmorphism UI with dark/light mode toggle and smooth circle-wipe transition animation",
@@ -20,7 +20,7 @@ const projects = [
     number: "02",
     category: "Personal",
     name: "Food Ordering System",
-    image: "https://sr-dev-lab.vercel.app/og-preview.png",
+    image: "assets/food_ordering.png",
     bullets: [
       "CLI-based food ordering app in Python with full MySQL persistence",
       "Handles menu browsing, order placement, and order history end-to-end",
@@ -33,7 +33,7 @@ const projects = [
     number: "03",
     category: "Personal",
     name: "Snake Game",
-    image: "https://sr-dev-lab.vercel.app/og-preview.png",
+    image: "assets/snake_game.png",
     bullets: [
       "Browser Snake clone built in vanilla JS — no frameworks, pure canvas rendering",
       "Features neon UI, local high score storage, and 3 selectable difficulty speeds",
