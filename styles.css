@@ -697,6 +697,7 @@ a { text-decoration: none; color: inherit; }
 
 .cert-lightbox-close {
   position: absolute; top: 1.5rem; left: 1.5rem;
+  z-index: 10;
   font-family: var(--mono); font-size: 0.78rem; font-weight: 700;
   letter-spacing: 0.12em;
   background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25);
