@@ -484,3 +484,25 @@ function closeCertLightbox(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeCertLightbox();
 });
+
+/* ═══════════════════════════════════════════════════
+   MOBILE HAMBURGER MENU
+═══════════════════════════════════════════════════ */
+(function initHamburger() {
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const navLinks = document.getElementById('navLinks');
+  
+  if (hamburgerBtn && navLinks) {
+    hamburgerBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Close menu when a link is clicked
+    const links = navLinks.querySelectorAll('.nav-btn');
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+  }
+})();

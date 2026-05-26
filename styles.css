@@ -805,6 +805,40 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ═══════════════════════════════════════════════
+   MOBILE NAVIGATION (<= 768px)
+═══════════════════════════════════════════════ */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .hamburger-btn { display: block; order: 3; }
+  .main-nav { 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    align-items: center; 
+    justify-content: space-between; 
+  }
+  .nav-brand { order: 1; justify-content: flex-start; }
+  .theme-toggle { order: 2; margin-left: auto; margin-right: 1rem; }
+  #navLinks {
+    display: none; 
+    width: 100%; 
+    order: 4; 
+    flex-direction: column; 
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+  }
+  #navLinks.active { display: flex; }
+}
+
+/* ═══════════════════════════════════════════════
    REACT STICKY STACKING PROJECTS SECTION
    Premium dark theme UI elements
    Color palette: #0C0C0C, #D7E2EA accents
