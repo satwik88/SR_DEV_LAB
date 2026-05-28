@@ -19,20 +19,14 @@
 
 <body>
 
-  <!-- ── SCROLL PROGRESS ────────────────────────── -->
-  <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="scroll-progress" id="scrollProgress"></div>
 
-  <!-- ── THREE.JS CANVAS ─────────────────────────── -->
-  <canvas id="bg-canvas"></canvas>
+    <canvas id="bg-canvas"></canvas>
 
-  <!-- ── SCAN LINE OVERLAY ───────────────────── -->
-  <div class="scanlines"></div>
+    <div class="scanlines"></div>
   <div class="vignette"></div>
 
-  <!-- ═══════════════════════════════════════════
-    MAIN NAV
-  ═══════════════════════════════════════════ -->
-  <nav class="main-nav" id="mainNav">
+    <nav class="main-nav" id="mainNav">
     <div class="nav-brand" style="cursor: pointer;" onclick="switchSection('home')" title="Go to Home">
       <img src="assets/logo.png" alt="Satwik Raj Logo" class="nav-logo-img" />
     </div>
@@ -71,13 +65,9 @@
     </button>
   </nav>
 
-  <!-- ═══════════════════════════════════════════
-    PANEL CONTAINER
-  ═══════════════════════════════════════════ -->
-  <main class="panel-container" id="panelContainer">
+    <main class="panel-container" id="panelContainer">
 
-    <!-- ── HOME ─────────────────────────────── -->
-    <section class="panel active" id="panel-home">
+        <section class="panel active" id="panel-home">
       <div class="panel-inner home-inner">
         <p class="pre-title">/// INITIALIZING PORTFOLIO ///</p>
         <h1 class="hero-name">
@@ -109,8 +99,7 @@
       </div>
     </section>
 
-    <!-- ── ABOUT ─────────────────────────────── -->
-    <section class="panel" id="panel-about">
+        <section class="panel" id="panel-about">
       <div class="panel-inner">
         <p class="section-pre">////// ABOUT</p>
         <h2 class="section-title">WHO_AM_I</h2>
@@ -157,8 +146,7 @@
       </div>
     </section>
 
-    <!-- ── SKILLS ─────────────────────────────── -->
-    <section class="panel" id="panel-skills">
+        <section class="panel" id="panel-skills">
       <div class="panel-inner">
         <p class="section-pre">////// SKILLS</p>
         <h2 class="section-title">TECH_STACK</h2>
@@ -218,13 +206,11 @@
       </div>
     </section>
 
-    <!-- ── PROJECTS (React + Framer Motion) ─────────────────────────── -->
-    <section class="panel-projects-react" id="panel-projects">
+        <section class="panel-projects-react" id="panel-projects">
       <div id="react-projects-root"></div>
     </section>
 
-    <!-- ── CERTIFICATIONS ─────────────────────────────── -->
-    <section class="panel" id="panel-certs">
+        <section class="panel" id="panel-certs">
       <div class="panel-inner">
         <p class="section-pre">////// AWARDS_&amp;_CERTIFICATIONS</p>
         <h2 class="section-title">CERTIFICATIONS</h2>
@@ -271,8 +257,7 @@
       </div>
     </section>
 
-    <!-- ── CERT LIGHTBOX ─────────────────────────────── -->
-    <div id="certLightbox" class="cert-lightbox" onclick="closeCertLightbox(event)">
+        <div id="certLightbox" class="cert-lightbox" onclick="closeCertLightbox(event)">
       <button class="cert-lightbox-close" onclick="closeCertLightbox()">← BACK</button>
       <img id="certLightboxImg" src="" alt="" class="cert-lightbox-img" />
     </div>
@@ -336,10 +321,7 @@
 
   </main>
 
-  <!-- ═══════════════════════════════════════════
-    PROJECT DETAIL OVERLAY
-  ═══════════════════════════════════════════ -->
-  <div class="project-overlay-panel" id="projectOverlay">
+    <div class="project-overlay-panel" id="projectOverlay">
     <div class="overlay-inner">
       <div class="overlay-left">
         <p class="overlay-pre" id="overlayPre"></p>
@@ -358,10 +340,7 @@
   <!-- Full-page theme transition overlay (must be before scripts) -->
   <div id="theme-transition-overlay"></div>
 
-  <!-- ═══════════════════════════════════════════
-    MOBILE SLIDE-IN MENU PANEL
-  ═══════════════════════════════════════════ -->
-  <div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+    <div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
   <nav class="mobile-menu-panel" id="mobileMenuPanel" aria-label="Mobile navigation">
     <!-- Close button -->
     <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close navigation">
@@ -406,10 +385,7 @@
       </li>
     </ul>
 
-    <!-- Footer status -->
-    <div class="mobile-menu-footer">
-      <span class="mobile-menu-status">&#9679; OPEN TO OPPORTUNITIES</span>
-    </div>
+
   </nav>
 
   <!-- Three.js -->

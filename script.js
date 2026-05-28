@@ -1,6 +1,3 @@
-/* ═══════════════════════════════════════════════════
-   THEME TOGGLE — dark / light mode
-═══════════════════════════════════════════════════ */
 (function initTheme() {
   const root    = document.documentElement;
   const btn     = document.getElementById('themeToggle');
@@ -19,15 +16,13 @@
     if (window.__threeSetBg) window.__threeSetBg(dark ? BG_DARK : BG_LIGHT);
   }
 
-  /* ── Restore saved preference ── */
-  let dark = localStorage.getItem('theme') === 'dark';
+    let dark = localStorage.getItem('theme') === 'dark';
   applyTheme(dark);
 
   window.__applyTheme = applyTheme;
   window.__isDark = () => dark;
 
-  /* ── Circle-wipe transition ── */
-  let animating = false;
+    let animating = false;
 
   if (btn) {
     btn.addEventListener('click', () => {
@@ -56,8 +51,7 @@
       overlay.style.background = dark ? '#0d0d12' : '#f4f4f5';
       overlay.innerHTML = '';
 
-      /* ── Expand from button → full screen (280ms) ── */
-      overlay.style.transition = 'none';
+            overlay.style.transition = 'none';
       overlay.style.clipPath = `circle(0% at ${ox} ${oy})`;
 
       requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -78,9 +72,6 @@
 
 
 
-/* ═══════════════════════════════════════════════════
-   THREE.JS PARTICLE BACKGROUND
-═══════════════════════════════════════════════════ */
 (function initThree() {
   const canvas = document.getElementById('bg-canvas');
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
@@ -97,8 +88,7 @@
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
   camera.position.set(0, 0, 30);
 
-  /* ── Particle field ── */
-  const COUNT = 1200;
+    const COUNT = 1200;
   const geo   = new THREE.BufferGeometry();
   const pos   = new Float32Array(COUNT * 3);
   const col   = new Float32Array(COUNT * 3);
@@ -128,8 +118,7 @@
 
 
 
-  /* ── Central wireframe (Explodable) ── */
-  let icoGeo = new THREE.IcosahedronGeometry(4, 1);
+    let icoGeo = new THREE.IcosahedronGeometry(4, 1);
   icoGeo = icoGeo.toNonIndexed(); // Separate triangles so they can break apart
   
   const icoMat = new THREE.MeshBasicMaterial({
@@ -165,15 +154,13 @@
     }
   }
 
-  /* ── Orbit ring ── */
-  const ringGeo = new THREE.TorusGeometry(6, 0.015, 2, 80);
+    const ringGeo = new THREE.TorusGeometry(6, 0.015, 2, 80);
   const ringMat = new THREE.MeshBasicMaterial({ color: 0xa5a5a5, transparent: true, opacity: 0.4 });
   const ring    = new THREE.Mesh(ringGeo, ringMat);
   ring.rotation.x = Math.PI / 2.5;
   scene.add(ring);
 
-  /* ── Mouse tracking & Raycaster ── */
-  const mouse = { x: 0, y: 0 };
+    const mouse = { x: 0, y: 0 };
   const rayMouse = new THREE.Vector2(-999, -999);
   const raycaster = new THREE.Raycaster();
   let explodeProgress = 0;
@@ -187,12 +174,10 @@
     rayMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
   });
 
-  /* ── FPS counter ── */
-  let lastTime = performance.now(), frameCount = 0;
+    let lastTime = performance.now(), frameCount = 0;
   const fpsEl  = document.getElementById('hudFrames');
 
-  /* ── Animate ── */
-  let t = 0;
+    let t = 0;
   function animate() {
     requestAnimationFrame(animate);
     t += 0.003;
@@ -251,9 +236,6 @@
 })();
 
 
-/* ═══════════════════════════════════════════════════
-   HUD CLOCK
-═══════════════════════════════════════════════════ */
 (function clock() {
   const el = document.getElementById('hudTime');
   setInterval(() => {
@@ -264,9 +246,6 @@
 })();
 
 
-/* ═══════════════════════════════════════════════════
-   TYPING ANIMATION
-═══════════════════════════════════════════════════ */
 (function typing() {
   const phrases = [
     'CSE STUDENT', 'WEB DEVELOPER', 'IOT ENGINEER',
@@ -286,9 +265,6 @@
 })();
 
 
-/* ═══════════════════════════════════════════════════
-   NAVIGATION — smooth scroll
-═══════════════════════════════════════════════════ */
 const sectionOrder = ['home', 'about', 'skills', 'projects', 'certs', 'contact'];
 
 function switchSection(name) {
@@ -320,9 +296,6 @@ sectionOrder.forEach(name => {
   if (el) navObserver.observe(el);
 });
 
-/* ═══════════════════════════════════════════════════
-   SCROLL PROGRESS BAR
-═══════════════════════════════════════════════════ */
 const progressBar = document.getElementById('scrollProgress');
 const hudCorners = document.querySelectorAll('.hud-corner');
 
@@ -339,9 +312,6 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
-/* ═══════════════════════════════════════════════════
-   SECTION REVEAL ON SCROLL
-═══════════════════════════════════════════════════ */
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -356,9 +326,6 @@ document.querySelectorAll('.panel-inner').forEach(el => revealObserver.observe(e
 const homeInner = document.querySelector('#panel-home .panel-inner');
 if (homeInner) homeInner.classList.add('revealed');
 
-/* ═══════════════════════════════════════════════════
-   SKILL BAR ANIMATION
-═══════════════════════════════════════════════════ */
 function animateBars() {
   document.querySelectorAll('.bar-fill').forEach(bar => {
     bar.style.animation = 'none';
@@ -369,9 +336,6 @@ function animateBars() {
 }
 
 
-/* ═══════════════════════════════════════════════════
-   PROJECT DATA
-═══════════════════════════════════════════════════ */
 const projects = [
   {
     pre: '// PROJECT_001 — WEB / LIVE',
@@ -437,9 +401,6 @@ function closeProject() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProject(); });
 
 
-/* ═══════════════════════════════════════════════════
-   CONTACT FORM
-═══════════════════════════════════════════════════ */
 document.getElementById('contactForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const btn  = document.getElementById('formSubmitBtn');
@@ -462,9 +423,6 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   }, 800);
 });
 
-/* ═══════════════════════════════════════════════════
-   CERT LIGHTBOX
-═══════════════════════════════════════════════════ */
 function openCertLightbox(src) {
   const lb  = document.getElementById('certLightbox');
   const img = document.getElementById('certLightboxImg');
@@ -485,9 +443,6 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeCertLightbox();
 });
 
-/* ═══════════════════════════════════════════════════
-   MOBILE DOT-MENU — slide-in panel
-═══════════════════════════════════════════════════ */
 (function initDotMenu() {
   const dotBtn    = document.getElementById('dotMenuBtn');
   const panel     = document.getElementById('mobileMenuPanel');
