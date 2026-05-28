@@ -32,7 +32,6 @@ Welcome to the source code for my personal developer portfolio and laboratory in
 SR_DEV_LAB/
 ├── assets/                  # Directory containing images and other assets
 ├── index.html               # Main HTML document
-├── old_styles.css           # Previous version of CSS styles (legacy)
 ├── projects-component.js    # Web Component definition for project cards
 ├── README.md                # Project documentation
 ├── script.js                # Main JavaScript file containing UI logic
