@@ -164,7 +164,7 @@ const ProjectsSection = () => {
 
   return (
     <div ref={sectionRef} className="react-projects-inner">
-      {/* Title block */}
+
       <div className="react-projects-title-wrap">
         <p className="react-projects-pre">////// EXPLORING THE LAB</p>
         <h2 className="react-projects-title">

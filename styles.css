@@ -1078,7 +1078,7 @@ a { text-decoration: none; color: inherit; }
   margin: 0;
 }
 
-/* Bottom Row Grid layout */
+
 .card-bottom-row {
   display: grid;
   grid-template-columns: 4.2fr 5.8fr;
@@ -1273,7 +1273,7 @@ a { text-decoration: none; color: inherit; }
   margin: 0;
 }
 
-/* Bottom Row Grid layout */
+
 .card-bottom-row {
   display: grid;
   grid-template-columns: 4.2fr 5.8fr;

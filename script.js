@@ -432,7 +432,7 @@ function openCertLightbox(src) {
 }
 
 function closeCertLightbox(e) {
-  // Close if clicking the backdrop (not the image itself)
+
   if (e && e.target === document.getElementById('certLightboxImg')) return;
   const lb = document.getElementById('certLightbox');
   lb.classList.remove('open');
