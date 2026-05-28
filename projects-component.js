@@ -47,14 +47,14 @@ const projects = [
 const Card = ({ number, category, name, image, bullets, tech, github, index, totalCards, sectionProgress }) => {
   // Calculate target scale according to formula: targetScale = 1 - (totalCards - 1 - index) * 0.05
   const targetScale = 1 - (totalCards - 1 - index) * 0.05;
-  
+
   // Slice of the total section progress for this specific card
   const start = index / totalCards;
   const end = (index + 1) / totalCards;
-  
+
   // Transform scale and opacity dynamically based on section scroll progress slice
   const scale = useTransform(sectionProgress, [start, end], [1, targetScale]);
-  
+
   // Custom dark dimming effect overlay: as subsequent cards stack over, dim the background slightly
   const dimOpacity = useTransform(sectionProgress, [start, end], [0, 0.45]);
 
@@ -65,11 +65,11 @@ const Card = ({ number, category, name, image, bullets, tech, github, index, tot
   };
 
   return (
-    <div 
-      className="card-sticky-container" 
+    <div
+      className="card-sticky-container"
       style={{ top: `calc(24px + ${index * 28}px)`, zIndex: index + 1 }}
     >
-      <motion.div 
+      <motion.div
         className="react-project-card"
         style={{ scale }}
       >
@@ -90,15 +90,15 @@ const Card = ({ number, category, name, image, bullets, tech, github, index, tot
           <div className="card-left-col">
             <div className="card-img-wrap">
               <img src={image} alt={name} className="card-screenshot" onError={handleImageError} />
-              <div 
+              <div
                 className="card-fallback-img"
-                style={{ 
-                  display: 'none', 
-                  width: '100%', 
-                  height: '100%', 
-                  background: 'var(--proj-img-wrap-bg)', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
+                style={{
+                  display: 'none',
+                  width: '100%',
+                  height: '100%',
+                  background: 'var(--proj-img-wrap-bg)',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   flexDirection: 'column',
                   color: 'var(--proj-muted)'
                 }}
@@ -127,10 +127,10 @@ const Card = ({ number, category, name, image, bullets, tech, github, index, tot
 
             <div className="card-actions">
               {github ? (
-                <a 
-                  href={github} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href={github}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="github-ghost-btn"
                   title="Open GitHub Repository in new tab"
                 >
@@ -175,10 +175,10 @@ const ProjectsSection = () => {
       {/* Stacking list */}
       <div className="sticky-cards-stack">
         {projects.map((project, index) => (
-          <Card 
-            key={project.number} 
-            {...project} 
-            index={index} 
+          <Card
+            key={project.number}
+            {...project}
+            index={index}
             totalCards={projects.length}
             sectionProgress={scrollYProgress}
           />
