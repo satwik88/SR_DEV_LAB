@@ -36,8 +36,11 @@
     <div class="nav-brand" style="cursor: pointer;" onclick="switchSection('home')" title="Go to Home">
       <img src="assets/logo.png" alt="Satwik Raj Logo" class="nav-logo-img" />
     </div>
-    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation">
-      ☰
+    <button class="dot-menu-btn" id="dotMenuBtn" aria-label="Toggle mobile navigation" aria-expanded="false">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
     </button>
     <div class="nav-links" id="navLinks">
       <button class="nav-btn active" data-section="home" id="navHome">[ HOME ]</button>
@@ -354,6 +357,61 @@
 
   <!-- Full-page theme transition overlay (must be before scripts) -->
   <div id="theme-transition-overlay"></div>
+
+  <!-- ═══════════════════════════════════════════
+    MOBILE SLIDE-IN MENU PANEL
+  ═══════════════════════════════════════════ -->
+  <div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+  <nav class="mobile-menu-panel" id="mobileMenuPanel" aria-label="Mobile navigation">
+    <!-- Close button -->
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close navigation">
+      <span class="close-line"></span>
+      <span class="close-line"></span>
+    </button>
+
+    <!-- Branding block -->
+    <div class="mobile-menu-brand">
+      <span class="mobile-menu-brand-pre">/// SR DEV LAB</span>
+      <span class="mobile-menu-brand-title">SATWIK<span>RAJ</span></span>
+    </div>
+
+    <!-- Nav items -->
+    <ul class="mobile-menu-list" role="list">
+      <li class="mobile-menu-item" style="--i:0">
+        <button class="mobile-menu-link" data-section="home" id="mNavHome">
+          <span class="mobile-menu-num">01</span>
+          <span class="mobile-menu-label">HOME</span>
+          <span class="mobile-menu-arrow">&#8594;</span>
+        </button>
+      </li>
+      <li class="mobile-menu-item" style="--i:1">
+        <button class="mobile-menu-link" data-section="about" id="mNavAbout">
+          <span class="mobile-menu-num">02</span>
+          <span class="mobile-menu-label">ABOUT</span>
+          <span class="mobile-menu-arrow">&#8594;</span>
+        </button>
+      </li>
+      <li class="mobile-menu-item" style="--i:2">
+        <button class="mobile-menu-link" data-section="projects" id="mNavProjects">
+          <span class="mobile-menu-num">03</span>
+          <span class="mobile-menu-label">PROJECTS</span>
+          <span class="mobile-menu-arrow">&#8594;</span>
+        </button>
+      </li>
+      <li class="mobile-menu-item" style="--i:3">
+        <button class="mobile-menu-link" data-section="contact" id="mNavContact">
+          <span class="mobile-menu-num">04</span>
+          <span class="mobile-menu-label">CONTACT</span>
+          <span class="mobile-menu-arrow">&#8594;</span>
+        </button>
+      </li>
+    </ul>
+
+    <!-- Footer status -->
+    <div class="mobile-menu-footer">
+      <span class="mobile-menu-status">&#9679; OPEN TO OPPORTUNITIES</span>
+    </div>
+  </nav>
 
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

@@ -679,6 +679,137 @@ a { text-decoration: none; color: inherit; }
   color: var(--text); line-height: 1.7;
 }
 
+/* ═══════════════════════════════════════════════
+   DOT-GRID MENU TRIGGER BUTTON
+═══════════════════════════════════════════════ */
+.dot-menu-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  width: 2.6rem; height: 2.6rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  padding: 8px;
+  align-items: center; justify-items: center;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.dot-menu-btn:hover {
+  border-color: var(--purple);
+  box-shadow: 0 0 12px rgba(101,82,208,0.25);
+  transform: scale(1.08);
+}
+.dot-menu-btn .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--text);
+  transition: background 0.25s ease, transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+.dot-menu-btn:hover .dot { background: var(--purple); }
+.dot-menu-btn[aria-expanded="true"] .dot { transform: scale(1.35); background: var(--purple); }
+
+@media (max-width: 768px) {
+  .dot-menu-btn { display: grid; order: 3; }
+  .main-nav { flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: space-between; }
+  .nav-brand { order: 1; justify-content: flex-start; }
+  .theme-toggle { order: 2; margin-left: auto; margin-right: 0.75rem; }
+  #navLinks { display: none !important; }
+}
+
+/* ═══════════════════════════════════════════════
+   MOBILE SLIDE-IN PANEL
+═══════════════════════════════════════════════ */
+.mobile-menu-backdrop {
+  position: fixed; inset: 0; z-index: 998;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.38s ease;
+}
+.mobile-menu-backdrop.open { opacity: 1; pointer-events: all; }
+
+.mobile-menu-panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  z-index: 999;
+  width: min(82vw, 340px);
+  padding: 2rem 1.8rem 2.5rem;
+  display: flex; flex-direction: column;
+  background: rgba(248,248,250,0.97);
+  border-left: 1px solid rgba(0,0,0,0.1);
+  box-shadow: -8px 0 48px rgba(0,0,0,0.12);
+  transform: translateX(100%);
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+  overflow-y: auto;
+}
+[data-theme="dark"] .mobile-menu-panel {
+  background: rgba(13,13,20,0.97);
+  border-left-color: rgba(255,255,255,0.08);
+  box-shadow: -8px 0 48px rgba(0,0,0,0.55);
+}
+.mobile-menu-panel.open { transform: translateX(0); }
+
+.mobile-menu-close {
+  align-self: flex-end;
+  width: 2.4rem; height: 2.4rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color 0.2s, transform 0.25s;
+}
+.mobile-menu-close:hover { border-color: var(--purple); transform: rotate(90deg) scale(1.1); }
+.close-line {
+  position: absolute; top: 50%; left: 50%;
+  width: 14px; height: 1.5px;
+  background: var(--text);
+  border-radius: 2px;
+  transform-origin: center;
+}
+.close-line:nth-child(1) { transform: translate(-50%, -50%) rotate(45deg); }
+.close-line:nth-child(2) { transform: translate(-50%, -50%) rotate(-45deg); }
+
+.mobile-menu-brand { margin-top: 2rem; margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 0.3rem; }
+.mobile-menu-brand-pre { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.22em; color: var(--muted); }
+.mobile-menu-brand-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem; line-height: 1; color: var(--text); }
+.mobile-menu-brand-title span { color: transparent; -webkit-text-stroke: 1.5px var(--purple); }
+
+.mobile-menu-list { list-style: none; display: flex; flex-direction: column; flex: 1; }
+.mobile-menu-item {
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.35s ease calc(var(--i) * 0.07s + 0.15s),
+              transform 0.4s cubic-bezier(0.22,1,0.36,1) calc(var(--i) * 0.07s + 0.15s);
+}
+.mobile-menu-panel.open .mobile-menu-item { opacity: 1; transform: translateX(0); }
+
+.mobile-menu-link {
+  width: 100%; display: flex; align-items: center; gap: 1rem;
+  padding: 1.15rem 0.25rem;
+  background: none; border: none; cursor: pointer;
+  text-align: left; border-radius: 8px;
+  transition: background 0.2s ease;
+}
+.mobile-menu-link:hover { background: rgba(101,82,208,0.06); }
+
+.mobile-menu-num { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.15em; color: var(--purple); min-width: 24px; transition: transform 0.2s ease; }
+.mobile-menu-label { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.04em; color: var(--text); flex: 1; line-height: 1; transition: color 0.2s ease, letter-spacing 0.2s ease; }
+.mobile-menu-arrow { font-size: 1.1rem; color: var(--muted); transform: translateX(-4px); transition: transform 0.25s ease, color 0.2s ease; }
+
+.mobile-menu-link:hover .mobile-menu-label { color: var(--purple); letter-spacing: 0.07em; }
+.mobile-menu-link:hover .mobile-menu-arrow { transform: translateX(4px); color: var(--purple); }
+.mobile-menu-link:hover .mobile-menu-num { transform: translateY(-1px); }
+
+.mobile-menu-footer { margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--border); opacity: 0; transition: opacity 0.4s ease 0.5s; }
+.mobile-menu-panel.open .mobile-menu-footer { opacity: 1; }
+.mobile-menu-status { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; color: var(--green); }
+
 /* ── Cert Lightbox ── */
 .cert-lightbox {
   position: fixed; inset: 0; z-index: 9999;
@@ -1382,6 +1513,60 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* Responsive query for stacking */
+/* ═══════════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════════ */
+.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+.contact-intro {
+  font-family: var(--sans); color: var(--muted);
+  line-height: 1.8; margin-bottom: 1.5rem; font-size: 0.95rem;
+}
+.contact-links { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
+.contact-row {
+  display: flex; align-items: center; gap: 0.8rem;
+  font-size: 0.72rem; letter-spacing: 0.1em;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--border); border-radius: 24px;
+  background: var(--card); backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(56,62,78,0.05);
+}
+.contact-row:hover { border-color: var(--purple); background: rgba(255,255,255,0.8); transform: translateX(5px); }
+.contact-key { color: var(--purple); font-weight: 700; min-width: 80px; }
+.contact-arrow { color: var(--muted); }
+.contact-val { color: var(--text); }
+
+.github-stats-wrap { display: flex; flex-direction: column; gap: 0.7rem; }
+.gh-stat { width: 100%; border-radius: 6px; }
+
+/* Contact Form */
+.contact-form { display: flex; flex-direction: column; gap: 1rem; }
+.form-row { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-row label { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted); }
+.form-row input,
+.form-row textarea {
+  background: rgba(255,255,255,0.6); border: 1px solid rgba(56,62,78,0.15);
+  border-radius: 16px; padding: 0.7rem 0.9rem;
+  color: var(--text); font-family: var(--mono); font-size: 0.8rem;
+  outline: none; resize: none; letter-spacing: 0.05em; transition: border-color 0.25s;
+}
+.form-row input:focus,
+.form-row textarea:focus { border-color: var(--purple); }
+.form-note { font-size: 0.75rem; min-height: 1em; text-align: center; }
+.form-note.success { color: var(--green); }
+.form-note.error   { color: #f87171; }
+
+/* ═══════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
 @media (max-width: 900px) {
   .panel-projects-react {
     padding: 5rem 1rem 6rem !important;

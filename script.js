@@ -486,23 +486,50 @@ document.addEventListener('keydown', function(e) {
 });
 
 /* ═══════════════════════════════════════════════════
-   MOBILE HAMBURGER MENU
+   MOBILE DOT-MENU — slide-in panel
 ═══════════════════════════════════════════════════ */
-(function initHamburger() {
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const navLinks = document.getElementById('navLinks');
-  
-  if (hamburgerBtn && navLinks) {
-    hamburgerBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
+(function initDotMenu() {
+  const dotBtn    = document.getElementById('dotMenuBtn');
+  const panel     = document.getElementById('mobileMenuPanel');
+  const backdrop  = document.getElementById('mobileMenuBackdrop');
+  const closeBtn  = document.getElementById('mobileMenuClose');
 
-    // Close menu when a link is clicked
-    const links = navLinks.querySelectorAll('.nav-btn');
-    links.forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-      });
-    });
+  if (!dotBtn || !panel || !backdrop) return;
+
+  function openMenu() {
+    panel.classList.add('open');
+    backdrop.classList.add('open');
+    dotBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
   }
+
+  function closeMenu() {
+    panel.classList.remove('open');
+    backdrop.classList.remove('open');
+    dotBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  dotBtn.addEventListener('click', () => {
+    const isOpen = panel.classList.contains('open');
+    isOpen ? closeMenu() : openMenu();
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+
+  // Navigate + close when a panel link is tapped
+  panel.querySelectorAll('.mobile-menu-link').forEach(link => {
+    link.addEventListener('click', () => {
+      const section = link.dataset.section;
+      closeMenu();
+      // Small delay so panel slides out before scrolling starts
+      setTimeout(() => switchSection(section), 80);
+    });
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) closeMenu();
+  });
 })();
