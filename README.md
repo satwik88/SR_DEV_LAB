@@ -26,6 +26,19 @@ Welcome to the source code for my personal developer portfolio and laboratory in
 - **Secondary Accent:** Tech Grey (`#A5A5A5` / `#1e1e2e`)
 - **Typography:** `JetBrains Mono` for HUD/Tech elements and `Space Grotesk` for readable paragraphs.
 
+## 📂 File Structure
+
+```text
+SR_DEV_LAB/
+├── assets/                  # Directory containing images and other assets
+├── index.html               # Main HTML document
+├── old_styles.css           # Previous version of CSS styles (legacy)
+├── projects-component.js    # Web Component definition for project cards
+├── README.md                # Project documentation
+├── script.js                # Main JavaScript file containing UI logic
+└── styles.css               # Main CSS stylesheet with custom properties
+```
+
 ## 🏃‍♂️ Running Locally
 
 1. Clone this repository.
