@@ -1,3 +1,6 @@
+/* ═══════════════════════════════════════════════════
+   THEME TOGGLE — dark / light mode
+═══════════════════════════════════════════════════ */
 (function initTheme() {
   const root    = document.documentElement;
   const btn     = document.getElementById('themeToggle');
@@ -16,13 +19,15 @@
     if (window.__threeSetBg) window.__threeSetBg(dark ? BG_DARK : BG_LIGHT);
   }
 
-    let dark = localStorage.getItem('theme') === 'dark';
+  /* ── Restore saved preference ── */
+  let dark = localStorage.getItem('theme') === 'dark';
   applyTheme(dark);
 
   window.__applyTheme = applyTheme;
   window.__isDark = () => dark;
 
-    let animating = false;
+  /* ── Circle-wipe transition ── */
+  let animating = false;
 
   if (btn) {
     btn.addEventListener('click', () => {
@@ -51,7 +56,8 @@
       overlay.style.background = dark ? '#0d0d12' : '#f4f4f5';
       overlay.innerHTML = '';
 
-            overlay.style.transition = 'none';
+      /* ── Expand from button → full screen (280ms) ── */
+      overlay.style.transition = 'none';
       overlay.style.clipPath = `circle(0% at ${ox} ${oy})`;
 
       requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -72,6 +78,9 @@
 
 
 
+/* ═══════════════════════════════════════════════════
+   THREE.JS PARTICLE BACKGROUND
+═══════════════════════════════════════════════════ */
 (function initThree() {
   const canvas = document.getElementById('bg-canvas');
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
@@ -88,7 +97,8 @@
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
   camera.position.set(0, 0, 30);
 
-    const COUNT = 1200;
+  /* ── Particle field ── */
+  const COUNT = 1200;
   const geo   = new THREE.BufferGeometry();
   const pos   = new Float32Array(COUNT * 3);
   const col   = new Float32Array(COUNT * 3);
@@ -118,7 +128,8 @@
 
 
 
-    let icoGeo = new THREE.IcosahedronGeometry(4, 1);
+  /* ── Central wireframe (Explodable) ── */
+  let icoGeo = new THREE.IcosahedronGeometry(4, 1);
   icoGeo = icoGeo.toNonIndexed(); // Separate triangles so they can break apart
   
   const icoMat = new THREE.MeshBasicMaterial({
@@ -154,13 +165,15 @@
     }
   }
 
-    const ringGeo = new THREE.TorusGeometry(6, 0.015, 2, 80);
+  /* ── Orbit ring ── */
+  const ringGeo = new THREE.TorusGeometry(6, 0.015, 2, 80);
   const ringMat = new THREE.MeshBasicMaterial({ color: 0xa5a5a5, transparent: true, opacity: 0.4 });
   const ring    = new THREE.Mesh(ringGeo, ringMat);
   ring.rotation.x = Math.PI / 2.5;
   scene.add(ring);
 
-    const mouse = { x: 0, y: 0 };
+  /* ── Mouse tracking & Raycaster ── */
+  const mouse = { x: 0, y: 0 };
   const rayMouse = new THREE.Vector2(-999, -999);
   const raycaster = new THREE.Raycaster();
   let explodeProgress = 0;
@@ -174,10 +187,12 @@
     rayMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
   });
 
-    let lastTime = performance.now(), frameCount = 0;
+  /* ── FPS counter ── */
+  let lastTime = performance.now(), frameCount = 0;
   const fpsEl  = document.getElementById('hudFrames');
 
-    let t = 0;
+  /* ── Animate ── */
+  let t = 0;
   function animate() {
     requestAnimationFrame(animate);
     t += 0.003;
@@ -236,6 +251,9 @@
 })();
 
 
+/* ═══════════════════════════════════════════════════
+   HUD CLOCK
+═══════════════════════════════════════════════════ */
 (function clock() {
   const el = document.getElementById('hudTime');
   setInterval(() => {
@@ -246,6 +264,9 @@
 })();
 
 
+/* ═══════════════════════════════════════════════════
+   TYPING ANIMATION
+═══════════════════════════════════════════════════ */
 (function typing() {
   const phrases = [
     'CSE STUDENT', 'WEB DEVELOPER', 'IOT ENGINEER',
@@ -265,6 +286,9 @@
 })();
 
 
+/* ═══════════════════════════════════════════════════
+   NAVIGATION — smooth scroll
+═══════════════════════════════════════════════════ */
 const sectionOrder = ['home', 'about', 'skills', 'projects', 'certs', 'contact'];
 
 function switchSection(name) {
@@ -296,6 +320,9 @@ sectionOrder.forEach(name => {
   if (el) navObserver.observe(el);
 });
 
+/* ═══════════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+═══════════════════════════════════════════════════ */
 const progressBar = document.getElementById('scrollProgress');
 const hudCorners = document.querySelectorAll('.hud-corner');
 
@@ -312,6 +339,9 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
+/* ═══════════════════════════════════════════════════
+   SECTION REVEAL ON SCROLL
+═══════════════════════════════════════════════════ */
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -326,6 +356,9 @@ document.querySelectorAll('.panel-inner').forEach(el => revealObserver.observe(e
 const homeInner = document.querySelector('#panel-home .panel-inner');
 if (homeInner) homeInner.classList.add('revealed');
 
+/* ═══════════════════════════════════════════════════
+   SKILL BAR ANIMATION
+═══════════════════════════════════════════════════ */
 function animateBars() {
   document.querySelectorAll('.bar-fill').forEach(bar => {
     bar.style.animation = 'none';
@@ -336,6 +369,9 @@ function animateBars() {
 }
 
 
+/* ═══════════════════════════════════════════════════
+   PROJECT DATA
+═══════════════════════════════════════════════════ */
 const projects = [
   {
     pre: '// PROJECT_001 — WEB / LIVE',
@@ -401,6 +437,9 @@ function closeProject() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProject(); });
 
 
+/* ═══════════════════════════════════════════════════
+   CONTACT FORM
+═══════════════════════════════════════════════════ */
 document.getElementById('contactForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const btn  = document.getElementById('formSubmitBtn');
@@ -423,6 +462,9 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   }, 800);
 });
 
+/* ═══════════════════════════════════════════════════
+   CERT LIGHTBOX
+═══════════════════════════════════════════════════ */
 function openCertLightbox(src) {
   const lb  = document.getElementById('certLightbox');
   const img = document.getElementById('certLightboxImg');
@@ -432,7 +474,7 @@ function openCertLightbox(src) {
 }
 
 function closeCertLightbox(e) {
-
+  // Close if clicking the backdrop (not the image itself)
   if (e && e.target === document.getElementById('certLightboxImg')) return;
   const lb = document.getElementById('certLightbox');
   lb.classList.remove('open');
@@ -443,48 +485,24 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeCertLightbox();
 });
 
-(function initDotMenu() {
-  const dotBtn    = document.getElementById('dotMenuBtn');
-  const panel     = document.getElementById('mobileMenuPanel');
-  const backdrop  = document.getElementById('mobileMenuBackdrop');
-  const closeBtn  = document.getElementById('mobileMenuClose');
-
-  if (!dotBtn || !panel || !backdrop) return;
-
-  function openMenu() {
-    panel.classList.add('open');
-    backdrop.classList.add('open');
-    dotBtn.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeMenu() {
-    panel.classList.remove('open');
-    backdrop.classList.remove('open');
-    dotBtn.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  }
-
-  dotBtn.addEventListener('click', () => {
-    const isOpen = panel.classList.contains('open');
-    isOpen ? closeMenu() : openMenu();
-  });
-
-  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-  backdrop.addEventListener('click', closeMenu);
-
-  // Navigate + close when a panel link is tapped
-  panel.querySelectorAll('.mobile-menu-link').forEach(link => {
-    link.addEventListener('click', () => {
-      const section = link.dataset.section;
-      closeMenu();
-      // Small delay so panel slides out before scrolling starts
-      setTimeout(() => switchSection(section), 80);
+/* ═══════════════════════════════════════════════════
+   MOBILE HAMBURGER MENU
+═══════════════════════════════════════════════════ */
+(function initHamburger() {
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const navLinks = document.getElementById('navLinks');
+  
+  if (hamburgerBtn && navLinks) {
+    hamburgerBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
     });
-  });
 
-  // Close on Escape
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && panel.classList.contains('open')) closeMenu();
-  });
+    // Close menu when a link is clicked
+    const links = navLinks.querySelectorAll('.nav-btn');
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+  }
 })();

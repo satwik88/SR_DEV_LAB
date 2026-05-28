@@ -19,22 +19,25 @@
 
 <body>
 
-    <div class="scroll-progress" id="scrollProgress"></div>
+  <!-- ── SCROLL PROGRESS ────────────────────────── -->
+  <div class="scroll-progress" id="scrollProgress"></div>
 
-    <canvas id="bg-canvas"></canvas>
+  <!-- ── THREE.JS CANVAS ─────────────────────────── -->
+  <canvas id="bg-canvas"></canvas>
 
-    <div class="scanlines"></div>
+  <!-- ── SCAN LINE OVERLAY ───────────────────── -->
+  <div class="scanlines"></div>
   <div class="vignette"></div>
 
-    <nav class="main-nav" id="mainNav">
+  <!-- ═══════════════════════════════════════════
+    MAIN NAV
+  ═══════════════════════════════════════════ -->
+  <nav class="main-nav" id="mainNav">
     <div class="nav-brand" style="cursor: pointer;" onclick="switchSection('home')" title="Go to Home">
       <img src="assets/logo.png" alt="Satwik Raj Logo" class="nav-logo-img" />
     </div>
-    <button class="dot-menu-btn" id="dotMenuBtn" aria-label="Toggle mobile navigation" aria-expanded="false">
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation">
+      ☰
     </button>
     <div class="nav-links" id="navLinks">
       <button class="nav-btn active" data-section="home" id="navHome">[ HOME ]</button>
@@ -65,9 +68,13 @@
     </button>
   </nav>
 
-    <main class="panel-container" id="panelContainer">
+  <!-- ═══════════════════════════════════════════
+    PANEL CONTAINER
+  ═══════════════════════════════════════════ -->
+  <main class="panel-container" id="panelContainer">
 
-        <section class="panel active" id="panel-home">
+    <!-- ── HOME ─────────────────────────────── -->
+    <section class="panel active" id="panel-home">
       <div class="panel-inner home-inner">
         <p class="pre-title">/// INITIALIZING PORTFOLIO ///</p>
         <h1 class="hero-name">
@@ -99,7 +106,8 @@
       </div>
     </section>
 
-        <section class="panel" id="panel-about">
+    <!-- ── ABOUT ─────────────────────────────── -->
+    <section class="panel" id="panel-about">
       <div class="panel-inner">
         <p class="section-pre">////// ABOUT</p>
         <h2 class="section-title">WHO_AM_I</h2>
@@ -146,7 +154,8 @@
       </div>
     </section>
 
-        <section class="panel" id="panel-skills">
+    <!-- ── SKILLS ─────────────────────────────── -->
+    <section class="panel" id="panel-skills">
       <div class="panel-inner">
         <p class="section-pre">////// SKILLS</p>
         <h2 class="section-title">TECH_STACK</h2>
@@ -206,11 +215,13 @@
       </div>
     </section>
 
-        <section class="panel-projects-react" id="panel-projects">
+    <!-- ── PROJECTS (React + Framer Motion) ─────────────────────────── -->
+    <section class="panel-projects-react" id="panel-projects">
       <div id="react-projects-root"></div>
     </section>
 
-        <section class="panel" id="panel-certs">
+    <!-- ── CERTIFICATIONS ─────────────────────────────── -->
+    <section class="panel" id="panel-certs">
       <div class="panel-inner">
         <p class="section-pre">////// AWARDS_&amp;_CERTIFICATIONS</p>
         <h2 class="section-title">CERTIFICATIONS</h2>
@@ -257,7 +268,8 @@
       </div>
     </section>
 
-        <div id="certLightbox" class="cert-lightbox" onclick="closeCertLightbox(event)">
+    <!-- ── CERT LIGHTBOX ─────────────────────────────── -->
+    <div id="certLightbox" class="cert-lightbox" onclick="closeCertLightbox(event)">
       <button class="cert-lightbox-close" onclick="closeCertLightbox()">← BACK</button>
       <img id="certLightboxImg" src="" alt="" class="cert-lightbox-img" />
     </div>
@@ -321,7 +333,10 @@
 
   </main>
 
-    <div class="project-overlay-panel" id="projectOverlay">
+  <!-- ═══════════════════════════════════════════
+    PROJECT DETAIL OVERLAY
+  ═══════════════════════════════════════════ -->
+  <div class="project-overlay-panel" id="projectOverlay">
     <div class="overlay-inner">
       <div class="overlay-left">
         <p class="overlay-pre" id="overlayPre"></p>
@@ -340,55 +355,7 @@
   <!-- Full-page theme transition overlay (must be before scripts) -->
   <div id="theme-transition-overlay"></div>
 
-    <div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
-  <nav class="mobile-menu-panel" id="mobileMenuPanel" aria-label="Mobile navigation">
-    <!-- Close button -->
-    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close navigation">
-      <span class="close-line"></span>
-      <span class="close-line"></span>
-    </button>
-
-    <!-- Brand name -->
-    <div class="mobile-menu-brand">
-      <span class="mobile-menu-brand-title">SATWIK<span>RAJ</span></span>
-    </div>
-
-    <!-- Nav items -->
-    <ul class="mobile-menu-list" role="list">
-      <li class="mobile-menu-item" style="--i:0">
-        <button class="mobile-menu-link" data-section="home" id="mNavHome">
-          <span class="mobile-menu-num">01</span>
-          <span class="mobile-menu-label">HOME</span>
-          <span class="mobile-menu-arrow">&#8594;</span>
-        </button>
-      </li>
-      <li class="mobile-menu-item" style="--i:1">
-        <button class="mobile-menu-link" data-section="about" id="mNavAbout">
-          <span class="mobile-menu-num">02</span>
-          <span class="mobile-menu-label">ABOUT</span>
-          <span class="mobile-menu-arrow">&#8594;</span>
-        </button>
-      </li>
-      <li class="mobile-menu-item" style="--i:2">
-        <button class="mobile-menu-link" data-section="projects" id="mNavProjects">
-          <span class="mobile-menu-num">03</span>
-          <span class="mobile-menu-label">PROJECTS</span>
-          <span class="mobile-menu-arrow">&#8594;</span>
-        </button>
-      </li>
-      <li class="mobile-menu-item" style="--i:3">
-        <button class="mobile-menu-link" data-section="contact" id="mNavContact">
-          <span class="mobile-menu-num">04</span>
-          <span class="mobile-menu-label">CONTACT</span>
-          <span class="mobile-menu-arrow">&#8594;</span>
-        </button>
-      </li>
-    </ul>
-
-
-  </nav>
-
-
+  <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="script.js"></script>
   <!-- Babel for in-browser JSX compilation -->
