@@ -1,381 +1,599 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Satwik Raj — CSE Student & Developer. Building modern web applications, IoT systems, and real-world software."
+    />
+    <meta
+      name="keywords"
+      content="Satwik Raj, Developer, Portfolio, Python, IoT, Web Development"
+    />
+    <title>SATWIK RAJ // DEV LAB</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description"
-    content="Satwik Raj — CSE Student & Developer. Building modern web applications, IoT systems, and real-world software." />
-  <meta name="keywords" content="Satwik Raj, Developer, Portfolio, Python, IoT, Web Development" />
-  <title>SATWIK RAJ // DEV LAB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=2" />
+  </head>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=2" />
-</head>
+  <body>
+    <!-- --- THREE.JS CANVAS --- -->
+    <canvas id="bg-canvas"></canvas>
 
-<body>
+    <!-- --- SCAN LINE OVERLAY --- -->
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
 
-  <!-- ── THREE.JS CANVAS ─────────────────────────── -->
-  <canvas id="bg-canvas"></canvas>
-
-  <!-- ── SCAN LINE OVERLAY ───────────────────── -->
-  <div class="scanlines"></div>
-  <div class="vignette"></div>
-
-  <!-- ═══════════════════════════════════════════
-    MAIN NAV
-  ═══════════════════════════════════════════ -->
-  <nav class="main-nav" id="mainNav">
-    <div class="nav-brand" style="cursor: pointer;" onclick="switchSection('home')" title="Go to Home">
-      <img src="assets/logo.png" alt="Satwik Raj Logo" class="nav-logo-img" />
-    </div>
-    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="7" cy="7" r="3.5" />
-        <circle cx="17" cy="7" r="3.5" />
-        <circle cx="7" cy="17" r="3.5" />
-        <circle cx="17" cy="17" r="3.5" />
-      </svg>
-    </button>
-    <div class="nav-links" id="navLinks">
-      <div class="mobile-nav-brand">
-        <span class="name-line">SATWIK</span>
-        <span class="name-line accent">RAJ</span>
+    <!-- --- MAIN NAV --- -->
+    <nav class="main-nav" id="mainNav">
+      <div
+        class="nav-brand"
+        style="cursor: pointer"
+        onclick="switchSection('home')"
+        title="Go to Home"
+      >
+        <img src="assets/logo.png" alt="Satwik Raj Logo" class="nav-logo-img" />
       </div>
-      <button class="nav-btn active" data-section="home" id="navHome">[ HOME ]</button>
-      <button class="nav-btn" data-section="about" id="navAbout">[ ABOUT ]</button>
-      <button class="nav-btn" data-section="skills" id="navSkills">[ SKILLS ]</button>
-      <button class="nav-btn" data-section="projects" id="navProjects">[ PROJECTS ]</button>
-      <button class="nav-btn" data-section="certs" id="navCerts">[ CERTIFICATIONS ]</button>
-      <button class="nav-btn" data-section="contact" id="navContact">[ CONTACT ]</button>
-    </div>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
-      <!-- Moon: shown in light mode -->
-      <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" />
-      </svg>
-      <!-- Sun: shown in dark mode -->
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="12" cy="12" r="4.5" fill="currentColor" />
-        <line x1="12" y1="2" x2="12" y2="5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        <line x1="12" y1="18.5" x2="12" y2="22" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        <line x1="2" y1="12" x2="5.5" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        <line x1="18.5" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        <line x1="4.93" y1="4.93" x2="7.17" y2="7.17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        <line x1="16.83" y1="16.83" x2="19.07" y2="19.07" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" />
-        <line x1="19.07" y1="4.93" x2="16.83" y2="7.17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        <line x1="7.17" y1="16.83" x2="4.93" y2="19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-      </svg>
-    </button>
-  </nav>
-
-  <!-- ═══════════════════════════════════════════
-    PANEL CONTAINER
-  ═══════════════════════════════════════════ -->
-  <main class="panel-container" id="panelContainer">
-
-    <!-- ── HOME ─────────────────────────────── -->
-    <section class="panel active" id="panel-home">
-      <div class="panel-inner home-inner">
-        <h1 class="hero-name">
+      <button
+        class="hamburger-btn"
+        id="hamburgerBtn"
+        aria-label="Toggle navigation"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="7" cy="7" r="3.5" />
+          <circle cx="17" cy="7" r="3.5" />
+          <circle cx="7" cy="17" r="3.5" />
+          <circle cx="17" cy="17" r="3.5" />
+        </svg>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <div class="mobile-nav-brand">
           <span class="name-line">SATWIK</span>
           <span class="name-line accent">RAJ</span>
-        </h1>
-        <div class="role-line">
-          <span class="bracket">[</span>
-          <span class="typed-out" id="typedRole"></span>
-          <span class="typed-cursor">_</span>
-          <span class="bracket">]</span>
         </div>
-        <p class="hero-desc">
-          CSE student building at the intersection of hardware and software —<br />
-          IoT systems, web apps, and Python automation.
-        </p>
-        <div class="hero-actions">
-          <button class="action-btn" onclick="switchSection('projects')" id="exploreBtn">
-            <span class="btn-bracket">[</span> EXPLORE PROJECTS <span class="btn-bracket">]</span>
-          </button>
-          <a href="https://github.com/satwik88" target="_blank" class="action-btn action-ghost" id="githubHeroBtn">
-            <span class="btn-bracket">[</span> GITHUB <span class="btn-bracket">]</span>
-          </a>
-          <a href="assets/resume.pdf" download class="action-btn action-ghost" id="resumeHeroBtn">
-            <span class="btn-bracket">[</span> RESUME <span class="btn-bracket">]</span>
-          </a>
-        </div>
-        <div class="scroll-hint">SCROLL OR USE NAV ↑</div>
+        <button class="nav-btn active" data-section="home" id="navHome">
+          [ HOME ]
+        </button>
+        <button class="nav-btn" data-section="about" id="navAbout">
+          [ ABOUT ]
+        </button>
+        <button class="nav-btn" data-section="skills" id="navSkills">
+          [ SKILLS ]
+        </button>
+        <button class="nav-btn" data-section="projects" id="navProjects">
+          [ PROJECTS ]
+        </button>
+        <button class="nav-btn" data-section="certs" id="navCerts">
+          [ CERTIFICATIONS ]
+        </button>
+        <button class="nav-btn" data-section="contact" id="navContact">
+          [ CONTACT ]
+        </button>
       </div>
-    </section>
+      <button
+        class="theme-toggle"
+        id="themeToggle"
+        aria-label="Toggle dark/light mode"
+        title="Toggle dark/light mode"
+      >
+        <!-- Moon: shown in light mode -->
+        <svg
+          class="icon-moon"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+            fill="currentColor"
+          />
+        </svg>
+        <!-- Sun: shown in dark mode -->
+        <svg
+          class="icon-sun"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="12" cy="12" r="4.5" fill="currentColor" />
+          <line
+            x1="12"
+            y1="2"
+            x2="12"
+            y2="5.5"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <line
+            x1="12"
+            y1="18.5"
+            x2="12"
+            y2="22"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <line
+            x1="2"
+            y1="12"
+            x2="5.5"
+            y2="12"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <line
+            x1="18.5"
+            y1="12"
+            x2="22"
+            y2="12"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <line
+            x1="4.93"
+            y1="4.93"
+            x2="7.17"
+            y2="7.17"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <line
+            x1="16.83"
+            y1="16.83"
+            x2="19.07"
+            y2="19.07"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <line
+            x1="19.07"
+            y1="4.93"
+            x2="16.83"
+            y2="7.17"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <line
+            x1="7.17"
+            y1="16.83"
+            x2="4.93"
+            y2="19.07"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+    </nav>
 
-    <!-- ── ABOUT ─────────────────────────────── -->
-    <section class="panel" id="panel-about">
-      <div class="panel-inner">
-        <p class="section-pre">////// ABOUT</p>
-        <h2 class="section-title">WHO_AM_I</h2>
-        <div class="about-grid">
-          <div class="about-bio">
-            <p>I'm <strong>Satwik Raj</strong> — a Computer Science &amp; Engineering student passionate about turning
-              ideas into real software. I work across the stack, from backend Python scripts to IoT hardware, from CLI
-              tools to browser games.</p>
-            <p>Currently deep-diving into <span class="hl">AI &amp; automation</span>, and the intersection of <span
-                class="hl">hardware + software</span>.</p>
-            <div class="meta-table">
-              <div class="meta-row"><span class="meta-key">ROLE</span><span class="meta-val">CSE Student &amp;
-                  Developer</span></div>
-              <div class="meta-row"><span class="meta-key">LOCATION</span><span class="meta-val">India 🇮🇳</span></div>
-              <div class="meta-row"><span class="meta-key">FOCUS</span><span class="meta-val">IoT · Web · Python ·
-                  AI</span></div>
-              <div class="meta-row"><span class="meta-key">STATUS</span><span class="meta-val hud-green">Open to
-                  Opportunities</span></div>
-            </div>
+    <!-- --- PANEL CONTAINER --- -->
+    <main class="panel-container" id="panelContainer">
+      <!-- --- HOME --- -->
+      <section class="panel active" id="panel-home">
+        <div class="panel-inner home-inner">
+          <h1 class="hero-name">
+            <span class="name-line">SATWIK</span>
+            <span class="name-line accent">RAJ</span>
+          </h1>
+          <div class="role-line">
+            <span class="bracket">[</span>
+            <span class="typed-out" id="typedRole"></span>
+            <span class="typed-cursor">_</span>
+            <span class="bracket">]</span>
           </div>
-          <div class="about-modules">
-            <div class="module-card" data-aos-like>
-              <span class="module-icon">🤖</span>
-              <span class="module-label">AI &amp; AUTOMATION</span>
-              <p>Machine learning, intelligent systems, and automating everyday tasks.</p>
-            </div>
-            <div class="module-card">
-              <span class="module-icon">📡</span>
-              <span class="module-label">IOT SYSTEMS</span>
-              <p>Connecting physical &amp; digital via sensors and microcontrollers.</p>
-            </div>
-            <div class="module-card">
-              <span class="module-icon">🌐</span>
-              <span class="module-label">FULL STACK</span>
-              <p>End-to-end web apps from backend APIs to polished front-ends.</p>
-            </div>
-            <div class="module-card">
-              <span class="module-icon">🎮</span>
-              <span class="module-label">GAME DEV</span>
-              <p>Interactive browser games with vanilla HTML, CSS &amp; JavaScript.</p>
-            </div>
+          <p class="hero-desc">
+            CSE student building at the intersection of hardware and software
+            —<br />
+            IoT systems, web apps, and Python automation.
+          </p>
+          <div class="hero-actions">
+            <button
+              class="action-btn"
+              onclick="switchSection('projects')"
+              id="exploreBtn"
+            >
+              <span class="btn-bracket">[</span> EXPLORE PROJECTS
+              <span class="btn-bracket">]</span>
+            </button>
+            <a
+              href="https://github.com/satwik88"
+              target="_blank"
+              class="action-btn action-ghost"
+              id="githubHeroBtn"
+            >
+              <span class="btn-bracket">[</span> GITHUB
+              <span class="btn-bracket">]</span>
+            </a>
+            <a
+              href="assets/resume.pdf"
+              download
+              class="action-btn action-ghost"
+              id="resumeHeroBtn"
+            >
+              <span class="btn-bracket">[</span> RESUME
+              <span class="btn-bracket">]</span>
+            </a>
           </div>
+          <div class="scroll-hint">SCROLL OR USE NAV ↑</div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ── SKILLS ─────────────────────────────── -->
-    <section class="panel" id="panel-skills">
-      <div class="panel-inner">
-        <p class="section-pre">////// SKILLS</p>
-        <h2 class="section-title">TECH_STACK</h2>
-        <div class="skills-grid">
-          <div class="skill-block">
-            <div class="skill-block-header">&gt; PROGRAMMING</div>
-            <div class="tag-cloud">
-              <span class="skill-chip">PYTHON</span>
-              <span class="skill-chip">JAVASCRIPT</span>
-              <span class="skill-chip">JAVA</span>
-              <span class="skill-chip">C</span>
-            </div>
-          </div>
-          <div class="skill-block">
-            <div class="skill-block-header">&gt; WEB &amp; DATABASE</div>
-            <div class="tag-cloud">
-              <span class="skill-chip">HTML5 / CSS3</span>
-              <span class="skill-chip">NODE.JS</span>
-              <span class="skill-chip">MYSQL</span>
-              <span class="skill-chip">MONGODB</span>
-            </div>
-          </div>
-          <div class="skill-block">
-            <div class="skill-block-header">&gt; IOT &amp; HARDWARE</div>
-            <div class="tag-cloud">
-              <span class="skill-chip">ARDUINO</span>
-              <span class="skill-chip">NODEMCU / ESP8266</span>
-              <span class="skill-chip">SENSORS</span>
-            </div>
-          </div>
-          <div class="skill-block">
-            <div class="skill-block-header">&gt; TOOLS &amp; DEVOPS</div>
-            <div class="tag-cloud">
-              <span class="skill-chip">Git</span>
-              <span class="skill-chip">GitHub</span>
-              <span class="skill-chip">VS Code</span>
-              <span class="skill-chip">Linux</span>
-              <span class="skill-chip learning">React ↗</span>
-              <span class="skill-chip learning">ML ↗</span>
-              <span class="skill-chip learning">Docker ↗</span>
-            </div>
-          </div>
-
-          <div class="skill-block skill-block-wide">
-            <div class="skill-block-header">&gt; WEB &amp; INTERACTIVE</div>
-            <div class="tag-cloud">
-              <span class="skill-chip skill-chip-accent">Animation</span>
-              <span class="skill-chip skill-chip-accent">Infinite Scroll</span>
-              <span class="skill-chip skill-chip-accent">Transitions</span>
-              <span class="skill-chip skill-chip-accent">3D</span>
-              <span class="skill-chip skill-chip-accent">Canvas API</span>
-              <span class="skill-chip skill-chip-accent">Three.js</span>
-              <span class="skill-chip skill-chip-accent">CSS FX</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── PROJECTS (React + Framer Motion) ─────────────────────────── -->
-    <section class="panel-projects-react" id="panel-projects">
-      <div id="react-projects-root"></div>
-    </section>
-
-    <!-- ── CERTIFICATIONS ─────────────────────────────── -->
-    <section class="panel" id="panel-certs">
-      <div class="panel-inner">
-        <p class="section-pre">////// AWARDS_&amp;_CERTIFICATIONS</p>
-        <h2 class="section-title">CERTIFICATIONS</h2>
-
-        <div class="certs-list">
-
-          <!-- Cert 01 -->
-          <div class="cert-row">
-            <div class="cert-row-left">
-              <div class="cert-row-img-wrap" onclick="openCertLightbox('assets/agentic_ai_cert.jpg.jpeg')"
-                title="Click to view full certificate">
-                <img src="assets/agentic_ai_cert.jpg.jpeg" alt="Agentic AI Saksham Certificate" class="cert-row-img" />
-                <div class="cert-img-hover-hint">🔍 View Full</div>
-              </div>
-              <div class="proj-row-actions" style="margin-top: 1rem;">
-                <button onclick="openCertLightbox('assets/agentic_ai_cert.jpg.jpeg')" class="proj-action-btn">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                  View Certificate
-                </button>
-              </div>
-            </div>
-            <div class="cert-row-right">
-              <div>
-                <p class="proj-num">CERTIFICATION 01</p>
-                <h3 class="cert-row-title">Agentic AI Saksham</h3>
-                <p class="cert-row-org">CAPABL &amp; RV INSTITUTE OF MANAGEMENT</p>
-              </div>
-              <p class="cert-row-desc">
-                Successfully participated in the two-day Agentic AI Saksham workshop — a collaborative initiative with
-                RV Institute of Management and Capabl. The program offered deep insights into Generative AI, Agentic AI
-                architectures, and contemporary AI technologies with hands-on exposure to real-world applications.
+      <!-- --- ABOUT --- -->
+      <section class="panel" id="panel-about">
+        <div class="panel-inner">
+          <p class="section-pre">////// ABOUT</p>
+          <h2 class="section-title">WHO_AM_I</h2>
+          <div class="about-grid">
+            <div class="about-bio">
+              <p>
+                I'm <strong>Satwik Raj</strong> — a Computer Science &amp;
+                Engineering student passionate about turning ideas into real
+                software. I work across the stack, from backend Python scripts
+                to IoT hardware, from CLI tools to browser games.
               </p>
-              <div class="proj-row-stack">
-                <p class="proj-stack-label">Topics Covered</p>
-                <div class="proj-row-chips">
-                  <span>#ArtificialIntelligence</span>
-                  <span>#GenerativeAI</span>
-                  <span>#AgenticAI</span>
-                  <span>#AI</span>
-                  <span>#Learning</span>
+              <p>
+                Currently deep-diving into
+                <span class="hl">AI &amp; automation</span>, and the
+                intersection of <span class="hl">hardware + software</span>.
+              </p>
+              <div class="meta-table">
+                <div class="meta-row">
+                  <span class="meta-key">ROLE</span
+                  ><span class="meta-val">CSE Student &amp; Developer</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-key">LOCATION</span
+                  ><span class="meta-val">India 🇮🇳</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-key">FOCUS</span
+                  ><span class="meta-val">IoT · Web · Python · AI</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-key">STATUS</span
+                  ><span class="meta-val hud-green">Open to Opportunities</span>
+                </div>
+              </div>
+            </div>
+            <div class="about-modules">
+              <div class="module-card" data-aos-like>
+                <span class="module-icon">🤖</span>
+                <span class="module-label">AI &amp; AUTOMATION</span>
+                <p>
+                  Machine learning, intelligent systems, and automating everyday
+                  tasks.
+                </p>
+              </div>
+              <div class="module-card">
+                <span class="module-icon">📡</span>
+                <span class="module-label">IOT SYSTEMS</span>
+                <p>
+                  Connecting physical &amp; digital via sensors and
+                  microcontrollers.
+                </p>
+              </div>
+              <div class="module-card">
+                <span class="module-icon">🌐</span>
+                <span class="module-label">FULL STACK</span>
+                <p>
+                  End-to-end web apps from backend APIs to polished front-ends.
+                </p>
+              </div>
+              <div class="module-card">
+                <span class="module-icon">🎮</span>
+                <span class="module-label">GAME DEV</span>
+                <p>
+                  Interactive browser games with vanilla HTML, CSS &amp;
+                  JavaScript.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- --- SKILLS --- -->
+      <section class="panel" id="panel-skills">
+        <div class="panel-inner">
+          <p class="section-pre">////// SKILLS</p>
+          <h2 class="section-title">TECH_STACK</h2>
+          <div class="skills-grid">
+            <div class="skill-block">
+              <div class="skill-block-header">&gt; PROGRAMMING</div>
+              <div class="tag-cloud">
+                <span class="skill-chip">PYTHON</span>
+                <span class="skill-chip">JAVASCRIPT</span>
+                <span class="skill-chip">JAVA</span>
+                <span class="skill-chip">C</span>
+              </div>
+            </div>
+            <div class="skill-block">
+              <div class="skill-block-header">&gt; WEB &amp; DATABASE</div>
+              <div class="tag-cloud">
+                <span class="skill-chip">HTML5 / CSS3</span>
+                <span class="skill-chip">NODE.JS</span>
+                <span class="skill-chip">MYSQL</span>
+                <span class="skill-chip">MONGODB</span>
+              </div>
+            </div>
+            <div class="skill-block">
+              <div class="skill-block-header">&gt; IOT &amp; HARDWARE</div>
+              <div class="tag-cloud">
+                <span class="skill-chip">ARDUINO</span>
+                <span class="skill-chip">NODEMCU / ESP8266</span>
+                <span class="skill-chip">SENSORS</span>
+              </div>
+            </div>
+            <div class="skill-block">
+              <div class="skill-block-header">&gt; TOOLS &amp; DEVOPS</div>
+              <div class="tag-cloud">
+                <span class="skill-chip">Git</span>
+                <span class="skill-chip">GitHub</span>
+                <span class="skill-chip">VS Code</span>
+                <span class="skill-chip">Linux</span>
+                <span class="skill-chip learning">React ↗</span>
+                <span class="skill-chip learning">ML ↗</span>
+                <span class="skill-chip learning">Docker ↗</span>
+              </div>
+            </div>
+
+            <div class="skill-block skill-block-wide">
+              <div class="skill-block-header">&gt; WEB &amp; INTERACTIVE</div>
+              <div class="tag-cloud">
+                <span class="skill-chip skill-chip-accent">Animation</span>
+                <span class="skill-chip skill-chip-accent"
+                  >Infinite Scroll</span
+                >
+                <span class="skill-chip skill-chip-accent">Transitions</span>
+                <span class="skill-chip skill-chip-accent">3D</span>
+                <span class="skill-chip skill-chip-accent">Canvas API</span>
+                <span class="skill-chip skill-chip-accent">Three.js</span>
+                <span class="skill-chip skill-chip-accent">CSS FX</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- --- PROJECTS (React + Framer Motion) --- -->
+      <section class="panel-projects-react" id="panel-projects">
+        <div id="react-projects-root"></div>
+      </section>
+
+      <!-- --- CERTIFICATIONS --- -->
+      <section class="panel" id="panel-certs">
+        <div class="panel-inner">
+          <p class="section-pre">////// AWARDS_&amp;_CERTIFICATIONS</p>
+          <h2 class="section-title">CERTIFICATIONS</h2>
+
+          <div class="certs-list">
+            <!-- Cert 01 -->
+            <div class="cert-row">
+              <div class="cert-row-left">
+                <div
+                  class="cert-row-img-wrap"
+                  onclick="openCertLightbox('assets/agentic_ai_cert.jpg.jpeg')"
+                  title="Click to view full certificate"
+                >
+                  <img
+                    src="assets/agentic_ai_cert.jpg.jpeg"
+                    alt="Agentic AI Saksham Certificate"
+                    class="cert-row-img"
+                  />
+                  <div class="cert-img-hover-hint">🔍 View Full</div>
+                </div>
+                <div class="proj-row-actions" style="margin-top: 1rem">
+                  <button
+                    onclick="
+                      openCertLightbox('assets/agentic_ai_cert.jpg.jpeg')
+                    "
+                    class="proj-action-btn"
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    View Certificate
+                  </button>
+                </div>
+              </div>
+              <div class="cert-row-right">
+                <div>
+                  <p class="proj-num">CERTIFICATION 01</p>
+                  <h3 class="cert-row-title">Agentic AI Saksham</h3>
+                  <p class="cert-row-org">
+                    CAPABL &amp; RV INSTITUTE OF MANAGEMENT
+                  </p>
+                </div>
+                <p class="cert-row-desc">
+                  Successfully participated in the two-day Agentic AI Saksham
+                  workshop — a collaborative initiative with RV Institute of
+                  Management and Capabl. The program offered deep insights into
+                  Generative AI, Agentic AI architectures, and contemporary AI
+                  technologies with hands-on exposure to real-world
+                  applications.
+                </p>
+                <div class="proj-row-stack">
+                  <p class="proj-stack-label">Topics Covered</p>
+                  <div class="proj-row-chips">
+                    <span>#ArtificialIntelligence</span>
+                    <span>#GenerativeAI</span>
+                    <span>#AgenticAI</span>
+                    <span>#AI</span>
+                    <span>#Learning</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
+      </section>
+
+      <!-- --- CERT LIGHTBOX --- -->
+      <div
+        id="certLightbox"
+        class="cert-lightbox"
+        onclick="closeCertLightbox(event)"
+      >
+        <button class="cert-lightbox-close" onclick="closeCertLightbox()">
+          ← BACK
+        </button>
+        <img id="certLightboxImg" src="" alt="" class="cert-lightbox-img" />
       </div>
-    </section>
 
-    <!-- ── CERT LIGHTBOX ─────────────────────────────── -->
-    <div id="certLightbox" class="cert-lightbox" onclick="closeCertLightbox(event)">
-      <button class="cert-lightbox-close" onclick="closeCertLightbox()">← BACK</button>
-      <img id="certLightboxImg" src="" alt="" class="cert-lightbox-img" />
-    </div>
-
-
-    <section class="panel" id="panel-contact">
-      <div class="panel-inner">
-        <p class="section-pre">////// ESTABLISHING_CONNECTION</p>
-        <h2 class="section-title">LET'S TALK.</h2>
-        <div class="contact-layout">
-          <div class="contact-info">
-            <p class="contact-intro">Open to internships, collabs, and interesting problems. I reply fast.</p>
-            <div class="contact-links">
-              <a href="mailto:satwikraj707@gmail.com" class="contact-row" id="emailLink">
-                <span class="contact-key">EMAIL</span>
-                <span class="contact-arrow">──▶</span>
-                <span class="contact-val">satwikraj707@gmail.com</span>
-              </a>
-              <a href="https://github.com/satwik88" target="_blank" class="contact-row" id="githubLink">
-                <span class="contact-key">GITHUB</span>
-                <span class="contact-arrow">──▶</span>
-                <span class="contact-val">github.com/satwik88</span>
-              </a>
-              <a href="https://www.linkedin.com/in/satwik-raj-35b6a9343/" target="_blank" class="contact-row"
-                id="linkedinLink">
-                <span class="contact-key">LINKEDIN</span>
-                <span class="contact-arrow">──▶</span>
-                <span class="contact-val">Satwik Raj</span>
-              </a>
-              <a href="https://www.instagram.com/satwik._23/" target="_blank" class="contact-row" id="instagramLink">
-                <span class="contact-key">INSTAGRAM</span>
-                <span class="contact-arrow">──▶</span>
-                <span class="contact-val">@satwik._23</span>
-              </a>
+      <section class="panel" id="panel-contact">
+        <div class="panel-inner">
+          <p class="section-pre">////// ESTABLISHING_CONNECTION</p>
+          <h2 class="section-title">LET'S TALK.</h2>
+          <div class="contact-layout">
+            <div class="contact-info">
+              <p class="contact-intro">
+                Open to internships, collabs, and interesting problems. I reply
+                fast.
+              </p>
+              <div class="contact-links">
+                <a
+                  href="mailto:satwikraj707@gmail.com"
+                  class="contact-row"
+                  id="emailLink"
+                >
+                  <span class="contact-key">EMAIL</span>
+                  <span class="contact-arrow">──▶</span>
+                  <span class="contact-val">satwikraj707@gmail.com</span>
+                </a>
+                <a
+                  href="https://github.com/satwik88"
+                  target="_blank"
+                  class="contact-row"
+                  id="githubLink"
+                >
+                  <span class="contact-key">GITHUB</span>
+                  <span class="contact-arrow">──▶</span>
+                  <span class="contact-val">github.com/satwik88</span>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/satwik-raj-35b6a9343/"
+                  target="_blank"
+                  class="contact-row"
+                  id="linkedinLink"
+                >
+                  <span class="contact-key">LINKEDIN</span>
+                  <span class="contact-arrow">──▶</span>
+                  <span class="contact-val">Satwik Raj</span>
+                </a>
+                <a
+                  href="https://www.instagram.com/satwik._23/"
+                  target="_blank"
+                  class="contact-row"
+                  id="instagramLink"
+                >
+                  <span class="contact-key">INSTAGRAM</span>
+                  <span class="contact-arrow">──▶</span>
+                  <span class="contact-val">@satwik._23</span>
+                </a>
+              </div>
             </div>
+            <form class="contact-form" id="contactForm">
+              <div class="form-row">
+                <label>// NAME</label>
+                <input
+                  type="text"
+                  id="formName"
+                  placeholder="ENTER_NAME"
+                  required
+                />
+              </div>
+              <div class="form-row">
+                <label>// EMAIL</label>
+                <input
+                  type="email"
+                  id="formEmail"
+                  placeholder="ENTER_EMAIL"
+                  required
+                />
+              </div>
+              <div class="form-row">
+                <label>// MESSAGE</label>
+                <textarea
+                  id="formMessage"
+                  placeholder="ENTER_MESSAGE..."
+                  rows="5"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="action-btn" id="formSubmitBtn">
+                <span class="btn-bracket">[</span> TRANSMIT MESSAGE
+                <span class="btn-bracket">]</span>
+              </button>
+              <p class="form-note" id="formNote"></p>
+            </form>
           </div>
-          <form class="contact-form" id="contactForm">
-            <div class="form-row">
-              <label>// NAME</label>
-              <input type="text" id="formName" placeholder="ENTER_NAME" required />
-            </div>
-            <div class="form-row">
-              <label>// EMAIL</label>
-              <input type="email" id="formEmail" placeholder="ENTER_EMAIL" required />
-            </div>
-            <div class="form-row">
-              <label>// MESSAGE</label>
-              <textarea id="formMessage" placeholder="ENTER_MESSAGE..." rows="5" required></textarea>
-            </div>
-            <button type="submit" class="action-btn" id="formSubmitBtn">
-              <span class="btn-bracket">[</span> TRANSMIT MESSAGE <span class="btn-bracket">]</span>
-            </button>
-            <p class="form-note" id="formNote"></p>
-          </form>
+          <footer class="site-footer">
+            © 2025 Satwik Raj — Built with HTML, CSS &amp; JS
+          </footer>
         </div>
-        <footer class="site-footer">
-          © 2025 Satwik Raj — Built with HTML, CSS &amp; JS
-        </footer>
-      </div>
-    </section>
+      </section>
+    </main>
 
-  </main>
-
-  <!-- ═══════════════════════════════════════════
-    PROJECT DETAIL OVERLAY
-  ═══════════════════════════════════════════ -->
-  <div class="project-overlay-panel" id="projectOverlay">
-    <div class="overlay-inner">
-      <div class="overlay-left">
-        <p class="overlay-pre" id="overlayPre"></p>
-        <h2 class="overlay-title" id="overlayTitle"></h2>
-        <p class="overlay-desc" id="overlayDesc"></p>
-        <div class="overlay-tech" id="overlayTech"></div>
-        <div class="overlay-links" id="overlayLinks"></div>
+    <!-- --- PROJECT DETAIL OVERLAY --- -->
+    <div class="project-overlay-panel" id="projectOverlay">
+      <div class="overlay-inner">
+        <div class="overlay-left">
+          <p class="overlay-pre" id="overlayPre"></p>
+          <h2 class="overlay-title" id="overlayTitle"></h2>
+          <p class="overlay-desc" id="overlayDesc"></p>
+          <div class="overlay-tech" id="overlayTech"></div>
+          <div class="overlay-links" id="overlayLinks"></div>
+        </div>
+        <div class="overlay-right">
+          <img class="overlay-img" id="overlayImg" src="" alt="" />
+        </div>
       </div>
-      <div class="overlay-right">
-        <img class="overlay-img" id="overlayImg" src="" alt="" />
-      </div>
+      <button class="close-btn" onclick="closeProject()" id="closeOverlayBtn">
+        ← BACK
+      </button>
     </div>
-    <button class="close-btn" onclick="closeProject()" id="closeOverlayBtn">← BACK</button>
-  </div>
 
-  <!-- Full-page theme transition overlay (must be before scripts) -->
-  <div id="theme-transition-overlay"></div>
+    <!-- Full-page theme transition overlay (must be before scripts) -->
+    <div id="theme-transition-overlay"></div>
 
-  <!-- Three.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="script.js"></script>
-  <!-- Babel for in-browser JSX compilation -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- React + Framer Motion Projects Stacking Component -->
-  <script type="text/babel" data-type="module" src="projects-component.js"></script>
-
-</body>
-
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+    <!-- Babel for in-browser JSX compilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- React + Framer Motion Projects Stacking Component -->
+    <script
+      type="text/babel"
+      data-type="module"
+      src="projects-component.js"
+    ></script>
+  </body>
 </html>

@@ -1,4 +1,4 @@
-# SR_ DEV LAB v2.3
+# SR\_ DEV LAB v2.3
 
 Welcome to the source code for my personal developer portfolio and laboratory interface.
 
@@ -41,8 +41,9 @@ SR_DEV_LAB/
 ## 🏃‍♂️ Running Locally
 
 1. Clone this repository.
-2. Open `index.html` in your web browser. 
-   *(Note: For the best experience and to avoid CORS issues if you add external assets later, it is recommended to run this via a local development server like VS Code's "Live Server" extension).*
+2. Open `index.html` in your web browser.
+   _(Note: For the best experience and to avoid CORS issues if you add external assets later, it is recommended to run this via a local development server like VS Code's "Live Server" extension)._
 
 ---
-*Built by Satwik Raj — Computer Science & Engineering Student and Developer.*
+
+_Built by Satwik Raj — Computer Science & Engineering Student and Developer._
