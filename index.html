@@ -19,9 +19,6 @@
 
 <body>
 
-  <!-- ── SCROLL PROGRESS ────────────────────────── -->
-  <div class="scroll-progress" id="scrollProgress"></div>
-
   <!-- ── THREE.JS CANVAS ─────────────────────────── -->
   <canvas id="bg-canvas"></canvas>
 
@@ -37,9 +34,18 @@
       <img src="assets/logo.png" alt="Satwik Raj Logo" class="nav-logo-img" />
     </div>
     <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation">
-      ☰
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="7" cy="7" r="3.5" />
+        <circle cx="17" cy="7" r="3.5" />
+        <circle cx="7" cy="17" r="3.5" />
+        <circle cx="17" cy="17" r="3.5" />
+      </svg>
     </button>
     <div class="nav-links" id="navLinks">
+      <div class="mobile-nav-brand">
+        <span class="name-line">SATWIK</span>
+        <span class="name-line accent">RAJ</span>
+      </div>
       <button class="nav-btn active" data-section="home" id="navHome">[ HOME ]</button>
       <button class="nav-btn" data-section="about" id="navAbout">[ ABOUT ]</button>
       <button class="nav-btn" data-section="skills" id="navSkills">[ SKILLS ]</button>
@@ -76,7 +82,6 @@
     <!-- ── HOME ─────────────────────────────── -->
     <section class="panel active" id="panel-home">
       <div class="panel-inner home-inner">
-        <p class="pre-title">/// INITIALIZING PORTFOLIO ///</p>
         <h1 class="hero-name">
           <span class="name-line">SATWIK</span>
           <span class="name-line accent">RAJ</span>
@@ -231,13 +236,19 @@
           <!-- Cert 01 -->
           <div class="cert-row">
             <div class="cert-row-left">
-              <div class="cert-row-img-wrap" onclick="openCertLightbox('assets/agentic_ai_cert.jpg.jpeg')" title="Click to view full certificate">
+              <div class="cert-row-img-wrap" onclick="openCertLightbox('assets/agentic_ai_cert.jpg.jpeg')"
+                title="Click to view full certificate">
                 <img src="assets/agentic_ai_cert.jpg.jpeg" alt="Agentic AI Saksham Certificate" class="cert-row-img" />
                 <div class="cert-img-hover-hint">🔍 View Full</div>
               </div>
               <div class="proj-row-actions" style="margin-top: 1rem;">
                 <button onclick="openCertLightbox('assets/agentic_ai_cert.jpg.jpeg')" class="proj-action-btn">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
                   View Certificate
                 </button>
               </div>
@@ -249,7 +260,9 @@
                 <p class="cert-row-org">CAPABL &amp; RV INSTITUTE OF MANAGEMENT</p>
               </div>
               <p class="cert-row-desc">
-                Successfully participated in the two-day Agentic AI Saksham workshop — a collaborative initiative with RV Institute of Management and Capabl. The program offered deep insights into Generative AI, Agentic AI architectures, and contemporary AI technologies with hands-on exposure to real-world applications.
+                Successfully participated in the two-day Agentic AI Saksham workshop — a collaborative initiative with
+                RV Institute of Management and Capabl. The program offered deep insights into Generative AI, Agentic AI
+                architectures, and contemporary AI technologies with hands-on exposure to real-world applications.
               </p>
               <div class="proj-row-stack">
                 <p class="proj-stack-label">Topics Covered</p>

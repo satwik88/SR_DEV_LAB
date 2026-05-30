@@ -321,15 +321,12 @@ sectionOrder.forEach(name => {
 });
 
 /* ═══════════════════════════════════════════════════
-   SCROLL PROGRESS BAR
+   SCROLL HUD FADE
 ═══════════════════════════════════════════════════ */
-const progressBar = document.getElementById('scrollProgress');
 const hudCorners = document.querySelectorAll('.hud-corner');
 
 window.addEventListener('scroll', () => {
   const scrolled = window.scrollY;
-  const total    = document.body.scrollHeight - window.innerHeight;
-  if (progressBar) progressBar.style.width = (scrolled / total * 100) + '%';
   
   // Fade out HUD corners when scrolling down past 100px
   if (scrolled > 100) {
@@ -493,7 +490,8 @@ document.addEventListener('keydown', function(e) {
   const navLinks = document.getElementById('navLinks');
   
   if (hamburgerBtn && navLinks) {
-    hamburgerBtn.addEventListener('click', () => {
+    hamburgerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       navLinks.classList.toggle('active');
     });
 
@@ -503,6 +501,13 @@ document.addEventListener('keydown', function(e) {
       link.addEventListener('click', () => {
         navLinks.classList.remove('active');
       });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (navLinks.classList.contains('active') && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('active');
+      }
     });
   }
 })();
