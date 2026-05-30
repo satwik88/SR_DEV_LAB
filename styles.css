@@ -86,11 +86,30 @@ a {
 .vignette {
   position: fixed;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
-  background: radial-gradient(ellipse at center,
-      transparent 55%,
-      rgba(56, 62, 78, 0.15) 100%);
+  background: radial-gradient(circle at center,
+      transparent 50%,
+      rgba(0, 0, 0, 0.15) 100%);
+}
+
+/* --- TOP BLUR TRANSITION --- */
+.top-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  z-index: 15;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(244, 244, 245, 0.9) 0%, transparent 100%);
+  backdrop-filter: blur(12px);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+}
+
+[data-theme="dark"] .top-blur {
+  background: linear-gradient(to bottom, rgba(13, 13, 18, 0.9) 0%, transparent 100%);
 }
 
 /* --- HUD CORNERS --- */
@@ -209,19 +228,22 @@ a {
 /* --- MAIN NAV --- */
 .main-nav {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 3rem);
+  max-width: 1200px;
   z-index: 20;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: rgba(244, 244, 245, 0.85);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 0.5rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 0.5rem 2.5rem;
   white-space: nowrap;
-  box-shadow: 0 2px 20px rgba(165, 165, 165, 0.2);
+  box-shadow: 0 8px 32px rgba(165, 165, 165, 0.2);
   transition:
     background 0.35s ease,
     border-color 0.35s ease;
@@ -369,7 +391,7 @@ a {
 
 #panel-home {
   min-height: 100vh;
-  padding-top: 5rem;
+  padding-top: 8rem;
   padding-bottom: 4rem;
 }
 
