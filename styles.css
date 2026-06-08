@@ -41,7 +41,6 @@ html {
   scrollbar-width: none;
   -ms-overflow-style: none;
   overflow-x: hidden;
-  width: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -53,16 +52,9 @@ body {
   color: var(--text);
   font-family: var(--mono);
   overflow-x: hidden;
-  width: 100%;
-  position: relative;
   transition:
     background 0.35s ease,
     color 0.35s ease;
-}
-
-/* Visibility Utilities */
-.mobile-only {
-  display: none !important;
 }
 
 a {
@@ -1417,6 +1409,84 @@ a {
 }
 
 /* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+  .panel {
+    padding: 5rem 1.2rem 3rem;
+  }
+
+  .main-nav {
+    padding: 0.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .nav-brand {
+    justify-content: center;
+  }
+
+  .nav-links {
+    gap: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    font-size: 0.62rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .hud-corner {
+    display: none;
+  }
+
+  .about-grid,
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .proj-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .cert-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-modules {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .overlay-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .overlay-right {
+    display: none;
+  }
+
+  .name-line {
+    font-size: clamp(3rem, 18vw, 6rem);
+  }
+}
+
+@media (max-width: 500px) {
+  .about-modules {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 
 .proj-github-btn {
   display: inline-flex;
@@ -1458,6 +1528,106 @@ a {
 
 .mobile-nav-brand {
   display: none;
+}
+
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: flex;
+    order: 3;
+  }
+
+  .main-nav {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    top: 0.4rem;
+    padding: 0.35rem 0.8rem;
+    width: calc(100% - 1.5rem);
+  }
+
+  .nav-logo-img {
+    height: 2rem;
+  }
+
+  .nav-brand {
+    order: 1;
+    justify-content: flex-start;
+  }
+
+  .theme-toggle {
+    order: 2;
+    margin-left: auto;
+    margin-right: 0.5rem;
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  #navLinks {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 280px;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    flex-direction: column;
+    padding: 5.5rem 1.5rem 2rem;
+    gap: 1.2rem;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    z-index: -1;
+  }
+
+  [data-theme="dark"] #navLinks {
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+  }
+
+  #navLinks.active {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 0.9;
+    margin-bottom: 1rem;
+  }
+
+  .mobile-nav-brand .name-line {
+    font-family: var(--mono);
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .mobile-nav-brand .name-line.accent {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--purple);
+  }
+
+  .nav-btn {
+    font-size: 0.9rem;
+    text-align: left;
+    padding: 0.8rem 1rem;
+    width: 100%;
+    border-radius: 8px;
+    background: transparent;
+    border-bottom: none;
+  }
+
+  .nav-btn:hover {
+    background: rgba(165, 165, 165, 0.1);
+  }
+
+  .nav-btn.active {
+    background: rgba(101, 82, 208, 0.1);
+    color: var(--purple);
+  }
 }
 
 /* --- REACT STICKY STACKING PROJECTS SECTION --- */
@@ -1996,8 +2166,75 @@ a {
 }
 
 /* Responsive query for stacking */
+@media (max-width: 900px) {
+  .panel-projects-react {
+    padding: 5rem 1rem 6rem !important;
+    min-height: auto;
+  }
+
+  .react-projects-inner {
+    min-height: auto;
+  }
+
+  .react-projects-title-wrap {
+    margin-bottom: 3.5rem;
+  }
+
+  .card-sticky-container {
+    height: auto;
+    position: relative;
+    top: 0 !important;
+    margin-bottom: 2.5rem;
+  }
+
+  .react-project-card {
+    padding: 2rem;
+    border-radius: 40px;
+    gap: 1.5rem;
+  }
+
+  .card-top-row {
+    padding-bottom: 1rem;
+  }
+
+  .card-bottom-row {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+
+  .card-right-col {
+    gap: 1.5rem;
+  }
+
+  .card-bullets {
+    gap: 0.65rem;
+  }
+}
 
 /* --- MOBILE FIXES (<= 768px) --- */
+@media (max-width: 768px) {
+
+  /* Fix 2: Certifications stack vertically — image on top, text below */
+  .cert-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .cert-row-right {
+    padding-top: 0;
+  }
+
+  /* Fix 3: Reduce hero section bottom whitespace on mobile */
+  #panel-home {
+    padding-bottom: 1.5rem;
+    min-height: auto;
+  }
+
+  /* Fix 4: Dim 3D globe canvas on mobile */
+  #bg-canvas {
+    opacity: 0.15;
+  }
+}
 
 /* --- SITE FOOTER --- */
 .site-footer {
