@@ -80,6 +80,14 @@
 }
 
 @media (max-width: 768px) {
+  /* Visibility Utilities */
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-only {
+    display: block !important;
+  }
+
   .hamburger-btn {
     display: flex;
     order: 3;

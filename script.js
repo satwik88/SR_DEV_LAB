@@ -1,7 +1,7 @@
 /* --- THEME TOGGLE — dark / light mode --- */
 (function initTheme() {
   const root = document.documentElement;
-  const btn = document.getElementById("themeToggle");
+  const btns = document.querySelectorAll("#themeToggle, #themeToggle-mobile");
 
   const BG_LIGHT = 0xf4f4f5;
   const BG_DARK = 0x0d0d12;
@@ -27,8 +27,8 @@
   /* --- Circle-wipe transition --- */
   let animating = false;
 
-  if (btn) {
-    btn.addEventListener("click", () => {
+  if (btns.length > 0) {
+    btns.forEach(btn => btn.addEventListener("click", () => {
       if (animating) return;
 
       // Get overlay lazily so it's always found regardless of DOM order
@@ -77,7 +77,7 @@
         overlay.style.clipPath = "circle(0% at 50% 50%)";
         animating = false;
       }, 290);
-    });
+    }));
   }
 })();
 
@@ -283,11 +283,10 @@
 
 /* --- HUD CLOCK --- */
 (function clock() {
-  const el = document.getElementById("hudTime");
+  const els = document.querySelectorAll("#hudTime, #hudTime-mobile");
   setInterval(() => {
-    if (!el) return;
     const d = new Date();
-    el.textContent = d.toTimeString().slice(0, 8);
+    els.forEach(el => el.textContent = d.toTimeString().slice(0, 8));
   }, 1000);
 })();
 
@@ -304,11 +303,12 @@
   let pi = 0,
     ci = 0,
     del = false;
-  const el = document.getElementById("typedRole");
-  if (!el) return;
+  const els = document.querySelectorAll("#typedRole, #typedRole-mobile");
+  if (els.length === 0) return;
   function tick() {
     const cur = phrases[pi];
-    el.textContent = del ? cur.slice(0, --ci) : cur.slice(0, ++ci);
+    const text = del ? cur.slice(0, --ci) : cur.slice(0, ++ci);
+    els.forEach(el => el.textContent = text);
     if (!del && ci === cur.length) {
       del = true;
       setTimeout(tick, 1800);
@@ -334,8 +334,10 @@ const sectionOrder = [
 ];
 
 function switchSection(name) {
-  const target = document.getElementById("panel-" + name);
-  if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  const targetDesktop = document.getElementById("panel-" + name);
+  const targetMobile = document.getElementById("panel-" + name + "-mobile");
+  if (targetDesktop && targetDesktop.offsetParent !== null) targetDesktop.scrollIntoView({ behavior: "smooth", block: "start" });
+  else if (targetMobile && targetMobile.offsetParent !== null) targetMobile.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 // Nav button clicks → smooth scroll
@@ -348,25 +350,24 @@ const navObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        const name = entry.target.id.replace("panel-", "");
+        const name = entry.target.id.replace("panel-", "").replace("-mobile", "");
         document
           .querySelectorAll(".nav-btn")
           .forEach((b) => b.classList.remove("active"));
-        const active = document.querySelector(
-          `.nav-btn[data-section="${name}"]`,
-        );
-        if (active) active.classList.add("active");
+        document.querySelectorAll(`.nav-btn[data-section="${name}"]`).forEach(active => active.classList.add("active"));
         // Trigger skill bar animation when skills comes into view
         if (name === "skills") animateBars();
       }
-    });
+    }));
   },
   { threshold: 0.4 },
 );
 
 sectionOrder.forEach((name) => {
   const el = document.getElementById("panel-" + name);
+  const elMobile = document.getElementById("panel-" + name + "-mobile");
   if (el) navObserver.observe(el);
+  if (elMobile) navObserver.observe(elMobile);
 });
 
 /* --- SCROLL HUD FADE --- */
@@ -395,7 +396,7 @@ const revealObserver = new IntersectionObserver(
         entry.target.classList.add("revealed");
         revealObserver.unobserve(entry.target);
       }
-    });
+    }));
   },
   { threshold: 0.12 },
 );
@@ -405,7 +406,9 @@ document
   .forEach((el) => revealObserver.observe(el));
 // Immediately reveal the home section
 const homeInner = document.querySelector("#panel-home .panel-inner");
+const homeInnerMobile = document.querySelector("#panel-home-mobile .panel-inner");
 if (homeInner) homeInner.classList.add("revealed");
+if (homeInnerMobile) homeInnerMobile.classList.add("revealed");
 
 /* --- SKILL BAR ANIMATION --- */
 function animateBars() {
@@ -489,13 +492,13 @@ document.addEventListener("keydown", (e) => {
 });
 
 /* --- CONTACT FORM --- */
-document.getElementById("contactForm").addEventListener("submit", function (e) {
+document.querySelectorAll("#contactForm, #contactForm-mobile").forEach(form => form.addEventListener("submit", function (e) {
   e.preventDefault();
-  const btn = document.getElementById("formSubmitBtn");
-  const note = document.getElementById("formNote");
-  const name = document.getElementById("formName").value.trim();
-  const email = document.getElementById("formEmail").value.trim();
-  const msg = document.getElementById("formMessage").value.trim();
+  const btn = this.querySelector("[id^=formSubmitBtn]");
+  const note = this.querySelector("[id^=formNote]");
+  const name = this.querySelector("[id^=formName]").value.trim();
+  const email = this.querySelector("[id^=formEmail]").value.trim();
+  const msg = this.querySelector("[id^=formMessage]").value.trim();
 
   btn.textContent = "[ TRANSMITTING... ]";
   btn.disabled = true;
@@ -513,7 +516,7 @@ document.getElementById("contactForm").addEventListener("submit", function (e) {
       note.className = "form-note";
     }, 5000);
   }, 800);
-});
+}));
 
 /* --- CERT LIGHTBOX --- */
 function openCertLightbox(src) {
@@ -538,8 +541,8 @@ document.addEventListener("keydown", function (e) {
 
 /* --- MOBILE HAMBURGER MENU --- */
 (function initHamburger() {
-  const hamburgerBtn = document.getElementById("hamburgerBtn");
-  const navLinks = document.getElementById("navLinks");
+  const hamburgerBtn = document.getElementById("hamburgerBtn-mobile") || document.getElementById("hamburgerBtn");
+  const navLinks = document.getElementById("navLinks-mobile") || document.getElementById("navLinks");
 
   if (hamburgerBtn && navLinks) {
     hamburgerBtn.addEventListener("click", (e) => {
@@ -563,6 +566,6 @@ document.addEventListener("keydown", function (e) {
       ) {
         navLinks.classList.remove("active");
       }
-    });
+    }));
   }
 })();

@@ -245,12 +245,23 @@ const ProjectsSection = () => {
 };
 
 // Mount the React component
-const container = document.getElementById("react-projects-root");
-if (container) {
-  const root = ReactDOM.createRoot(container);
-  root.render(
+// Render to both Desktop and Mobile React roots
+const rootNodeDesktop = document.getElementById("react-projects-root");
+if (rootNodeDesktop) {
+  const rootDesktop = ReactDOM.createRoot(rootNodeDesktop);
+  rootDesktop.render(
     <React.StrictMode>
       <ProjectsSection />
-    </React.StrictMode>,
+    </React.StrictMode>
+  );
+}
+
+const rootNodeMobile = document.getElementById("react-projects-root-mobile");
+if (rootNodeMobile) {
+  const rootMobile = ReactDOM.createRoot(rootNodeMobile);
+  rootMobile.render(
+    <React.StrictMode>
+      <ProjectsSection />
+    </React.StrictMode>
   );
 }

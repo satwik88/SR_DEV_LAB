@@ -60,6 +60,11 @@ body {
     color 0.35s ease;
 }
 
+/* Visibility Utilities */
+.mobile-only {
+  display: none !important;
+}
+
 a {
   text-decoration: none;
   color: inherit;
