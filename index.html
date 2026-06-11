@@ -14,7 +14,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="stylesheet" href="styles.css?v=9" />
+  <link rel="icon" type="image/png" href="./assets/logo.png" />
 </head>
 
 <body>
@@ -43,30 +44,6 @@
         <circle cx="17" cy="17" r="3.5" />
       </svg>
     </button>
-    <div class="nav-links" id="navLinks">
-      <div class="mobile-nav-brand">
-        <span class="name-line">SATWIK</span>
-        <span class="name-line accent">RAJ</span>
-      </div>
-      <button class="nav-btn active" data-section="home" id="navHome">
-        [ HOME ]
-      </button>
-      <button class="nav-btn" data-section="about" id="navAbout">
-        [ ABOUT ]
-      </button>
-      <button class="nav-btn" data-section="skills" id="navSkills">
-        [ SKILLS ]
-      </button>
-      <button class="nav-btn" data-section="projects" id="navProjects">
-        [ PROJECTS ]
-      </button>
-      <button class="nav-btn" data-section="certs" id="navCerts">
-        [ CERTIFICATIONS ]
-      </button>
-      <button class="nav-btn" data-section="contact" id="navContact">
-        [ CONTACT ]
-      </button>
-    </div>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
       <!-- Moon: shown in light mode -->
       <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -87,6 +64,35 @@
       </svg>
     </button>
   </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <!-- Navigation Links (Desktop Inline / Mobile Drawer) -->
+  <div class="nav-links" id="navLinks">
+    <div class="mobile-nav-brand">
+      <span class="name-line">SATWIK</span>
+      <span class="name-line accent">RAJ</span>
+    </div>
+    <button class="nav-btn active" data-section="home" id="navHome">
+      [ HOME ]
+    </button>
+    <button class="nav-btn" data-section="about" id="navAbout">
+      [ ABOUT ]
+    </button>
+    <button class="nav-btn" data-section="skills" id="navSkills">
+      [ SKILLS ]
+    </button>
+    <button class="nav-btn" data-section="projects" id="navProjects">
+      [ PROJECTS ]
+    </button>
+    <button class="nav-btn" data-section="certs" id="navCerts">
+      [ CERTIFICATIONS ]
+    </button>
+    <button class="nav-btn" data-section="contact" id="navContact">
+      [ CONTACT ]
+    </button>
+  </div>
 
   <!-- ═══════════════════════════════════════════
     PANEL CONTAINER
@@ -420,11 +426,9 @@
 
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="script.js"></script>
-  <!-- Babel for in-browser JSX compilation -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- React + Framer Motion Projects Stacking Component -->
-  <script type="text/babel" data-type="module" src="projects-component.js"></script>
+  <script src="script.js?v=2"></script>
+  <!-- React + Framer Motion Projects Stacking Component (plain ES module, no Babel) -->
+  <script type="module" src="projects-component.js"></script>
 </body>
 
 </html>

@@ -358,7 +358,7 @@ const navObserver = new IntersectionObserver(
         // Trigger skill bar animation when skills comes into view
         if (name === "skills") animateBars();
       }
-    }));
+    });
   },
   { threshold: 0.4 },
 );
@@ -396,7 +396,7 @@ const revealObserver = new IntersectionObserver(
         entry.target.classList.add("revealed");
         revealObserver.unobserve(entry.target);
       }
-    }));
+    });
   },
   { threshold: 0.12 },
 );
@@ -543,29 +543,48 @@ document.addEventListener("keydown", function (e) {
 (function initHamburger() {
   const hamburgerBtn = document.getElementById("hamburgerBtn-mobile") || document.getElementById("hamburgerBtn");
   const navLinks = document.getElementById("navLinks-mobile") || document.getElementById("navLinks");
+  const menuOverlay = document.getElementById("menuOverlay");
 
   if (hamburgerBtn && navLinks) {
     hamburgerBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      navLinks.classList.toggle("active");
+      const isOpen = navLinks.classList.toggle("active");
+      if (menuOverlay) menuOverlay.classList.toggle("active", isOpen);
+      // Prevent body scroll/overflow while drawer is open
+      document.body.style.overflow = isOpen ? "hidden" : "";
+      document.body.style.overflowX = isOpen ? "hidden" : "";
+      hamburgerBtn.setAttribute("aria-expanded", String(isOpen));
     });
 
-    // Close menu when a link is clicked
+    const closeMenu = () => {
+      navLinks.classList.remove("active");
+      if (menuOverlay) menuOverlay.classList.remove("active");
+      document.body.style.overflow = "";
+      document.body.style.overflowX = "";
+      hamburgerBtn.setAttribute("aria-expanded", "false");
+    };
+
+    // Close menu when a nav link is clicked
     const links = navLinks.querySelectorAll(".nav-btn");
     links.forEach((link) => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("active");
-      });
+      link.addEventListener("click", closeMenu);
     });
 
-    // Close menu when clicking outside
+    // Close menu when overlay is tapped
+    if (menuOverlay) {
+      menuOverlay.addEventListener("click", closeMenu);
+    }
+
+    // Close menu when clicking outside the drawer OR the hamburger button
     document.addEventListener("click", (e) => {
       if (
         navLinks.classList.contains("active") &&
-        !navLinks.contains(e.target)
+        !navLinks.contains(e.target) &&
+        !hamburgerBtn.contains(e.target)
       ) {
-        navLinks.classList.remove("active");
+        closeMenu();
       }
-    }));
+    });
   }
 })();
+
