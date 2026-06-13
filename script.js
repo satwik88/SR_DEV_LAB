@@ -140,7 +140,9 @@
 
   /* --- Central wireframe (Explodable) --- */
   let icoGeo = new THREE.IcosahedronGeometry(4, 1);
-  icoGeo = icoGeo.toNonIndexed(); // Separate triangles so they can break apart
+  if (icoGeo.index !== null) {
+    icoGeo = icoGeo.toNonIndexed(); // Separate triangles so they can break apart
+  }
 
   const icoMat = new THREE.MeshBasicMaterial({
     color: 0x6552d0,
