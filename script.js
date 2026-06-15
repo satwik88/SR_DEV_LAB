@@ -56,7 +56,7 @@
 
       /* Setup overlay — plain background, no icon */
       overlay.style.background = dark ? "#0d0d12" : "#f4f4f5";
-      overlay.innerHTML = "";
+      overlay.textContent = "";
 
       /* --- Expand from button → full screen (280ms) --- */
       overlay.style.transition = "none";
@@ -482,21 +482,42 @@ function openProject(i) {
   document.getElementById("overlayImg").alt = p.title;
 
   const techEl = document.getElementById("overlayTech");
-  techEl.innerHTML = p.tech.map((t) => `<span>${t}</span>`).join("");
+  techEl.textContent = "";
+  p.tech.forEach((t) => {
+    const span = document.createElement("span");
+    span.textContent = t;
+    techEl.appendChild(span);
+  });
 
   const linksEl = document.getElementById("overlayLinks");
-  linksEl.innerHTML = `
-    <a href="${p.github}" target="_blank" class="action-btn">
-      <span class="btn-bracket">[</span> GITHUB <span class="btn-bracket">]</span>
-    </a>
-    ${
-      p.demo
-        ? `<a href="${p.demo}" target="_blank" class="action-btn action-ghost">
-      <span class="btn-bracket">[</span> LIVE DEMO <span class="btn-bracket">]</span>
-    </a>`
-        : ""
-    }
-  `;
+  linksEl.textContent = "";
+  
+  const createBracket = (text) => {
+    const span = document.createElement("span");
+    span.className = "btn-bracket";
+    span.textContent = text;
+    return span;
+  };
+
+  const githubLink = document.createElement("a");
+  githubLink.href = p.github;
+  githubLink.target = "_blank";
+  githubLink.className = "action-btn";
+  githubLink.appendChild(createBracket("["));
+  githubLink.appendChild(document.createTextNode(" GITHUB "));
+  githubLink.appendChild(createBracket("]"));
+  linksEl.appendChild(githubLink);
+
+  if (p.demo) {
+    const demoLink = document.createElement("a");
+    demoLink.href = p.demo;
+    demoLink.target = "_blank";
+    demoLink.className = "action-btn action-ghost";
+    demoLink.appendChild(createBracket("["));
+    demoLink.appendChild(document.createTextNode(" LIVE DEMO "));
+    demoLink.appendChild(createBracket("]"));
+    linksEl.appendChild(demoLink);
+  }
 
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
@@ -510,6 +531,42 @@ function closeProject() {
 // Close on escape
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeProject();
+});
+
+/* --- INLINE EVENT HANDLERS REPLACEMENT --- */
+document.addEventListener("DOMContentLoaded", () => {
+  const navBrandBtn = document.getElementById("navBrandBtn");
+  if (navBrandBtn) {
+    navBrandBtn.addEventListener("click", () => switchSection("home"));
+    navBrandBtn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        switchSection("home");
+      }
+    });
+  }
+
+  const exploreBtn = document.getElementById("exploreBtn");
+  if (exploreBtn) exploreBtn.addEventListener("click", () => switchSection("projects"));
+
+  document.querySelectorAll(".cert-lightbox-trigger").forEach((el) => {
+    el.addEventListener("click", () => openCertLightbox(el.getAttribute("data-cert")));
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openCertLightbox(el.getAttribute("data-cert"));
+      }
+    });
+  });
+
+  const certLightbox = document.getElementById("certLightbox");
+  if (certLightbox) certLightbox.addEventListener("click", closeCertLightbox);
+
+  const certLightboxCloseBtn = document.getElementById("certLightboxCloseBtn");
+  if (certLightboxCloseBtn) certLightboxCloseBtn.addEventListener("click", closeCertLightbox);
+
+  const closeOverlayBtn = document.getElementById("closeOverlayBtn");
+  if (closeOverlayBtn) closeOverlayBtn.addEventListener("click", closeProject);
 });
 
 /* --- CONTACT FORM --- */
@@ -526,8 +583,7 @@ document.querySelectorAll("#contactForm, #contactForm-mobile").forEach(form => f
 
   setTimeout(() => {
     window.location.href = `mailto:satwikraj707@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(msg + "\n\nFrom: " + email)}`;
-    btn.innerHTML =
-      '<span class="btn-bracket">[</span> TRANSMIT MESSAGE <span class="btn-bracket">]</span>';
+    btn.textContent = "[ TRANSMIT MESSAGE ]";
     btn.disabled = false;
     note.textContent = "// TRANSMISSION SUCCESSFUL — email client opened.";
     note.className = "form-note success";

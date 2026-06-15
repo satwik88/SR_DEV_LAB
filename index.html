@@ -64,6 +64,7 @@
   <!-- Styles & Favicon -->
   <link rel="stylesheet" href="styles.css?v=40" />
   <link rel="icon" type="image/png" href="./assets/logo.png" />
+  <link rel="apple-touch-icon" href="/assets/logo.png" />
 
   <!-- GSAP for Staggered Menu Animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -84,7 +85,7 @@
     MAIN NAV
   ═══════════════════════════════════════════ -->
   <nav class="main-nav" id="mainNav">
-    <div class="nav-brand" style="cursor: pointer" onclick="switchSection('home')" title="Go to Home">
+    <div class="nav-brand cursor-pointer" id="navBrandBtn" role="button" tabindex="0" title="Go to Home" aria-label="Go to Home">
       <img src="assets/logo.png" alt="Satwik Raj Logo" class="nav-logo-img" />
     </div>
     <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation">
@@ -217,7 +218,7 @@
           IoT systems, web apps, and Python automation.
         </p>
         <div class="hero-actions">
-          <button class="action-btn" onclick="switchSection('projects')" id="exploreBtn">
+          <button class="action-btn" id="exploreBtn">
             <span class="btn-bracket">[</span> EXPLORE PROJECTS
             <span class="btn-bracket">]</span>
           </button>
@@ -380,15 +381,13 @@
           <!-- Cert 01 -->
           <div class="cert-row">
             <div class="cert-row-left">
-              <div class="cert-row-img-wrap" onclick="openCertLightbox('assets/agentic_ai_cert.jpg.jpeg')"
-                title="Click to view full certificate">
+              <div class="cert-row-img-wrap cert-lightbox-trigger" data-cert="assets/agentic_ai_cert.jpg.jpeg" role="button" tabindex="0"
+                title="Click to view full certificate" aria-label="View full certificate">
                 <img src="assets/agentic_ai_cert.jpg.jpeg" alt="Agentic AI Saksham Certificate issued by CAPABL and RV Institute of Management" class="cert-row-img" loading="lazy" />
                 <div class="cert-img-hover-hint">🔍 View Full</div>
               </div>
-              <div class="proj-row-actions" style="margin-top: 1rem">
-                <button onclick="
-                      openCertLightbox('assets/agentic_ai_cert.jpg.jpeg')
-                    " class="proj-action-btn">
+              <div class="proj-row-actions mt-4">
+                <button class="proj-action-btn cert-lightbox-trigger" data-cert="assets/agentic_ai_cert.jpg.jpeg">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="3" width="18" height="18" rx="2"></rect>
@@ -432,8 +431,8 @@
     </section>
 
     <!-- ── CERT LIGHTBOX ─────────────────────────────── -->
-    <div id="certLightbox" class="cert-lightbox" onclick="closeCertLightbox(event)">
-      <button class="cert-lightbox-close" onclick="closeCertLightbox()">
+    <div id="certLightbox" class="cert-lightbox">
+      <button class="cert-lightbox-close" id="certLightboxCloseBtn" aria-label="Close certificate viewer">
         ← BACK
       </button>
       <img id="certLightboxImg" src="" alt="" class="cert-lightbox-img" />
@@ -530,7 +529,7 @@
         <img class="overlay-img" id="overlayImg" src="" alt="" />
       </div>
     </div>
-    <button class="close-btn" onclick="closeProject()" id="closeOverlayBtn">
+    <button class="close-btn" id="closeOverlayBtn" aria-label="Close project details">
       ← BACK
     </button>
   </div>
