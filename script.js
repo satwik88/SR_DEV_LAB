@@ -629,6 +629,14 @@ document.addEventListener("keydown", function (e) {
     toggleMenu();
   });
 
+  const smPanelClose = document.getElementById("smPanelClose");
+  if (smPanelClose) {
+    smPanelClose.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeMenu();
+    });
+  }
+
   // Close when clicking nav links
   const navLinks = panel.querySelectorAll(".sm-panel-item");
   navLinks.forEach(link => {

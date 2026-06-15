@@ -62,7 +62,7 @@
     rel="stylesheet" />
 
   <!-- Styles & Favicon -->
-  <link rel="stylesheet" href="styles.css?v=39" />
+  <link rel="stylesheet" href="styles.css?v=40" />
   <link rel="icon" type="image/png" href="./assets/logo.png" />
 
   <!-- GSAP for Staggered Menu Animations -->
@@ -126,6 +126,27 @@
   </div>
 
   <aside id="staggeredPanel" class="staggered-menu-panel">
+    <div class="sm-panel-header">
+      <button class="theme-toggle" id="themeToggle-mobile" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
+        <!-- Moon: shown in light mode -->
+        <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" />
+        </svg>
+        <!-- Sun: shown in dark mode -->
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="4.5" fill="currentColor" />
+          <line x1="12" y1="2" x2="12" y2="5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <line x1="12" y1="18.5" x2="12" y2="22" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <line x1="2" y1="12" x2="5.5" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <line x1="18.5" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <line x1="4.93" y1="4.93" x2="7.17" y2="7.17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <line x1="16.83" y1="16.83" x2="19.07" y2="19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <line x1="19.07" y1="4.93" x2="16.83" y2="7.17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <line x1="7.17" y1="16.83" x2="4.93" y2="19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+      <button class="sm-panel-close" id="smPanelClose" aria-label="Close menu">&times;</button>
+    </div>
     <ul class="sm-panel-list">
       <li class="sm-panel-itemWrap"><a href="#home" class="sm-panel-item" data-section="home"><span class="sm-panel-itemLabel">Home</span></a></li>
       <li class="sm-panel-itemWrap"><a href="#about" class="sm-panel-item" data-section="about"><span class="sm-panel-itemLabel">About</span></a></li>
