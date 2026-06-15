@@ -1,3 +1,4 @@
+import { WebGLRenderer, Scene, PerspectiveCamera, BufferGeometry, BufferAttribute, PointsMaterial, Points, IcosahedronGeometry, MeshBasicMaterial, Mesh, SphereGeometry, TorusGeometry, Vector2, Raycaster } from 'three';
 /* --- THEME TOGGLE — dark / light mode --- */
 (function initTheme() {
   const root = document.documentElement;
@@ -81,12 +82,12 @@
   }
 })();
 
-/* --- THREE.JS PARTICLE BACKGROUND --- */
+/* --- JS PARTICLE BACKGROUND --- */
 function initThree() {
-  if (typeof THREE === "undefined") return;
+  
   const canvas = document.getElementById("bg-canvas");
   if (!canvas) return;
-  const renderer = new THREE.WebGLRenderer({
+  const renderer = new WebGLRenderer({
     canvas,
     antialias: true,
     alpha: true,
@@ -100,8 +101,8 @@ function initThree() {
   // Apply current theme immediately (in case theme was already set)
   if (window.__isDark && window.__isDark()) renderer.setClearColor(0x0d0d12, 1);
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
+  const scene = new Scene();
+  const camera = new PerspectiveCamera(
     60,
     window.innerWidth / window.innerHeight,
     0.1,
@@ -111,7 +112,7 @@ function initThree() {
 
   /* --- Particle field --- */
   const COUNT = 700;
-  const geo = new THREE.BufferGeometry();
+  const geo = new BufferGeometry();
   const pos = new Float32Array(COUNT * 3);
   const col = new Float32Array(COUNT * 3);
   const sizes = new Float32Array(COUNT);
@@ -126,39 +127,39 @@ function initThree() {
     col[i * 3 + 2] = t > 0.5 ? 0.815 : 0.647; // purple b (#d0) or grey b (#a5)
     sizes[i] = Math.random() * 1.5 + 0.3;
   }
-  geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-  geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
-  geo.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
+  geo.setAttribute("position", new BufferAttribute(pos, 3));
+  geo.setAttribute("color", new BufferAttribute(col, 3));
+  geo.setAttribute("size", new BufferAttribute(sizes, 1));
 
-  const mat = new THREE.PointsMaterial({
+  const mat = new PointsMaterial({
     size: 0.3,
     vertexColors: true,
     transparent: true,
     opacity: 0.5,
     sizeAttenuation: true,
   });
-  const particles = new THREE.Points(geo, mat);
+  const particles = new Points(geo, mat);
   scene.add(particles);
 
   /* --- Central wireframe (Explodable) --- */
-  let icoGeo = new THREE.IcosahedronGeometry(4, 0);
+  let icoGeo = new IcosahedronGeometry(4, 0);
   if (icoGeo.index !== null) {
     icoGeo = icoGeo.toNonIndexed(); // Separate triangles so they can break apart
   }
 
-  const icoMat = new THREE.MeshBasicMaterial({
+  const icoMat = new MeshBasicMaterial({
     color: 0x6552d0,
     wireframe: true,
     transparent: true,
     opacity: 0.15,
   });
-  const ico = new THREE.Mesh(icoGeo, icoMat);
+  const ico = new Mesh(icoGeo, icoMat);
   scene.add(ico);
 
   // Invisible hit-box for stable raycasting (prevents jitter when geometry expands)
-  const hitGeo = new THREE.SphereGeometry(5, 16, 16);
-  const hitMat = new THREE.MeshBasicMaterial({ visible: false });
-  const hitMesh = new THREE.Mesh(hitGeo, hitMat);
+  const hitGeo = new SphereGeometry(5, 16, 16);
+  const hitMat = new MeshBasicMaterial({ visible: false });
+  const hitMesh = new Mesh(hitGeo, hitMat);
   ico.add(hitMesh);
 
   // Setup explosion targets
@@ -192,20 +193,20 @@ function initThree() {
   }
 
   /* --- Orbit ring --- */
-  const ringGeo = new THREE.TorusGeometry(6, 0.015, 2, 40);
-  const ringMat = new THREE.MeshBasicMaterial({
+  const ringGeo = new TorusGeometry(6, 0.015, 2, 40);
+  const ringMat = new MeshBasicMaterial({
     color: 0xa5a5a5,
     transparent: true,
     opacity: 0.4,
   });
-  const ring = new THREE.Mesh(ringGeo, ringMat);
+  const ring = new Mesh(ringGeo, ringMat);
   ring.rotation.x = Math.PI / 2.5;
   scene.add(ring);
 
   /* --- Mouse tracking & Raycaster --- */
   const mouse = { x: 0, y: 0 };
-  const rayMouse = new THREE.Vector2(-999, -999);
-  const raycaster = new THREE.Raycaster();
+  const rayMouse = new Vector2(-999, -999);
+  const raycaster = new Raycaster();
   let explodeProgress = 0;
 
   document.addEventListener("mousemove", (e) => {
