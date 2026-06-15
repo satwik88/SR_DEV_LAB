@@ -544,6 +544,18 @@ a {
   display: none;
 }
 
+/* Staggered panel elements — hidden on desktop by default */
+.staggered-menu-panel,
+.sm-prelayers,
+.menu-overlay {
+  display: none;
+}
+
+/* sm-panel-header hidden by default (only shown on mobile) */
+.sm-panel-header {
+  display: none;
+}
+
 /* ── 6. LAYOUT & PANELS ───────────────────────────────────── */
 .panel-container {
   position: relative;
@@ -2164,12 +2176,16 @@ a {
   }
 
   .main-nav {
-    background: transparent !important;
-    border: none !important;
-    backdrop-filter: none !important;
-    box-shadow: none !important;
-    pointer-events: none;
-    z-index: 102;
+    display: none !important;
+  }
+
+  .staggered-menu-panel,
+  .sm-prelayers,
+  .menu-overlay {
+    display: flex;
+  }
+  .menu-overlay {
+    display: block;
   }
 
   .nav-brand, .theme-toggle {
@@ -2178,7 +2194,7 @@ a {
 
   /* Header inside staggered panel */
   .sm-panel-header {
-    display: flex;
+    display: flex !important;
     justify-content: flex-end;
     align-items: center;
     gap: 1.5rem;
