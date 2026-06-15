@@ -502,7 +502,35 @@ a {
   padding: 0.2rem;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
+  z-index: 101; /* Keep above staggered panel */
 }
+
+.hamburger-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.hamburger-svg {
+  transition: transform 0.5s cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+.hb-dot {
+  transition: cx 0.5s cubic-bezier(0.87, 0, 0.13, 1), cy 0.5s cubic-bezier(0.87, 0, 0.13, 1);
+  transform-origin: center;
+}
+
+/* Open State */
+.hamburger-btn.open .hamburger-svg {
+  transform: rotate(90deg);
+}
+.hamburger-btn.open .hb-dot-1 { cx: 12; cy: 12; transform: translate(-5px, -5px); }
+.hamburger-btn.open .hb-dot-2 { cx: 12; cy: 12; transform: translate(5px, -5px); }
+.hamburger-btn.open .hb-dot-3 { cx: 12; cy: 12; transform: translate(-5px, 5px); }
+.hamburger-btn.open .hb-dot-4 { cx: 12; cy: 12; transform: translate(5px, 5px); }
 
 /* Mobile brand inside drawer — hidden on desktop */
 .mobile-nav-brand {
@@ -1241,6 +1269,31 @@ a {
   border-color: var(--purple);
   background: rgba(101, 82, 208, 0.08);
   transform: translateX(-3px);
+}
+
+.nav-links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-link-item {
+  margin: 1.5rem 0;
+  overflow: hidden;
+}
+
+.nav-link-item a {
+  display: block;
+  font-size: clamp(2rem, 8vw, 4rem);
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-overlay.open .nav-link-item a {
+  transform: translateY(0);
 }
 
 /* ── 12. PROJECTS — React Stacking Cards ──────────────────── */
@@ -2099,26 +2152,7 @@ a {
     order: 3;
   }
 
-  .menu-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    z-index: 98;
-    transition: opacity 0.3s ease;
-    opacity: 0;
-  }
 
-  .menu-overlay.active {
-    display: block;
-    opacity: 1;
-    pointer-events: auto;
-  }
 
   .main-nav {
     flex-direction: row;
@@ -2152,85 +2186,118 @@ a {
     height: 2.2rem;
   }
 
-  /* Sidebar drawer — hidden off-screen using transform + visibility.
-     Using visibility:hidden (not display:none) so CSS transitions still work.
-     transform:translateX(100%) moves it fully off the right edge.
-     The combination prevents it from painting or receiving clicks. */
-  #navLinks {
-    display: flex;
+  .menu-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 98;
+    opacity: 0;
+    pointer-events: none;
+    clip-path: inset(0 0 0 100%);
+  }
+
+  /* ── Staggered Menu Panel ── */
+  .staggered-menu-panel {
     position: fixed;
     top: 0;
     right: 0;
-    height: 100vh;
     width: min(280px, 80vw);
-    background: var(--surface);
+    height: 100vh;
+    background: rgba(244, 244, 245, 0.95);
+    backdrop-filter: blur(20px);
     border-left: 1px solid var(--border);
     border-radius: 32px 0 0 32px;
-    flex-direction: column;
-    padding: 5.5rem 1.5rem 2rem;
-    gap: 1.2rem;
-    filter: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    /* Hidden state: moved off-screen + invisible + non-interactive */
-    transform: translateX(100%);
-    visibility: hidden;
-    pointer-events: none;
-    transition:
-      transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-      visibility 0s linear 0.4s;
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
     z-index: 100;
-    overflow-y: auto;
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    transform: translateX(100%); /* Hidden initially */
+    pointer-events: none;
   }
 
-  [data-theme="dark"] #navLinks {
+  [data-theme="dark"] .staggered-menu-panel {
+    background: rgba(13, 13, 18, 0.95);
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
   }
 
-  /* Open state: slide in, make visible and interactive immediately */
-  #navLinks.active {
-    transform: translateX(0);
-    visibility: visible;
+  /* Make panel pointer-events: auto when active class is added by JS, although GSAP handles display/pointer events often */
+  .staggered-menu-panel.active {
     pointer-events: auto;
-    transition:
-      transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-      visibility 0s linear 0s;
   }
 
-  .mobile-nav-brand {
+  /* List of items */
+  .sm-panel-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 4rem 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    line-height: 0.9;
-    margin-bottom: 1rem;
+    justify-content: space-evenly;
+    flex-grow: 1;
   }
 
-  .mobile-nav-brand .name-line {
+  .sm-panel-itemWrap {
+    overflow: hidden; /* For the slide-up reveal */
+    border-bottom: 1px solid var(--purple);
+    padding-bottom: 0.5rem;
+  }
+
+  .sm-panel-item {
+    display: block;
+    text-decoration: none;
     font-family: var(--mono);
-    font-size: 2.2rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text);
-  }
-
-  .mobile-nav-brand .name-line.accent {
-    color: transparent;
-    -webkit-text-stroke: 1.5px var(--purple);
-  }
-
-  .nav-btn {
     font-size: 0.9rem;
-    text-align: left;
-    padding: 0.8rem 1rem;
-    width: 100%;
-    border-radius: 8px;
-    background: transparent;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    color: var(--text);
+    text-transform: uppercase;
   }
 
-  .nav-btn:hover {
-    background: rgba(165, 165, 165, 0.1);
+  .sm-panel-itemLabel {
+    display: block;
+    /* Will be translated and rotated by GSAP */
+    transform: translateY(100%) rotate(5deg);
+    opacity: 0;
+  }
+
+
+
+  /* Prelayers */
+  .sm-prelayers {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(280px, 80vw);
+    height: 100vh;
+    z-index: 99;
+    pointer-events: none;
+  }
+
+  .sm-prelayer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    border-radius: 32px 0 0 32px;
+    transform: translateX(100%);
+  }
+
+  .sm-prelayer-1 {
+    background: #6d44cc; /* Darker accent */
+  }
+
+  .sm-prelayer-2 {
+    background: var(--purple); /* Main accent */
   }
 
   .nav-btn.active {

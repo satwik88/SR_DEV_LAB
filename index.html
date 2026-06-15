@@ -62,8 +62,11 @@
     rel="stylesheet" />
 
   <!-- Styles & Favicon -->
-  <link rel="stylesheet" href="styles.css?v=22" />
+  <link rel="stylesheet" href="styles.css?v=33" />
   <link rel="icon" type="image/png" href="./assets/logo.png" />
+
+  <!-- GSAP for Staggered Menu Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 
 <body>
@@ -85,12 +88,14 @@
       <img src="assets/logo.png" alt="Satwik Raj Logo" class="nav-logo-img" />
     </div>
     <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="7" cy="7" r="3.5" />
-        <circle cx="17" cy="7" r="3.5" />
-        <circle cx="7" cy="17" r="3.5" />
-        <circle cx="17" cy="17" r="3.5" />
-      </svg>
+      <div class="hamburger-icon-wrap">
+        <svg class="hamburger-svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <circle class="hb-dot hb-dot-1" cx="7" cy="7" r="3.5" />
+          <circle class="hb-dot hb-dot-2" cx="17" cy="7" r="3.5" />
+          <circle class="hb-dot hb-dot-3" cx="7" cy="17" r="3.5" />
+          <circle class="hb-dot hb-dot-4" cx="17" cy="17" r="3.5" />
+        </svg>
+      </div>
     </button>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
       <!-- Moon: shown in light mode -->
@@ -115,6 +120,22 @@
 
   <!-- Mobile Menu Overlay -->
   <div class="menu-overlay" id="menuOverlay"></div>
+
+  <!-- Mobile Menu Prelayers & Panel -->
+  <div class="sm-prelayers" aria-hidden="true">
+    <div class="sm-prelayer sm-prelayer-1"></div>
+    <div class="sm-prelayer sm-prelayer-2"></div>
+  </div>
+
+  <aside id="staggeredPanel" class="staggered-menu-panel">
+    <ul class="sm-panel-list">
+      <li class="sm-panel-itemWrap"><a href="#home" class="sm-panel-item" data-section="home"><span class="sm-panel-itemLabel">Home</span></a></li>
+      <li class="sm-panel-itemWrap"><a href="#about" class="sm-panel-item" data-section="about"><span class="sm-panel-itemLabel">About</span></a></li>
+      <li class="sm-panel-itemWrap"><a href="#skills" class="sm-panel-item" data-section="skills"><span class="sm-panel-itemLabel">Skills</span></a></li>
+      <li class="sm-panel-itemWrap"><a href="#projects" class="sm-panel-item" data-section="projects"><span class="sm-panel-itemLabel">Projects</span></a></li>
+      <li class="sm-panel-itemWrap"><a href="#certs" class="sm-panel-item" data-section="certs"><span class="sm-panel-itemLabel">Certifications</span></a></li>
+      <li class="sm-panel-itemWrap"><a href="#contact" class="sm-panel-item" data-section="contact"><span class="sm-panel-itemLabel">Contact</span></a></li>
+    </ul>  </aside>
 
   <!-- Navigation Links (Desktop Inline / Mobile Drawer) -->
   <div class="nav-links" id="navLinks">
@@ -500,7 +521,7 @@
 
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=33"></script>
   <!-- React + Framer Motion Projects Stacking Component (plain ES module, no Babel) -->
   <script type="module" src="projects-component.js"></script>
 </body>

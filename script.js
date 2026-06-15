@@ -561,51 +561,98 @@ document.addEventListener("keydown", function (e) {
 });
 
 /* --- MOBILE HAMBURGER MENU --- */
-(function initHamburger() {
-  const hamburgerBtn = document.getElementById("hamburgerBtn-mobile") || document.getElementById("hamburgerBtn");
-  const navLinks = document.getElementById("navLinks-mobile") || document.getElementById("navLinks");
+/* --- MOBILE HAMBURGER MENU (GSAP Staggered) --- */
+(function initStaggeredMenu() {
+  const hamburgerBtn = document.getElementById("hamburgerBtn");
+  const panel = document.getElementById("staggeredPanel");
   const menuOverlay = document.getElementById("menuOverlay");
+  
+  if (!hamburgerBtn || !panel || typeof gsap === "undefined") return;
 
-  if (hamburgerBtn && navLinks) {
-    hamburgerBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const isOpen = navLinks.classList.toggle("active");
-      if (menuOverlay) menuOverlay.classList.toggle("active", isOpen);
-      // Prevent body scroll/overflow while drawer is open
-      document.body.style.overflow = isOpen ? "hidden" : "";
-      document.body.style.overflowX = isOpen ? "hidden" : "";
-      hamburgerBtn.setAttribute("aria-expanded", String(isOpen));
-    });
+  let isMenuOpen = false;
 
-    const closeMenu = () => {
-      navLinks.classList.remove("active");
-      if (menuOverlay) menuOverlay.classList.remove("active");
-      document.body.style.overflow = "";
-      document.body.style.overflowX = "";
-      hamburgerBtn.setAttribute("aria-expanded", "false");
-    };
+  // Set initial states. Force x: 0 to override any CSS translateX parsed as pixels.
+  gsap.set(".sm-prelayer", { x: 0, xPercent: 100 });
+  gsap.set(".staggered-menu-panel", { x: 0, xPercent: 100 });
+  gsap.set(".sm-panel-itemLabel", { y: 100, rotation: 5, opacity: 0 });
+  gsap.set(".menu-overlay", { clipPath: "inset(0px 0px 0px 100%)", opacity: 0, pointerEvents: "none" });
 
-    // Close menu when a nav link is clicked
-    const links = navLinks.querySelectorAll(".nav-btn");
-    links.forEach((link) => {
-      link.addEventListener("click", closeMenu);
-    });
+  // Create GSAP Timeline
+  const tl = gsap.timeline({ paused: true, defaults: { ease: "power4.inOut" } });
 
-    // Close menu when overlay is tapped
-    if (menuOverlay) {
-      menuOverlay.addEventListener("click", closeMenu);
+  tl.to(".menu-overlay", {
+    clipPath: "inset(0px 0px 0px 0px)",
+    opacity: 1,
+    duration: 0.6,
+    pointerEvents: "auto",
+    ease: "power2.inOut"
+  })
+  .to(".sm-prelayer", {
+    xPercent: 0,
+    duration: 0.8,
+    stagger: 0.1
+  }, "-=0.4")
+  .to(".staggered-menu-panel", {
+    xPercent: 0,
+    duration: 0.8
+  }, "-=0.6")
+  .to(".sm-panel-itemLabel", {
+    y: 0,
+    rotation: 0,
+    opacity: 1,
+    duration: 0.6,
+    stagger: 0.05,
+    ease: "power4.out"
+  }, "-=0.4");
+
+  function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+    hamburgerBtn.classList.toggle("open", isMenuOpen);
+    panel.classList.toggle("active", isMenuOpen);
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    document.body.style.overflowX = isMenuOpen ? "hidden" : "";
+
+    if (isMenuOpen) {
+      tl.play();
+    } else {
+      tl.reverse();
     }
-
-    // Close menu when clicking outside the drawer OR the hamburger button
-    document.addEventListener("click", (e) => {
-      if (
-        navLinks.classList.contains("active") &&
-        !navLinks.contains(e.target) &&
-        !hamburgerBtn.contains(e.target)
-      ) {
-        closeMenu();
-      }
-    });
   }
+
+  function closeMenu() {
+    if (isMenuOpen) toggleMenu();
+  }
+
+  // Toggle on hamburger click
+  hamburgerBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  // Close when clicking nav links
+  const navLinks = panel.querySelectorAll(".sm-panel-item");
+  navLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute("href").substring(1);
+      closeMenu();
+      
+      // Delay scroll until menu animation mostly finishes
+      setTimeout(() => {
+        switchSection(targetId);
+      }, 600);
+    });
+  });
+
+  // Close when clicking outside panel or on overlay
+  if (menuOverlay) {
+    menuOverlay.addEventListener("click", closeMenu);
+  }
+
+  document.addEventListener("click", (e) => {
+    if (isMenuOpen && !panel.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+      closeMenu();
+    }
+  });
 })();
 
