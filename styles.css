@@ -516,6 +516,7 @@ a {
   position: relative;
   width: 24px;
   height: 24px;
+  transition: transform 350ms cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .dot {
@@ -524,18 +525,6 @@ a {
   height: 6px;
   border-radius: 50%;
   background-color: var(--text);
-  /* Default transitions for closing:
-     width, transform, opacity happen immediately (0s delay).
-     top, left, bottom, right happen with a 150ms delay.
-  */
-  transition: 
-    top 350ms cubic-bezier(0.65, 0, 0.35, 1) 150ms,
-    left 350ms cubic-bezier(0.65, 0, 0.35, 1) 150ms,
-    bottom 350ms cubic-bezier(0.65, 0, 0.35, 1) 150ms,
-    right 350ms cubic-bezier(0.65, 0, 0.35, 1) 150ms,
-    width 350ms cubic-bezier(0.65, 0, 0.35, 1) 0s,
-    transform 350ms cubic-bezier(0.65, 0, 0.35, 1) 0s,
-    opacity 350ms cubic-bezier(0.65, 0, 0.35, 1) 0s;
 }
 
 .dot-1 {
@@ -558,48 +547,9 @@ a {
   right: 3px;
 }
 
-/* Open State */
-.hamburger-btn.open .dot {
-  /* Transitions for opening:
-     top, left, bottom, right happen immediately (0s delay).
-     width, transform, opacity happen with a 150ms delay.
-  */
-  transition: 
-    top 350ms cubic-bezier(0.65, 0, 0.35, 1) 0s,
-    left 350ms cubic-bezier(0.65, 0, 0.35, 1) 0s,
-    bottom 350ms cubic-bezier(0.65, 0, 0.35, 1) 0s,
-    right 350ms cubic-bezier(0.65, 0, 0.35, 1) 0s,
-    width 350ms cubic-bezier(0.65, 0, 0.35, 1) 150ms,
-    transform 350ms cubic-bezier(0.65, 0, 0.35, 1) 150ms,
-    opacity 350ms cubic-bezier(0.65, 0, 0.35, 1) 150ms;
-}
-
-.hamburger-btn.open .dot-1 {
-  top: 9px;
-  left: 2px;
-  width: 20px;
-  transform: rotate(45deg);
-  border-radius: 3px;
-}
-
-.hamburger-btn.open .dot-2 {
-  top: 9px;
-  right: 9px;
-  opacity: 0;
-}
-
-.hamburger-btn.open .dot-3 {
-  bottom: 9px;
-  left: 9px;
-  opacity: 0;
-}
-
-.hamburger-btn.open .dot-4 {
-  bottom: 9px;
-  right: 2px;
-  width: 20px;
-  transform: rotate(-45deg);
-  border-radius: 3px;
+/* Open State: only rotate the grid, no morphing */
+.hamburger-btn.open .menu-icon-grid {
+  transform: rotate(90deg);
 }
 
 /* Mobile brand inside drawer — hidden on desktop */
