@@ -426,6 +426,7 @@ a {
 
 /* On mobile, hide pill animation elements */
 @media (max-width: 768px) {
+
   .nav-btn .pill-circle,
   .nav-btn .pill-dot {
     display: none !important;
@@ -507,10 +508,10 @@ a {
   padding: 0;
   align-items: center;
   justify-content: center;
-  z-index: 101; /* Keep above staggered panel */
+  z-index: 101;
+  /* Keep above staggered panel */
   width: 40px;
   height: 40px;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .menu-icon-grid {
@@ -523,20 +524,61 @@ a {
   position: absolute;
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+  border-radius: 5px;
   background-color: var(--text);
+  transform-origin: center;
+  transition: top 350ms cubic-bezier(0.65, 0, 0.35, 1),
+    bottom 350ms cubic-bezier(0.65, 0, 0.35, 1),
+    left 350ms cubic-bezier(0.65, 0, 0.35, 1),
+    right 350ms cubic-bezier(0.65, 0, 0.35, 1),
+    transform 350ms cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 350ms cubic-bezier(0.65, 0, 0.35, 1),
+    width 350ms cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.dot-1 { top: 0; left: 0; }
-.dot-2 { top: 0; right: 0; }
-.dot-3 { bottom: 0; left: 0; }
-.dot-4 { bottom: 0; right: 0; }
+/* Default state: 4 dots at corners (using top/left for smooth animation) */
+.dot-1 {
+  top: 0;
+  left: 0;
+}
 
-/* Hide hamburger button completely when panel is open */
-.hamburger-btn.open {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+.dot-2 {
+  top: 0;
+  left: 15px;
+}
+
+.dot-3 {
+  top: 15px;
+  left: 0;
+}
+
+.dot-4 {
+  top: 15px;
+  left: 15px;
+}
+
+/* Open State (2-beat morph) */
+.hamburger-btn.open .dot {
+  top: 7.5px;
+  left: 7.5px;
+}
+
+/* Beat 2: dots 1 and 4 form the / line */
+.hamburger-btn.open .dot-1,
+.hamburger-btn.open .dot-4 {
+  width: 28px;
+  left: -2.5px;
+  transform: rotate(45deg);
+  transition-delay: 150ms;
+}
+
+/* Beat 2: dots 2 and 3 form the \ line */
+.hamburger-btn.open .dot-2,
+.hamburger-btn.open .dot-3 {
+  width: 28px;
+  left: -2.5px;
+  transform: rotate(-45deg);
+  transition-delay: 150ms;
 }
 
 /* Mobile brand inside drawer — hidden on desktop */
@@ -1791,12 +1833,12 @@ a {
 .contact-tagline,
 .contact-subtitle,
 .contact-desc {
-    font-size: 1.1rem;
-    font-family: monospace;
-    letter-spacing: 0.08em;
-    font-weight: 500;
-    opacity: 0.8;
-    margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  font-family: monospace;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
 }
 
 .contact-grid-wrapper {
@@ -1881,111 +1923,111 @@ a {
 }
 
 .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    width: 100%;
-    max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 560px;
 }
 
 .form-field {
-    position: relative;
+  position: relative;
 }
 
 .form-input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(139, 92, 246, 0.3);
-    padding: 12px 0 8px 0;
-    font-size: 1rem;
-    font-family: monospace;
-    color: inherit;
-    outline: none;
-    transition: border-color 0.3s ease;
-    resize: none;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+  padding: 12px 0 8px 0;
+  font-size: 1rem;
+  font-family: monospace;
+  color: inherit;
+  outline: none;
+  transition: border-color 0.3s ease;
+  resize: none;
 }
 
 .form-textarea {
-    min-height: 120px;
+  min-height: 120px;
 }
 
 .form-input:focus {
-    border-bottom-color: #8b5cf6;
+  border-bottom-color: #8b5cf6;
 }
 
 /* Floating label */
 .form-label {
-    position: absolute;
-    top: 12px;
-    left: 0;
-    font-size: 0.85rem;
-    font-family: monospace;
-    letter-spacing: 0.1em;
-    color: rgba(139, 92, 246, 0.6);
-    pointer-events: none;
-    transition: all 0.25s ease;
+  position: absolute;
+  top: 12px;
+  left: 0;
+  font-size: 0.85rem;
+  font-family: monospace;
+  letter-spacing: 0.1em;
+  color: rgba(139, 92, 246, 0.6);
+  pointer-events: none;
+  transition: all 0.25s ease;
 }
 
 /* Float up when input is focused or has content */
-.form-input:focus ~ .form-label,
-.form-input:not(:placeholder-shown) ~ .form-label {
-    top: -16px;
-    font-size: 0.7rem;
-    color: #8b5cf6;
-    letter-spacing: 0.15em;
+.form-input:focus~.form-label,
+.form-input:not(:placeholder-shown)~.form-label {
+  top: -16px;
+  font-size: 0.7rem;
+  color: #8b5cf6;
+  letter-spacing: 0.15em;
 }
 
 /* Animated underline on focus */
 .form-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: #8b5cf6;
-    transition: width 0.3s ease;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #8b5cf6;
+  transition: width 0.3s ease;
 }
 
-.form-input:focus ~ .form-label ~ .form-line,
-.form-input:focus ~ .form-line {
-    width: 100%;
+.form-input:focus~.form-label~.form-line,
+.form-input:focus~.form-line {
+  width: 100%;
 }
 
 /* Submit button */
 .form-submit {
-    align-self: flex-start;
-    background: transparent;
-    border: 1px solid rgba(139, 92, 246, 0.5);
-    color: #8b5cf6;
-    font-family: monospace;
-    font-size: 0.85rem;
-    letter-spacing: 0.15em;
-    padding: 12px 28px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.25s ease;
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  color: #8b5cf6;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  padding: 12px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
 .form-submit:hover {
-    background: rgba(139, 92, 246, 0.1);
-    border-color: #8b5cf6;
-    transform: translateY(-2px);
+  background: rgba(139, 92, 246, 0.1);
+  border-color: #8b5cf6;
+  transform: translateY(-2px);
 }
 
 /* Light mode */
 [data-theme="light"] .form-input {
-    color: #111;
-    border-bottom-color: rgba(109, 40, 217, 0.3);
+  color: #111;
+  border-bottom-color: rgba(109, 40, 217, 0.3);
 }
 
 [data-theme="light"] .form-label {
-    color: rgba(109, 40, 217, 0.6);
+  color: rgba(109, 40, 217, 0.6);
 }
 
-[data-theme="light"] .form-input:focus ~ .form-label,
-[data-theme="light"] .form-input:not(:placeholder-shown) ~ .form-label {
-    color: #6d28d9;
+[data-theme="light"] .form-input:focus~.form-label,
+[data-theme="light"] .form-input:not(:placeholder-shown)~.form-label {
+  color: #6d28d9;
 }
 
 .form-note {
@@ -2165,18 +2207,37 @@ a {
 /* ── 17b. ≤ 768px — Mobile breakpoint ───────────────────── */
 @media (max-width: 768px) {
 
-  /* Switch to hamburger navigation */
+  /* Hamburger is positioned fixed now that it's outside main-nav */
   .hamburger-btn {
     display: flex;
     position: fixed;
-    top: 1.5rem;
-    right: 1.5rem;
-    z-index: 102;
-    pointer-events: auto;
+    top: calc(0.75rem + 1px);
+    right: calc(1.55rem + 1px);
+    z-index: 110;
   }
 
   .main-nav {
-    display: none !important;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    top: 0.4rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    transform: none;
+    width: auto;
+    padding: 0.35rem 0.8rem;
+    border-radius: 16px;
+    z-index: 90;
+    background: rgba(244, 244, 245, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px rgba(165, 165, 165, 0.2);
+  }
+
+  [data-theme="dark"] .main-nav {
+    background: rgba(13, 13, 18, 0.88);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
   }
 
   .staggered-menu-panel,
@@ -2184,12 +2245,34 @@ a {
   .menu-overlay {
     display: flex;
   }
+
   .menu-overlay {
     display: block;
   }
 
-  .nav-brand, .theme-toggle {
-    display: none !important;
+  .nav-logo-img {
+    height: 35px;
+  }
+
+  .nav-brand {
+    display: flex !important;
+    order: 1;
+    justify-content: flex-start;
+  }
+
+  .theme-toggle {
+    display: flex !important;
+    order: 2;
+    margin-left: auto;
+    margin-right: calc(40px + 0.5rem);
+    width: 40px;
+    height: 40px;
+  }
+
+  .theme-toggle .icon-moon,
+  .theme-toggle .icon-sun {
+    width: 24px;
+    height: 24px;
   }
 
   /* Header inside staggered panel */
@@ -2255,7 +2338,8 @@ a {
     flex-direction: column;
     justify-content: center;
     padding: 2rem 1.5rem;
-    transform: translateX(100%); /* Hidden initially */
+    transform: translateX(100%);
+    /* Hidden initially */
     pointer-events: none;
   }
 
@@ -2281,7 +2365,8 @@ a {
   }
 
   .sm-panel-itemWrap {
-    overflow: hidden; /* For the slide-up reveal */
+    overflow: hidden;
+    /* For the slide-up reveal */
     border-bottom: 1px solid var(--purple);
     padding-bottom: 0.5rem;
   }
@@ -2329,11 +2414,13 @@ a {
   }
 
   .sm-prelayer-1 {
-    background: #6d44cc; /* Darker accent */
+    background: #6d44cc;
+    /* Darker accent */
   }
 
   .sm-prelayer-2 {
-    background: var(--purple); /* Main accent */
+    background: var(--purple);
+    /* Main accent */
   }
 
   .nav-btn.active {
