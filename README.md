@@ -1,3 +1,5 @@
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=140&section=header"/>
+
 # ⚡ SR_DEV_LAB
 
 <div align="center">
@@ -230,3 +232,5 @@ Focused on:
 ### ⚡ Built with code, curiosity, and countless debugging sessions.
 
 </div>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=140&section=footer"/>
