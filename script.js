@@ -347,30 +347,49 @@ document.querySelectorAll(".nav-btn").forEach((btn) => {
   btn.addEventListener("click", () => switchSection(btn.dataset.section));
 });
 
-// Highlight active nav link via IntersectionObserver
-const navObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const name = entry.target.id.replace("panel-", "").replace("-mobile", "");
-        document
-          .querySelectorAll(".nav-btn")
-          .forEach((b) => b.classList.remove("active"));
-        document.querySelectorAll(`.nav-btn[data-section="${name}"]`).forEach(active => active.classList.add("active"));
-        // Trigger skill bar animation when skills comes into view
-        if (name === "skills") animateBars();
-      }
-    });
-  },
-  { threshold: 0.4 },
-);
 
-sectionOrder.forEach((name) => {
-  const el = document.getElementById("panel-" + name);
-  const elMobile = document.getElementById("panel-" + name + "-mobile");
-  if (el) navObserver.observe(el);
-  if (elMobile) navObserver.observe(elMobile);
-});
+
+// --- Active nav highlight via scroll spy ---
+// Finds which section's top is closest to 35% from viewport top.
+// This is pixel-accurate regardless of section height or scroll speed.
+function updateActiveNav() {
+  const triggerY = window.innerHeight * 0.35;
+  let closestSection = null;
+  let closestDist = Infinity;
+
+  sectionOrder.forEach((name) => {
+    const el = document.getElementById("panel-" + name);
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    // Only consider sections that are at least partially visible
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+    const dist = Math.abs(rect.top - triggerY);
+    if (dist < closestDist) {
+      closestDist = dist;
+      closestSection = name;
+    }
+  });
+
+  if (closestSection) {
+    document.querySelectorAll(".nav-btn").forEach((b) => b.classList.remove("active"));
+    document.querySelectorAll(`.nav-btn[data-section="${closestSection}"]`).forEach((b) => b.classList.add("active"));
+  }
+}
+
+// Run on scroll (passive for performance)
+window.addEventListener("scroll", updateActiveNav, { passive: true });
+// Run once on load to set initial active state
+updateActiveNav();
+
+// Separate observer only for triggering skill bar animation
+const skillsEl = document.getElementById("panel-skills");
+if (skillsEl) {
+  new IntersectionObserver(
+    (entries) => { if (entries[0].isIntersecting) animateBars(); },
+    { threshold: 0.2 }
+  ).observe(skillsEl);
+}
+
 
 /* --- SCROLL HUD FADE --- */
 const hudCorners = document.querySelectorAll(".hud-corner");
