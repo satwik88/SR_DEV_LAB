@@ -82,14 +82,16 @@
 })();
 
 /* --- THREE.JS PARTICLE BACKGROUND --- */
-(function initThree() {
+function initThree() {
+  if (typeof THREE === "undefined") return;
   const canvas = document.getElementById("bg-canvas");
+  if (!canvas) return;
   const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
     alpha: true,
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth > 768 ? 2 : 1.25));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0xf4f4f5, 1);
 
@@ -108,7 +110,7 @@
   camera.position.set(0, 0, 30);
 
   /* --- Particle field --- */
-  const COUNT = 1200;
+  const COUNT = 700;
   const geo = new THREE.BufferGeometry();
   const pos = new Float32Array(COUNT * 3);
   const col = new Float32Array(COUNT * 3);
@@ -139,7 +141,7 @@
   scene.add(particles);
 
   /* --- Central wireframe (Explodable) --- */
-  let icoGeo = new THREE.IcosahedronGeometry(4, 1);
+  let icoGeo = new THREE.IcosahedronGeometry(4, 0);
   if (icoGeo.index !== null) {
     icoGeo = icoGeo.toNonIndexed(); // Separate triangles so they can break apart
   }
@@ -190,7 +192,7 @@
   }
 
   /* --- Orbit ring --- */
-  const ringGeo = new THREE.TorusGeometry(6, 0.015, 2, 80);
+  const ringGeo = new THREE.TorusGeometry(6, 0.015, 2, 40);
   const ringMat = new THREE.MeshBasicMaterial({
     color: 0xa5a5a5,
     transparent: true,
@@ -224,6 +226,8 @@
   let t = 0;
   function animate() {
     requestAnimationFrame(animate);
+    if (document.hidden) return; // Pause on inactive tab
+
     t += 0.003;
 
     particles.rotation.y = t * 0.04;
@@ -276,12 +280,24 @@
   }
   animate();
 
+  let resizeTimeout;
   window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    if (resizeTimeout) clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }, 150);
   });
-})();
+}
+
+window.addEventListener("load", () => {
+  if (window.requestIdleCallback) {
+    requestIdleCallback(initThree);
+  } else {
+    setTimeout(initThree, 1000);
+  }
+});
 
 /* --- HUD CLOCK --- */
 (function clock() {
@@ -448,7 +464,7 @@ const projects = [
     title: "PERSONAL_WEBSITE",
     desc: "My personal developer portfolio and interactive laboratory. Built from scratch with Vanilla JS, Glassmorphism UI, a reactive 3D WebGL particle field using Three.js, and smooth continuous scroll architectures.",
     tech: ["HTML5", "CSS3", "JavaScript", "Three.js", "UI/UX"],
-    img: "assets/portfolio.png",
+    img: "assets/portfolio.webp",
     github: "https://github.com/satwik88/SR_DEV_LAB",
     demo: "https://satwik88.github.io/SR_DEV_LAB",
   },
@@ -457,7 +473,7 @@ const projects = [
     title: "FOOD_ORDERING_SYSTEM",
     desc: "Built a CLI-based food ordering app in Python with full MySQL persistence. Handles menu browsing, order placement, and order history. Designed the full database schema — tables for users, menu items, orders, and order items with relational integrity.",
     tech: ["Python", "MySQL", "CLI", "DBMS", "OOP"],
-    img: "assets/food_ordering.png",
+    img: "assets/food_ordering.webp",
     github: "https://github.com/satwik88/Food-Ordering-System",
     demo: null,
   },
@@ -466,7 +482,7 @@ const projects = [
     title: "SNAKE_GAME",
     desc: "Browser Snake clone built in vanilla JS — no frameworks. Features neon UI, local high score storage, and 3 difficulty speeds. Focused on clean game loop logic and smooth canvas rendering.",
     tech: ["HTML5", "CSS3", "JavaScript", "Canvas API", "localStorage"],
-    img: "assets/snake_game.png",
+    img: "assets/snake_game.webp",
     github: "https://github.com/satwik88/Snake",
     demo: "https://satwik88.github.io/Snake",
   },
