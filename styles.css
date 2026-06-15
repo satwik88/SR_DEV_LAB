@@ -277,6 +277,11 @@ a {
   filter: invert(1) brightness(2);
 }
 
+/* Mobile .nav-links — Hidden on mobile */
+.nav-links {
+  display: none;
+}
+
 /* Desktop .nav-links — Pill Nav hover effect (direction-aware) */
 @media (min-width: 769px) {
   .nav-links {
