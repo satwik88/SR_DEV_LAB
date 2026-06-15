@@ -1,53 +1,232 @@
-# SR\_ DEV LAB v2.3
+# ⚡ SR_DEV_LAB
 
-Welcome to the source code for my personal developer portfolio and laboratory interface.
+<div align="center">
 
-## 🚀 Features
+### Personal Portfolio • Developer Laboratory • Interactive Web Experience
 
-- **Continuous Scroll Architecture:** A high-tech, seamless vertical scroll experience with progress tracking.
-- **Progressive Web App (PWA):** Fully installable as a standalone app on mobile and desktop, complete with custom high-res icons and theme colors.
-- **Dynamic 3D Background:** Interactive `Three.js` canvas featuring floating particles and a reactive central wireframe that explodes on hover.
-- **Glassmorphism UI:** Frosted glass panels, sleek HUD elements, and modern rounded pill shapes for a premium aesthetic.
-- **Dynamic Light/Dark Theme:** Seamlessly toggles between light and dark modes with a dedicated theme switcher.
-- **Advanced GSAP Animations:** Features a slick staggered mobile menu that morphs an interactive 4-dot grid into an 'X' using fluid timeline animations.
-- **Modular Components:** Uses Web Components (e.g. `<project-showcase>`) for reusable, dynamic project cards.
-- **Intersection Observers:** Automatically highlights active navigation tabs and handles HUD visibility as you explore different sections.
-- **Fully Responsive:** Adapts flawlessly across desktop, tablet, and mobile devices.
+*Designed, developed and maintained by Satwik Raj*
 
-## 🛠️ Technology Stack
+<br>
 
-- **HTML5:** Semantic and structured content.
-- **CSS3:** Custom properties (`:root`), flexbox, grid layouts, and advanced CSS animations/transitions.
-- **Vanilla JavaScript:** DOM manipulation, scroll-tracking logic, event handling, and Web Components.
-- **Three.js (r128):** WebGL rendering for the interactive 3D background.
-- **GSAP:** High-performance animation library used for complex stagger and UI motion sequences.
+![Status](https://img.shields.io/badge/Status-Live-success?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-v2.3-purple?style=for-the-badge)
+![Security](https://img.shields.io/badge/Security-A%2B-success?style=for-the-badge)
+![PWA](https://img.shields.io/badge/PWA-Enabled-blue?style=for-the-badge)
 
-## 🎨 Design System
-
-- **Themes:** Dynamic Light and Dark themes supported via CSS variables.
-- **Primary Accent:** Vivid Purple (`#6552D0` / `#a78bfa`)
-- **Secondary Accent:** Tech Grey (`#A5A5A5` / `#1e1e2e`)
-- **Typography:** `JetBrains Mono` for HUD/Tech elements and `Space Grotesk` for readable paragraphs.
-
-## 📂 File Structure
-
-```text
-SR_DEV_LAB/
-├── assets/                  # Directory containing images, high-res PWA icons, etc.
-├── index.html               # Main HTML document
-├── site.webmanifest         # PWA Manifest config
-├── projects-component.js    # Web Component definition for project cards
-├── README.md                # Project documentation
-├── script.js                # Main JavaScript file containing UI logic & GSAP timelines
-└── styles.css               # Main CSS stylesheet with custom properties
-```
-
-## 🏃‍♂️ Running Locally
-
-1. Clone this repository.
-2. Open `index.html` in your web browser.
-   _(Note: For the best experience and to avoid CORS issues if you add external assets later, it is recommended to run this via a local development server like VS Code's "Live Server" extension)._
+</div>
 
 ---
 
-_Built by Satwik Raj — Computer Science & Engineering Student and Developer._
+## 🚀 Overview
+
+SR_DEV_LAB is my personal developer portfolio built as an interactive digital laboratory rather than a traditional website.
+
+The project combines modern frontend engineering, real-time 3D graphics, advanced animations, and responsive design into a single immersive experience.
+
+Visitors can explore projects, certifications, technical skills, and development work through a futuristic interface inspired by modern HUD systems and glassmorphism design principles.
+
+---
+
+## ✨ Core Features
+
+### 🌌 Interactive 3D Environment
+
+* Three.js powered WebGL background
+* Reactive floating particle system
+* Dynamic wireframe geometry
+* Optimized rendering pipeline
+* Performance-tuned for desktop and mobile
+
+### 🎨 Modern Interface Design
+
+* Glassmorphism panels
+* Floating HUD elements
+* Smooth transitions
+* Custom design system
+* Dark and Light themes
+
+### 📱 Progressive Web App
+
+* Installable on desktop and mobile
+* Custom app icons
+* Offline-ready configuration
+* Native-like user experience
+
+### ⚡ High Performance
+
+* Optimized assets
+* WebP image delivery
+* Deferred 3D loading
+* Modern ES Module architecture
+* Lighthouse optimized
+
+### ♿ Accessibility & SEO
+
+* Semantic HTML
+* Keyboard navigation support
+* Focus management
+* Structured data
+* Open Graph integration
+* Sitemap & Robots configuration
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+<p>
+<img src="https://skillicons.dev/icons?i=html,css,javascript&theme=dark" />
+</p>
+
+### Graphics & Animation
+
+<p>
+<img src="https://skillicons.dev/icons?i=threejs&theme=dark" />
+</p>
+
+**Additional Libraries**
+
+* Three.js
+* GSAP
+* Web Components API
+* Intersection Observer API
+
+### Development Tools
+
+<p>
+<img src="https://skillicons.dev/icons?i=git,github,vscode,vercel&theme=dark" />
+</p>
+
+---
+
+## 🧠 Architecture
+
+```text
+SR_DEV_LAB
+│
+├── Interactive HUD Interface
+├── Dynamic Theme System
+├── Three.js Rendering Engine
+├── GSAP Animation Layer
+├── Project Showcase Component
+├── PWA Configuration
+├── SEO Infrastructure
+└── Security Layer
+```
+
+---
+
+## 📂 Project Structure
+
+```text
+SR_DEV_LAB/
+│
+├── assets/
+│   ├── images
+│   ├── icons
+│   └── certificates
+│
+├── index.html
+├── styles.css
+├── script.js
+├── projects-component.js
+├── site.webmanifest
+├── robots.txt
+├── sitemap.xml
+├── 404.html
+└── README.md
+```
+
+---
+
+## 🎯 Technical Highlights
+
+### Security
+
+✔ Content Security Policy
+
+✔ Security Headers A+
+
+✔ XSS Protection
+
+✔ Trusted Resource Loading
+
+### SEO
+
+✔ Open Graph Tags
+
+✔ Twitter Cards
+
+✔ Structured Data
+
+✔ Sitemap
+
+✔ Robots Configuration
+
+### Accessibility
+
+✔ Keyboard Navigation
+
+✔ Skip Navigation Link
+
+✔ Focus Indicators
+
+✔ ARIA Labels
+
+### Performance
+
+✔ Lazy Loading
+
+✔ WebP Assets
+
+✔ Optimized Three.js Rendering
+
+✔ Deferred Initialization
+
+✔ Mobile Performance Optimizations
+
+---
+
+## 📊 Current Status
+
+| Category          | Status          |
+| ----------------- | --------------- |
+| Security Headers  | ✅ A+            |
+| SEO               | ✅ Optimized     |
+| Accessibility     | ✅ WCAG Friendly |
+| Performance       | ✅ Optimized     |
+| PWA               | ✅ Enabled       |
+| Mobile Responsive | ✅ Complete      |
+
+---
+
+## 🌐 Live Website
+
+**Portfolio**
+
+https://satwik23.vercel.app
+
+---
+
+## 👨💻 Developer
+
+### Satwik Raj
+
+Computer Science Engineering Student
+
+Focused on:
+
+* Software Development
+* Full Stack Development
+* Database Systems
+* IoT Solutions
+* Interactive Web Experiences
+
+---
+
+<div align="center">
+
+### ⚡ Built with code, curiosity, and countless debugging sessions.
+
+</div>
