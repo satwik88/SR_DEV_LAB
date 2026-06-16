@@ -19,7 +19,7 @@ const projects = [
     number: "01",
     category: "Personal",
     name: "Personal Website",
-    image: "assets/portfolio.webp",
+    image: "assets/portfolio.png",
     bullets: [
       "Interactive developer portfolio with a reactive 3D WebGL particle field using Three.js",
       "Glassmorphism UI with dark/light mode toggle and smooth circle-wipe transition animation",
@@ -31,8 +31,20 @@ const projects = [
   {
     number: "02",
     category: "Personal",
+    name: "The Global Grid",
+    image: "assets/global_grid.png",
+    bullets: [
+      "A premium international digital newspaper site blending traditional print journalism with modern web technology — category sections, a daily print-style front page, searchable archive, bookmarks, and downloadable PDF editions."
+    ],
+    tech: ["Next.js", "React", "Tailwind CSS"],
+    github: "https://github.com/satwik88/The-Global-Grid",
+    live: "https://the-global-grid.vercel.app/",
+  },
+  {
+    number: "03",
+    category: "Personal",
     name: "Food Ordering System",
-    image: "assets/food_ordering.webp",
+    image: "assets/food_ordering.png",
     bullets: [
       "CLI-based food ordering app in Python with full MySQL persistence",
       "Handles menu browsing, order placement, and order history end-to-end",
@@ -40,19 +52,6 @@ const projects = [
     ],
     tech: ["Python", "MySQL", "CLI", "DBMS", "OOP"],
     github: "https://github.com/satwik88/Food-Ordering-System",
-  },
-  {
-    number: "03",
-    category: "Personal",
-    name: "Snake Game",
-    image: "assets/snake_game.webp",
-    bullets: [
-      "Browser Snake clone built in vanilla JS — no frameworks, pure canvas rendering",
-      "Features neon UI, local high score storage, and 3 selectable difficulty speeds",
-      "Focused on clean game loop logic and smooth 60fps canvas animation",
-    ],
-    tech: ["HTML5", "CSS3", "JavaScript", "Canvas API", "localStorage"],
-    github: "https://github.com/satwik88/Snake",
   },
 ];
 
@@ -65,6 +64,7 @@ const Card = ({
   bullets,
   tech,
   github,
+  live,
   index,
   totalCards,
   sectionProgress,
@@ -99,10 +99,41 @@ const Card = ({
     })
   );
 
-  const actionBtn = github
-    ? e(
+  /* External Link SVG path */
+  const externalSvg = e(
+    "svg",
+    { viewBox: "0 0 24 24", width: "14", height: "14", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
+    e("path", { d: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" }),
+    e("polyline", { points: "15 3 21 3 21 9" }),
+    e("line", { x1: "10", y1: "14", x2: "21", y2: "3" })
+  );
+
+  const actionBtn = [];
+  
+  if (live) {
+    actionBtn.push(
+      e(
         "a",
         {
+          key: "live",
+          href: live,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          className: "github-ghost-btn",
+          title: "Open Live Demo in new tab",
+        },
+        externalSvg,
+        "Live Demo"
+      )
+    );
+  }
+
+  if (github) {
+    actionBtn.push(
+      e(
+        "a",
+        {
+          key: "github",
           href: github,
           target: "_blank",
           rel: "noopener noreferrer",
@@ -112,12 +143,19 @@ const Card = ({
         githubSvg,
         "GitHub"
       )
-    : e(
+    );
+  }
+
+  if (actionBtn.length === 0) {
+    actionBtn.push(
+      e(
         "span",
-        { className: "private-repo-badge", title: "This repository is private" },
+        { key: "private", className: "private-repo-badge", title: "This repository is private" },
         lockSvg,
         "Private Repo"
-      );
+      )
+    );
+  }
 
   return e(
     "div",
