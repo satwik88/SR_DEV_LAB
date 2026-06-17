@@ -43,6 +43,18 @@ const projects = [
   {
     number: "03",
     category: "Personal",
+    name: "Smart Delivery System",
+    image: "assets/smart_delivery.png",
+    bullets: [
+      "A full-stack logistics platform implementing 13 classic algorithms (Dijkstra, Floyd-Warshall, Knapsack, Kruskal/Prim, N-Queens & more) to optimize delivery routing, resource allocation, and network topography — with live order tracking and an admin panel."
+    ],
+    tech: ["React", "Node.js", "MySQL", "DSA"],
+    github: "https://github.com/satwik88/Smart-Delivery-System",
+    live: "https://smart-delivery-system-beta.vercel.app",
+  },
+  {
+    number: "04",
+    category: "Personal",
     name: "Food Ordering System",
     image: "assets/food_ordering.png",
     bullets: [

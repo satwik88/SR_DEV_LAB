@@ -73,7 +73,6 @@
 </head>
 
 <body>
-  <a href="#panelContainer" class="skip-link">Skip to content</a>
   <!-- ── THREE.JS CANVAS ─────────────────────────── -->
   <canvas id="bg-canvas"></canvas>
 
@@ -89,10 +88,7 @@
   ═══════════════════════════════════════════ -->
   <nav class="main-nav" id="mainNav">
     <div class="nav-brand cursor-pointer" id="navBrandBtn" role="button" tabindex="0" title="Go to Home" aria-label="Go to Home">
-      <picture>
-        <source type="image/webp" srcset="assets/logo.webp">
-        <img src="assets/logo.png" alt="Satwik Raj Logo" class="nav-logo-img" />
-      </picture>
+      <img src="assets/logo.png" alt="Satwik Raj Logo" class="nav-logo-img" />
     </div>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
       <!-- Moon: shown in light mode -->
@@ -370,10 +366,7 @@
             <div class="cert-row-left">
               <div class="cert-row-img-wrap cert-lightbox-trigger" data-cert="assets/agentic_ai_cert.jpg.jpeg" role="button" tabindex="0"
                 title="Click to view full certificate" aria-label="View full certificate">
-                <picture>
-                <source type="image/webp" srcset="assets/agentic_ai_cert.webp">
                 <img src="assets/agentic_ai_cert.jpg.jpeg" alt="Agentic AI Saksham Certificate issued by CAPABL and RV Institute of Management" class="cert-row-img" loading="lazy" />
-              </picture>
                 <div class="cert-img-hover-hint">🔍 View Full</div>
               </div>
               <div class="proj-row-actions mt-4">
@@ -527,8 +520,9 @@
   <!-- Full-page theme transition overlay (must be before scripts) -->
   <div id="theme-transition-overlay"></div>
 
-  <!-- Scripts -->
-  <script type="module" src="script.js?v=34"></script>
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="script.js?v=33"></script>
   <!-- React + Framer Motion Projects Stacking Component (plain ES module, no Babel) -->
   <script type="module" src="projects-component.js"></script>
 </body>

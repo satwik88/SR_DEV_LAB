@@ -38,25 +38,7 @@
   --card: rgba(20, 20, 32, 0.85);
 }
 
-/* ── 3. ACCESSIBILITY ─────────────────────────────────────── */
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: var(--purple);
-  color: white;
-  padding: 8px;
-  z-index: 1000;
-  transition: top 0.2s ease;
-  text-decoration: none;
-  font-family: var(--mono);
-}
-
-.skip-link:focus {
-  top: 0;
-}
-
-/* ── 4. BASE / GLOBAL ─────────────────────────────────────── */
+/* ── 3. BASE / GLOBAL ─────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
   scrollbar-width: none;

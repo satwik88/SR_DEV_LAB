@@ -1,4 +1,3 @@
-import { WebGLRenderer, Scene, PerspectiveCamera, BufferGeometry, BufferAttribute, PointsMaterial, Points, IcosahedronGeometry, MeshBasicMaterial, Mesh, SphereGeometry, TorusGeometry, Vector2, Raycaster } from 'three';
 /* --- THEME TOGGLE — dark / light mode --- */
 (function initTheme() {
   const root = document.documentElement;
@@ -82,17 +81,15 @@ import { WebGLRenderer, Scene, PerspectiveCamera, BufferGeometry, BufferAttribut
   }
 })();
 
-/* --- JS PARTICLE BACKGROUND --- */
-function initThree() {
-  
+/* --- THREE.JS PARTICLE BACKGROUND --- */
+(function initThree() {
   const canvas = document.getElementById("bg-canvas");
-  if (!canvas) return;
-  const renderer = new WebGLRenderer({
+  const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
     alpha: true,
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth > 768 ? 2 : 1.25));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0xf4f4f5, 1);
 
@@ -101,8 +98,8 @@ function initThree() {
   // Apply current theme immediately (in case theme was already set)
   if (window.__isDark && window.__isDark()) renderer.setClearColor(0x0d0d12, 1);
 
-  const scene = new Scene();
-  const camera = new PerspectiveCamera(
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(
     60,
     window.innerWidth / window.innerHeight,
     0.1,
@@ -111,8 +108,8 @@ function initThree() {
   camera.position.set(0, 0, 30);
 
   /* --- Particle field --- */
-  const COUNT = 700;
-  const geo = new BufferGeometry();
+  const COUNT = 1200;
+  const geo = new THREE.BufferGeometry();
   const pos = new Float32Array(COUNT * 3);
   const col = new Float32Array(COUNT * 3);
   const sizes = new Float32Array(COUNT);
@@ -127,39 +124,39 @@ function initThree() {
     col[i * 3 + 2] = t > 0.5 ? 0.815 : 0.647; // purple b (#d0) or grey b (#a5)
     sizes[i] = Math.random() * 1.5 + 0.3;
   }
-  geo.setAttribute("position", new BufferAttribute(pos, 3));
-  geo.setAttribute("color", new BufferAttribute(col, 3));
-  geo.setAttribute("size", new BufferAttribute(sizes, 1));
+  geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+  geo.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
 
-  const mat = new PointsMaterial({
+  const mat = new THREE.PointsMaterial({
     size: 0.3,
     vertexColors: true,
     transparent: true,
     opacity: 0.5,
     sizeAttenuation: true,
   });
-  const particles = new Points(geo, mat);
+  const particles = new THREE.Points(geo, mat);
   scene.add(particles);
 
   /* --- Central wireframe (Explodable) --- */
-  let icoGeo = new IcosahedronGeometry(4, 0);
+  let icoGeo = new THREE.IcosahedronGeometry(4, 1);
   if (icoGeo.index !== null) {
     icoGeo = icoGeo.toNonIndexed(); // Separate triangles so they can break apart
   }
 
-  const icoMat = new MeshBasicMaterial({
+  const icoMat = new THREE.MeshBasicMaterial({
     color: 0x6552d0,
     wireframe: true,
     transparent: true,
     opacity: 0.15,
   });
-  const ico = new Mesh(icoGeo, icoMat);
+  const ico = new THREE.Mesh(icoGeo, icoMat);
   scene.add(ico);
 
   // Invisible hit-box for stable raycasting (prevents jitter when geometry expands)
-  const hitGeo = new SphereGeometry(5, 16, 16);
-  const hitMat = new MeshBasicMaterial({ visible: false });
-  const hitMesh = new Mesh(hitGeo, hitMat);
+  const hitGeo = new THREE.SphereGeometry(5, 16, 16);
+  const hitMat = new THREE.MeshBasicMaterial({ visible: false });
+  const hitMesh = new THREE.Mesh(hitGeo, hitMat);
   ico.add(hitMesh);
 
   // Setup explosion targets
@@ -193,20 +190,20 @@ function initThree() {
   }
 
   /* --- Orbit ring --- */
-  const ringGeo = new TorusGeometry(6, 0.015, 2, 40);
-  const ringMat = new MeshBasicMaterial({
+  const ringGeo = new THREE.TorusGeometry(6, 0.015, 2, 80);
+  const ringMat = new THREE.MeshBasicMaterial({
     color: 0xa5a5a5,
     transparent: true,
     opacity: 0.4,
   });
-  const ring = new Mesh(ringGeo, ringMat);
+  const ring = new THREE.Mesh(ringGeo, ringMat);
   ring.rotation.x = Math.PI / 2.5;
   scene.add(ring);
 
   /* --- Mouse tracking & Raycaster --- */
   const mouse = { x: 0, y: 0 };
-  const rayMouse = new Vector2(-999, -999);
-  const raycaster = new Raycaster();
+  const rayMouse = new THREE.Vector2(-999, -999);
+  const raycaster = new THREE.Raycaster();
   let explodeProgress = 0;
 
   document.addEventListener("mousemove", (e) => {
@@ -227,8 +224,6 @@ function initThree() {
   let t = 0;
   function animate() {
     requestAnimationFrame(animate);
-    if (document.hidden) return; // Pause on inactive tab
-
     t += 0.003;
 
     particles.rotation.y = t * 0.04;
@@ -281,24 +276,12 @@ function initThree() {
   }
   animate();
 
-  let resizeTimeout;
   window.addEventListener("resize", () => {
-    if (resizeTimeout) clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    }, 150);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
   });
-}
-
-window.addEventListener("load", () => {
-  if (window.requestIdleCallback) {
-    requestIdleCallback(initThree);
-  } else {
-    setTimeout(initThree, 1000);
-  }
-});
+})();
 
 /* --- HUD CLOCK --- */
 (function clock() {
@@ -465,7 +448,7 @@ const projects = [
     title: "PERSONAL_WEBSITE",
     desc: "My personal developer portfolio and interactive laboratory. Built from scratch with Vanilla JS, Glassmorphism UI, a reactive 3D WebGL particle field using Three.js, and smooth continuous scroll architectures.",
     tech: ["HTML5", "CSS3", "JavaScript", "Three.js", "UI/UX"],
-    img: "assets/portfolio.webp",
+    img: "assets/portfolio.png",
     github: "https://github.com/satwik88/SR_DEV_LAB",
     demo: "https://satwik88.github.io/SR_DEV_LAB",
   },
@@ -474,7 +457,7 @@ const projects = [
     title: "FOOD_ORDERING_SYSTEM",
     desc: "Built a CLI-based food ordering app in Python with full MySQL persistence. Handles menu browsing, order placement, and order history. Designed the full database schema — tables for users, menu items, orders, and order items with relational integrity.",
     tech: ["Python", "MySQL", "CLI", "DBMS", "OOP"],
-    img: "assets/food_ordering.webp",
+    img: "assets/food_ordering.png",
     github: "https://github.com/satwik88/Food-Ordering-System",
     demo: null,
   },
@@ -483,7 +466,7 @@ const projects = [
     title: "SNAKE_GAME",
     desc: "Browser Snake clone built in vanilla JS — no frameworks. Features neon UI, local high score storage, and 3 difficulty speeds. Focused on clean game loop logic and smooth canvas rendering.",
     tech: ["HTML5", "CSS3", "JavaScript", "Canvas API", "localStorage"],
-    img: "assets/snake_game.webp",
+    img: "assets/snake_game.png",
     github: "https://github.com/satwik88/Snake",
     demo: "https://satwik88.github.io/Snake",
   },
