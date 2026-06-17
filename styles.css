@@ -1691,12 +1691,13 @@ a {
   grid-template-columns: 320px 1fr;
   gap: 3rem;
   padding: 3rem 0;
-  align-items: start;
+  align-items: stretch;
 }
 
 .cert-row-left {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .cert-row-img-wrap {
@@ -1743,6 +1744,7 @@ a {
   flex-direction: column;
   gap: 1.5rem;
   padding-top: 2rem;
+  justify-content: space-between;
 }
 
 .cert-row-title {
