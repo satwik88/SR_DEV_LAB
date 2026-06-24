@@ -893,6 +893,7 @@ function initFooterFX() {
           y:      r * STEP,
           op:     Math.random() * MAX_OPACITY, // initial random opacity
           isGrey: Math.random() > 0.3,         // 70% grey (#a5a5a5), 30% purple
+          hoverIntensity: 0,                   // hover trail intensity
         });
       }
     }
@@ -927,16 +928,22 @@ function initFooterFX() {
       let g = sq.isGrey ? 165 : purple.g;
       let b = sq.isGrey ? 165 : purple.b;
 
-      // Mouse hover reaction
+      // Mouse hover reaction - decaying trail
+      sq.hoverIntensity *= 0.95; // fade out by 5% each frame
+
       const dx = mouseX - (sq.x + SQUARE_SIZE / 2);
       const dy = mouseY - (sq.y + SQUARE_SIZE / 2);
       const dist = Math.sqrt(dx * dx + dy * dy);
       
-      const HOVER_RADIUS = 100;
+      const HOVER_RADIUS = 60; // reduced radius
       if (dist < HOVER_RADIUS) {
-        // Boost opacity and force accent color near mouse
+        // Boost intensity when mouse is close
         const factor = 1 - (dist / HOVER_RADIUS);
-        finalOp = Math.max(sq.op, factor * 0.8); // max 80% opacity on hover
+        sq.hoverIntensity = Math.max(sq.hoverIntensity, factor);
+      }
+
+      if (sq.hoverIntensity > 0.01) {
+        finalOp = Math.max(sq.op, sq.hoverIntensity * 0.8);
         r = purple.r;
         g = purple.g;
         b = purple.b;
