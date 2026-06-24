@@ -928,24 +928,6 @@ function initFooterFX() {
     requestAnimationFrame(loop);
   }
 
-  // ── Clock Updater ─────────────────────────────────────────
-  function updateClock() {
-    const now = new Date();
-    let hours = now.getHours();
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12 || 12;
-    const hoursStr = String(hours).padStart(2, '0');
-    
-    const timeEl = document.getElementById('footer-time');
-    const ampmEl = document.getElementById('footer-ampm');
-    if (timeEl) timeEl.textContent = `${hoursStr}:${minutes}`;
-    if (ampmEl) ampmEl.textContent = ampm;
-  }
-
-  updateClock();
-  setInterval(updateClock, 1000);
-
   // ── Bootstrap ─────────────────────────────────────────────
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
