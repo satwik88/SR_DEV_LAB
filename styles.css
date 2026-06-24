@@ -2570,31 +2570,4 @@ a {
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 30%);
 }
-
-#footer-clock {
-  position: absolute;
-  bottom: 20px;
-  right: 30px;
-  z-index: 3;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  pointer-events: none;
-}
-
-#footer-time {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: clamp(14px, 2vw, 22px);
-  color: rgba(255, 255, 255, 0.85);
-  letter-spacing: 0.15em;
-  font-weight: 400;
-  /* NO animation, NO transition — static display only */
-}
-
-#footer-ampm {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: clamp(10px, 1.2vw, 14px);
-  color: rgba(255, 255, 255, 0.5);
-  letter-spacing: 0.1em;
-}
 
