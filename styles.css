@@ -1914,11 +1914,7 @@ a {
   font-weight: 600;
 }
 
-/* Reserved empty space */
-.contact-reserved-space {
-  min-height: 200px;
-  width: 100%;
-}
+
 
 /* Light mode adjustments */
 [data-theme="light"] .contact-icon-card {
