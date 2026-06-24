@@ -41,8 +41,9 @@
 /* ── 3. BASE / GLOBAL ─────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE / Edge */
+  /* Safari: hide scrollbar via ::-webkit-scrollbar (see below) */
   overflow-x: clip;
   width: 100%;
   max-width: 100%;
@@ -105,6 +106,7 @@ a {
   z-index: 15;
   pointer-events: none;
   background: linear-gradient(to bottom, rgba(244, 244, 245, 0.9) 0%, transparent 100%);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
   mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
@@ -246,6 +248,7 @@ a {
   justify-content: space-between;
   align-items: center;
   background: rgba(244, 244, 245, 0.85);
+  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   border: 1px solid var(--border);
   border-radius: 100px;
@@ -882,6 +885,7 @@ a {
   border-radius: 24px;
   padding: 1.2rem;
   background: var(--card);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   transition: all 0.25s ease;
   display: flex;
@@ -927,6 +931,7 @@ a {
   border-radius: 24px;
   padding: 1.4rem;
   background: var(--card);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   transition: border-color 0.25s ease;
   box-shadow: 0 2px 12px rgba(56, 62, 78, 0.06);
@@ -1205,6 +1210,7 @@ a {
   position: fixed;
   inset: 0;
   z-index: 100;
+  -webkit-backdrop-filter: blur(28px);
   backdrop-filter: blur(28px);
   display: flex;
   align-items: center;
@@ -2180,13 +2186,13 @@ a {
   /* React stacking cards — disable sticky scroll behavior */
   .panel-projects-react {
     padding: 5rem 1rem 6rem !important;
-    min-height: auto;
+    min-height: 0; /* was auto — Firefox doesn't support min-height:auto */
     border-top-left-radius: 40px !important;
     border-top-right-radius: 40px !important;
   }
 
   .react-projects-inner {
-    min-height: auto;
+    min-height: 0; /* was auto — Firefox doesn't support min-height:auto */
   }
 
   .react-projects-title-wrap {
@@ -2250,6 +2256,7 @@ a {
     border-radius: 16px;
     z-index: 90;
     background: rgba(244, 244, 245, 0.85);
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     border: 1px solid var(--border);
     box-shadow: 0 8px 32px rgba(165, 165, 165, 0.2);
@@ -2333,8 +2340,8 @@ a {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
     z-index: 98;
     opacity: 0;
     pointer-events: none;
@@ -2349,6 +2356,7 @@ a {
     width: min(280px, 80vw);
     height: 100vh;
     background: rgba(244, 244, 245, 0.95);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border-left: 1px solid var(--border);
     border-radius: 32px 0 0 32px;
@@ -2461,7 +2469,7 @@ a {
   /* Hero — tighten bottom space */
   #panel-home {
     padding-bottom: 1.5rem;
-    min-height: auto;
+    min-height: 0; /* was auto — Firefox doesn't support min-height:auto */
   }
 
   /* Dim 3D canvas on mobile for performance */
