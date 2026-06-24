@@ -898,6 +898,20 @@ function initFooterFX() {
     }
   }
 
+  let mouseX = -9999;
+  let mouseY = -9999;
+
+  section.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+  });
+
+  section.addEventListener('mouseleave', () => {
+    mouseX = -9999;
+    mouseY = -9999;
+  });
+
   // ── Single tick: probabilistic instant flicker per square ──
   function tick() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -907,10 +921,28 @@ function initFooterFX() {
       if (Math.random() < FLICKER_CHANCE) {
         sq.op = Math.random() * MAX_OPACITY;
       }
-      const r = sq.isGrey ? 165 : purple.r;
-      const g = sq.isGrey ? 165 : purple.g;
-      const b = sq.isGrey ? 165 : purple.b;
-      ctx.fillStyle = `rgba(${r},${g},${b},${sq.op})`;
+      
+      let finalOp = sq.op;
+      let r = sq.isGrey ? 165 : purple.r;
+      let g = sq.isGrey ? 165 : purple.g;
+      let b = sq.isGrey ? 165 : purple.b;
+
+      // Mouse hover reaction
+      const dx = mouseX - (sq.x + SQUARE_SIZE / 2);
+      const dy = mouseY - (sq.y + SQUARE_SIZE / 2);
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      const HOVER_RADIUS = 100;
+      if (dist < HOVER_RADIUS) {
+        // Boost opacity and force accent color near mouse
+        const factor = 1 - (dist / HOVER_RADIUS);
+        finalOp = Math.max(sq.op, factor * 0.8); // max 80% opacity on hover
+        r = purple.r;
+        g = purple.g;
+        b = purple.b;
+      }
+
+      ctx.fillStyle = `rgba(${r},${g},${b},${finalOp})`;
       ctx.fillRect(sq.x, sq.y, SQUARE_SIZE, SQUARE_SIZE);
     }
   }
