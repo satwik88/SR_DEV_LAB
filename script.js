@@ -297,6 +297,20 @@ let isCanvasVisible = true;
   }
   animate();
 
+  // Fade out 3D background when scrolling to footer FX to prevent overlap
+  const footerFx = document.getElementById('panel-footer-fx');
+  if (footerFx) {
+    window.addEventListener('scroll', () => {
+      const rect = footerFx.getBoundingClientRect();
+      const overlap = window.innerHeight - rect.top;
+      if (overlap > 0) {
+        canvas.style.opacity = Math.max(0, 1 - overlap / 350);
+      } else {
+        canvas.style.opacity = 1;
+      }
+    }, { passive: true });
+  }
+
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
