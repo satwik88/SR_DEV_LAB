@@ -320,7 +320,7 @@ let isCanvasVisible = true;
 
 /* --- HUD CLOCK --- */
 (function clock() {
-  const els = document.querySelectorAll("#hudTime, #hudTime-mobile, #footer-time");
+  const els = document.querySelectorAll("#hudTime, #hudTime-mobile");
   setInterval(() => {
     const d = new Date();
     const timeString = d.toLocaleTimeString('en-US', { 
@@ -328,13 +328,7 @@ let isCanvasVisible = true;
       minute: '2-digit', 
       hour12: true 
     });
-    els.forEach(el => {
-      if (el.id === 'footer-time') {
-        el.textContent = `////// ${timeString}`;
-      } else {
-        el.textContent = timeString;
-      }
-    });
+    els.forEach(el => el.textContent = timeString);
   }, 1000);
 })();
 
@@ -933,6 +927,24 @@ function initFooterFX() {
     if (isSectionVisible) tick();
     requestAnimationFrame(loop);
   }
+
+  // ── Clock Updater ─────────────────────────────────────────
+  function updateClock() {
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    const hoursStr = String(hours).padStart(2, '0');
+    
+    const timeEl = document.getElementById('footer-time');
+    const ampmEl = document.getElementById('footer-ampm');
+    if (timeEl) timeEl.textContent = `${hoursStr}:${minutes}`;
+    if (ampmEl) ampmEl.textContent = ampm;
+  }
+
+  updateClock();
+  setInterval(updateClock, 1000);
 
   // ── Bootstrap ─────────────────────────────────────────────
   resizeCanvas();
