@@ -328,7 +328,13 @@ let isCanvasVisible = true;
       minute: '2-digit', 
       hour12: true 
     });
-    els.forEach(el => el.textContent = timeString);
+    els.forEach(el => {
+      if (el.id === 'footer-time') {
+        el.textContent = `////// ${timeString}`;
+      } else {
+        el.textContent = timeString;
+      }
+    });
   }, 1000);
 })();
 
