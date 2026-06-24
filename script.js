@@ -82,7 +82,15 @@
 })();
 
 /* --- THREE.JS PARTICLE BACKGROUND --- */
+// Prompt 1: IntersectionObserver to pause rendering when canvas is offscreen
+let isCanvasVisible = true;
+
 (function initThree() {
+  // Prompt 5: Sync Three.js accent color from CSS variable
+  const style = getComputedStyle(document.documentElement);
+  const accentColor = style.getPropertyValue('--purple').trim();
+  const threeColor = parseInt(accentColor.replace('#', ''), 16);
+
   const canvas = document.getElementById("bg-canvas");
   const renderer = new THREE.WebGLRenderer({
     canvas,
@@ -97,6 +105,13 @@
   window.__threeSetBg = (hex) => renderer.setClearColor(hex, 1);
   // Apply current theme immediately (in case theme was already set)
   if (window.__isDark && window.__isDark()) renderer.setClearColor(0x0d0d12, 1);
+
+  // Prompt 1: Observe #panel-home (or #bg-canvas) to pause WebGL when off-screen
+  const observeTarget = document.getElementById("panel-home") || canvas;
+  new IntersectionObserver(
+    (entries) => { isCanvasVisible = entries[0].isIntersecting; },
+    { threshold: 0 }
+  ).observe(observeTarget);
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
@@ -119,9 +134,13 @@
     pos[i * 3 + 1] = (Math.random() - 0.5) * 100;
     pos[i * 3 + 2] = (Math.random() - 0.5) * 60;
     const t = Math.random();
-    col[i * 3] = t > 0.5 ? 0.396 : 0.647; // purple r (#65) or grey r (#a5)
-    col[i * 3 + 1] = t > 0.5 ? 0.321 : 0.647; // purple g (#52) or grey g (#a5)
-    col[i * 3 + 2] = t > 0.5 ? 0.815 : 0.647; // purple b (#d0) or grey b (#a5)
+    // Prompt 5: Derive purple channel values from CSS variable (threeColor)
+    const pr = ((threeColor >> 16) & 0xff) / 255;
+    const pg = ((threeColor >> 8) & 0xff) / 255;
+    const pb = (threeColor & 0xff) / 255;
+    col[i * 3] = t > 0.5 ? pr : 0.647;     // purple r or grey r (#a5)
+    col[i * 3 + 1] = t > 0.5 ? pg : 0.647; // purple g or grey g (#a5)
+    col[i * 3 + 2] = t > 0.5 ? pb : 0.647; // purple b or grey b (#a5)
     sizes[i] = Math.random() * 1.5 + 0.3;
   }
   geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
@@ -145,7 +164,7 @@
   }
 
   const icoMat = new THREE.MeshBasicMaterial({
-    color: 0x6552d0,
+    color: threeColor, // Prompt 5: synced from --purple CSS variable
     wireframe: true,
     transparent: true,
     opacity: 0.15,
@@ -223,6 +242,8 @@
   /* --- Animate --- */
   let t = 0;
   function animate() {
+    // Prompt 1: Skip expensive rendering when canvas is not visible
+    if (!isCanvasVisible) { requestAnimationFrame(animate); return; }
     requestAnimationFrame(animate);
     t += 0.003;
 
@@ -472,7 +493,10 @@ const projects = [
   },
 ];
 
+let _projectOverlayTrigger = null; // Prompt 3: track triggering element for focus restore
+
 function openProject(i) {
+  _projectOverlayTrigger = document.activeElement; // Prompt 3: save focus origin
   const p = projects[i];
   const overlay = document.getElementById("projectOverlay");
   document.getElementById("overlayPre").textContent = p.pre;
@@ -521,11 +545,19 @@ function openProject(i) {
 
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
+  // Prompt 3: trap focus inside project overlay panel
+  const panel = overlay.querySelector(".project-overlay-panel") || overlay;
+  trapFocus(panel);
 }
 
 function closeProject() {
   document.getElementById("projectOverlay").classList.remove("open");
   document.body.style.overflow = "";
+  // Prompt 3: restore focus to triggering element
+  if (_projectOverlayTrigger && typeof _projectOverlayTrigger.focus === 'function') {
+    _projectOverlayTrigger.focus();
+    _projectOverlayTrigger = null;
+  }
 }
 
 // Close on escape
@@ -570,38 +602,96 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* --- CONTACT FORM --- */
+/* Prompt 4: Replaced mailto: with Formspree fetch submission */
 document.querySelectorAll("#contactForm, #contactForm-mobile").forEach(form => form.addEventListener("submit", function (e) {
   e.preventDefault();
   const btn = this.querySelector("[id^=formSubmitBtn]");
   const note = this.querySelector("[id^=formNote]");
   const name = this.querySelector("[id^=formName]").value.trim();
   const email = this.querySelector("[id^=formEmail]").value.trim();
-  const msg = this.querySelector("[id^=formMessage]").value.trim();
+  const message = this.querySelector("[id^=formMessage]").value.trim();
 
   btn.textContent = "[ TRANSMITTING... ]";
   btn.disabled = true;
 
-  setTimeout(() => {
-    window.location.href = `mailto:satwikraj707@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(msg + "\n\nFrom: " + email)}`;
+  fetch('https://formspree.io/f/xgojolwr', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: name, email: email, message: message })
+  })
+  .then(res => {
     btn.textContent = "[ TRANSMIT MESSAGE ]";
     btn.disabled = false;
-    note.textContent = "// TRANSMISSION SUCCESSFUL — email client opened.";
-    note.className = "form-note success";
-    this.reset();
+    if (res.ok) {
+      note.textContent = "// TRANSMISSION SUCCESSFUL — message sent.";
+      note.className = "form-note success";
+      this.reset();
+    } else {
+      note.textContent = "// ERROR — something went wrong. Try again.";
+      note.className = "form-note error";
+    }
     setTimeout(() => {
       note.textContent = "";
       note.className = "form-note";
     }, 5000);
-  }, 800);
+  })
+  .catch(() => {
+    btn.textContent = "[ TRANSMIT MESSAGE ]";
+    btn.disabled = false;
+    note.textContent = "// NETWORK ERROR — check your connection.";
+    note.className = "form-note error";
+    setTimeout(() => {
+      note.textContent = "";
+      note.className = "form-note";
+    }, 5000);
+  });
 }));
 
+/* --- FOCUS TRAP UTILITY (Prompt 3) --- */
+function trapFocus(element) {
+  const focusableSelectors = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  const focusableEls = Array.from(element.querySelectorAll(focusableSelectors)).filter(el => !el.closest('[hidden]'));
+  if (focusableEls.length === 0) return;
+  const firstEl = focusableEls[0];
+  const lastEl = focusableEls[focusableEls.length - 1];
+
+  function handleKeydown(e) {
+    if (e.key !== 'Tab') return;
+    if (e.shiftKey) {
+      // Shift+Tab: if focus is on first element, wrap to last
+      if (document.activeElement === firstEl) {
+        e.preventDefault();
+        lastEl.focus();
+      }
+    } else {
+      // Tab: if focus is on last element, wrap to first
+      if (document.activeElement === lastEl) {
+        e.preventDefault();
+        firstEl.focus();
+      }
+    }
+  }
+
+  // Remove any previous trap on this element before attaching a new one
+  if (element._trapFocusHandler) element.removeEventListener('keydown', element._trapFocusHandler);
+  element._trapFocusHandler = handleKeydown;
+  element.addEventListener('keydown', handleKeydown);
+  // Move focus into the container
+  firstEl.focus();
+}
+
 /* --- CERT LIGHTBOX --- */
+let _certLightboxTrigger = null; // Prompt 3: track triggering element for focus restore
+
 function openCertLightbox(src) {
+  _certLightboxTrigger = document.activeElement; // Prompt 3: save focus origin
   const lb = document.getElementById("certLightbox");
   const img = document.getElementById("certLightboxImg");
   img.src = src;
   lb.classList.add("open");
   document.body.style.overflow = "hidden";
+  // Prompt 3: trap focus inside lightbox
+  trapFocus(lb);
 }
 
 function closeCertLightbox(e) {
@@ -610,6 +700,11 @@ function closeCertLightbox(e) {
   const lb = document.getElementById("certLightbox");
   lb.classList.remove("open");
   document.body.style.overflow = "";
+  // Prompt 3: restore focus to triggering element
+  if (_certLightboxTrigger && typeof _certLightboxTrigger.focus === 'function') {
+    _certLightboxTrigger.focus();
+    _certLightboxTrigger = null;
+  }
 }
 
 document.addEventListener("keydown", function (e) {
@@ -667,6 +762,8 @@ document.addEventListener("keydown", function (e) {
     panel.classList.toggle("active", isMenuOpen);
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
     document.body.style.overflowX = isMenuOpen ? "hidden" : "";
+    // Prompt 2: update aria-expanded on hamburger button
+    hamburgerBtn.setAttribute('aria-expanded', isMenuOpen ? 'true' : 'false');
 
     if (isMenuOpen) {
       tl.play();

@@ -1917,11 +1917,11 @@ a {
 }
 
 [data-theme="light"] .icon-label {
-  color: #6d28d9;
+  color: #000000;
 }
 
 [data-theme="light"] .icon-circle svg {
-  stroke: #6d28d9;
+  stroke: #000000;
 }
 
 .contact-form {
@@ -2019,17 +2019,35 @@ a {
 
 /* Light mode */
 [data-theme="light"] .form-input {
-  color: #111;
-  border-bottom-color: rgba(109, 40, 217, 0.3);
+  color: #000000;
+  border-bottom-color: rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="light"] .form-label {
-  color: rgba(109, 40, 217, 0.6);
+  color: rgba(0, 0, 0, 0.6);
 }
 
 [data-theme="light"] .form-input:focus~.form-label,
 [data-theme="light"] .form-input:not(:placeholder-shown)~.form-label {
-  color: #6d28d9;
+  color: #000000;
+}
+
+[data-theme="light"] .form-input:focus {
+  border-bottom-color: #000000;
+}
+
+[data-theme="light"] .form-line {
+  background: #000000;
+}
+
+[data-theme="light"] .form-submit {
+  color: #000000;
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .form-submit:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: #000000;
 }
 
 .form-note {
