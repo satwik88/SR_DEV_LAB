@@ -321,9 +321,23 @@ let isCanvasVisible = true;
 /* --- HUD CLOCK --- */
 (function clock() {
   const els = document.querySelectorAll("#hudTime, #hudTime-mobile");
+  const footerTimeEl = document.getElementById("footer-time");
+  
   setInterval(() => {
     const d = new Date();
+    // Update main HUD clock (24-hour format)
     els.forEach(el => el.textContent = d.toTimeString().slice(0, 8));
+    
+    // Update footer clock (12-hour AM/PM format)
+    if (footerTimeEl) {
+      let hours = d.getHours();
+      const minutes = d.getMinutes().toString().padStart(2, '0');
+      const seconds = d.getSeconds().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // '0' becomes '12'
+      footerTimeEl.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+    }
   }, 1000);
 })();
 

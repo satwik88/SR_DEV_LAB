@@ -2570,4 +2570,17 @@ a {
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 30%);
 }
+
+#footer-time {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--text); /* Black in light mode, white in dark mode */
+  font-weight: 500;
+  z-index: 10;
+  pointer-events: none;
+  letter-spacing: 0.1em;
+}
 
