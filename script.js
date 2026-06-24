@@ -873,7 +873,7 @@ function initFooterFX() {
   const GRID_GAP       = 6;    // gridGap={6}
   const STEP           = SQUARE_SIZE + GRID_GAP;
   const MAX_OPACITY    = 0.5;  // maxOpacity={0.5}
-  const FLICKER_CHANCE = 0.02; // slower flicker (2% chance per frame)
+  const FLICKER_CHANCE = 0.005; // even slower flicker (0.5% chance per frame)
 
   let squares = [];
 
