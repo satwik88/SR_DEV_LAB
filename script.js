@@ -321,23 +321,14 @@ let isCanvasVisible = true;
 /* --- HUD CLOCK --- */
 (function clock() {
   const els = document.querySelectorAll("#hudTime, #hudTime-mobile");
-  const footerTimeEl = document.getElementById("footer-time");
-  
   setInterval(() => {
     const d = new Date();
-    // Update main HUD clock (24-hour format)
-    els.forEach(el => el.textContent = d.toTimeString().slice(0, 8));
-    
-    // Update footer clock (12-hour AM/PM format)
-    if (footerTimeEl) {
-      let hours = d.getHours();
-      const minutes = d.getMinutes().toString().padStart(2, '0');
-      const seconds = d.getSeconds().toString().padStart(2, '0');
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12; // '0' becomes '12'
-      footerTimeEl.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
-    }
+    const timeString = d.toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
+      minute: '2-digit', 
+      hour12: true 
+    });
+    els.forEach(el => el.textContent = timeString);
   }, 1000);
 })();
 
@@ -887,7 +878,7 @@ function initFooterFX() {
   const GRID_GAP       = 6;    // gridGap={6}
   const STEP           = SQUARE_SIZE + GRID_GAP;
   const MAX_OPACITY    = 0.5;  // maxOpacity={0.5}
-  const FLICKER_CHANCE = 0.005; // even slower flicker (0.5% chance per frame)
+  const FLICKER_CHANCE = 0.02; // slower flicker (2% chance per frame)
 
   let squares = [];
 
