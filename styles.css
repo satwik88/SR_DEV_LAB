@@ -2554,8 +2554,10 @@ a {
   height: 300px;
   position: relative;
   overflow: hidden;
-  background: #000;
+  background: var(--bg); /* follows light/dark theme */
   display: block;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 #footer-flicker-canvas {
@@ -2574,7 +2576,7 @@ a {
   transform: translate(-50%, -50%);
   font-family: "Bebas Neue", sans-serif;
   font-size: clamp(80px, 15vw, 180px);
-  color: #ffffff;
+  color: var(--text); /* follows light/dark theme */
   letter-spacing: 0.2em;
   opacity: 0;
   pointer-events: none;
@@ -2582,4 +2584,9 @@ a {
   transition: opacity 0.3s ease;
   white-space: nowrap;
   user-select: none;
+}
+
+/* Dark mode: slightly more opacity on dots for contrast */
+[data-theme="dark"] #panel-footer-fx {
+  background: var(--bg);
 }

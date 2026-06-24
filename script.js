@@ -829,16 +829,28 @@ function initFooterFX() {
 
   const ctx = canvas.getContext('2d');
 
-  // Read --purple from CSS variable (same pattern as initThree)
-  const cssStyle  = getComputedStyle(document.documentElement);
-  const rawPurple = cssStyle.getPropertyValue('--purple').trim();
-
+  // ── Live color reading — re-reads on theme toggle ──────────
   function hexToRgb(hex) {
     const n = parseInt(hex.replace('#', ''), 16);
     return { r: (n >> 16) & 0xff, g: (n >> 8) & 0xff, b: n & 0xff };
   }
-  const purple    = hexToRgb(rawPurple);
+
+  let purple = { r: 101, g: 82, b: 208 }; // fallback #6552d0
+  function refreshColors() {
+    const raw = getComputedStyle(document.documentElement).getPropertyValue('--purple').trim();
+    if (raw) purple = hexToRgb(raw);
+  }
+  refreshColors();
+
+  // Re-read on theme toggle (watches data-theme attribute)
+  new MutationObserver(refreshColors).observe(
+    document.documentElement,
+    { attributes: true, attributeFilter: ['data-theme'] }
+  );
+
+  // rgba helpers — always read from live `purple` object
   const purpleRgba = (a) => `rgba(${purple.r},${purple.g},${purple.b},${a})`;
+  const greyRgba   = (a) => `rgba(165,165,165,${a})`; // #a5a5a5, same as Three.js grey particles
 
   // ── Canvas resize ──────────────────────────────────────────
   function resizeCanvas() {
@@ -862,9 +874,10 @@ function initFooterFX() {
         squares.push({
           x:       c * STEP,
           y:       r * STEP,
-          opacity: Math.random() * 0.6,
-          target:  Math.random() * 0.6,
+          opacity: Math.random() * 0.3,
+          target:  Math.random() * 0.3,
           speed:   0.02 + Math.random() * 0.05,
+          isGrey:  Math.random() > 0.3, // 70% grey, 30% purple — matches reference
         });
       }
     }
@@ -873,14 +886,14 @@ function initFooterFX() {
   function updateSquares() {
     squares.forEach(sq => {
       sq.opacity += (sq.target - sq.opacity) * sq.speed;
-      if (Math.random() < 0.008) sq.target = Math.random() * 0.6;
+      if (Math.random() < 0.008) sq.target = Math.random() * 0.3;
     });
   }
 
   function drawGrid() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     squares.forEach(sq => {
-      ctx.fillStyle = purpleRgba(sq.opacity);
+      ctx.fillStyle = sq.isGrey ? greyRgba(sq.opacity) : purpleRgba(sq.opacity);
       ctx.fillRect(sq.x, sq.y, SQUARE_SIZE, SQUARE_SIZE);
     });
   }
