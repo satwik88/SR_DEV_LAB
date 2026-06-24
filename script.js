@@ -106,8 +106,8 @@ let isCanvasVisible = true;
   // Apply current theme immediately (in case theme was already set)
   if (window.__isDark && window.__isDark()) renderer.setClearColor(0x0d0d12, 1);
 
-  // Prompt 1: Observe #panel-home (or #bg-canvas) to pause WebGL when off-screen
-  const observeTarget = document.getElementById("panel-home") || canvas;
+  // Observe the canvas itself so it doesn't freeze when scrolling past the home section
+  const observeTarget = canvas;
   new IntersectionObserver(
     (entries) => { isCanvasVisible = entries[0].isIntersecting; },
     { threshold: 0 }
