@@ -320,7 +320,7 @@ let isCanvasVisible = true;
 
 /* --- HUD CLOCK --- */
 (function clock() {
-  const els = document.querySelectorAll("#hudTime, #hudTime-mobile");
+  const els = document.querySelectorAll("#hudTime, #hudTime-mobile, #footer-time");
   setInterval(() => {
     const d = new Date();
     const timeString = d.toLocaleTimeString('en-US', { 
