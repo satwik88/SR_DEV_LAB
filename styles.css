@@ -655,6 +655,7 @@ a {
 
 #panel-contact {
   background: rgba(165, 165, 165, 0.15);
+  padding-bottom: 0; /* footer FX is now outside this panel */
 }
 
 [data-theme="dark"] #panel-about {
@@ -2079,10 +2080,10 @@ a {
   letter-spacing: 0.15em;
   color: var(--muted);
   text-transform: uppercase;
-  padding-top: 2rem;
+  padding-top: 1.5rem;
   padding-bottom: 1rem;
-  margin-top: 5rem;
-  border-top: 1px solid var(--border);
+  margin-top: 0; /* footer FX section acts as separator now */
+  border-top: none; /* border-bottom on footer-fx handles separation */
   background: transparent;
 }
 
@@ -2568,25 +2569,4 @@ a {
   height: 100%;
   display: block;
 }
-
-#footer-name-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(80px, 15vw, 180px);
-  color: var(--text); /* follows light/dark theme */
-  letter-spacing: 0.2em;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 2;
-  transition: opacity 0.3s ease;
-  white-space: nowrap;
-  user-select: none;
-}
-
-/* Dark mode: slightly more opacity on dots for contrast */
-[data-theme="dark"] #panel-footer-fx {
-  background: var(--bg);
-}
+

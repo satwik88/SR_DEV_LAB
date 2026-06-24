@@ -820,12 +820,11 @@ document.addEventListener("keydown", function (e) {
   });
 })();
 
-/* --- FOOTER FX: Flickering Grid + Ripple Name Animation --- */
+/* --- FOOTER FX: MagicUI-style Flickering Grid --- */
 function initFooterFX() {
   const section = document.getElementById('panel-footer-fx');
   const canvas  = document.getElementById('footer-flicker-canvas');
-  const nameEl  = document.getElementById('footer-name-text');
-  if (!section || !canvas || !nameEl) return;
+  if (!section || !canvas) return;
 
   const ctx = canvas.getContext('2d');
 
@@ -842,15 +841,11 @@ function initFooterFX() {
   }
   refreshColors();
 
-  // Re-read on theme toggle (watches data-theme attribute)
+  // Re-read accent color whenever theme changes
   new MutationObserver(refreshColors).observe(
     document.documentElement,
     { attributes: true, attributeFilter: ['data-theme'] }
   );
-
-  // rgba helpers — always read from live `purple` object
-  const purpleRgba = (a) => `rgba(${purple.r},${purple.g},${purple.b},${a})`;
-  const greyRgba   = (a) => `rgba(165,165,165,${a})`; // #a5a5a5, same as Three.js grey particles
 
   // ── Canvas resize ──────────────────────────────────────────
   function resizeCanvas() {
@@ -859,10 +854,13 @@ function initFooterFX() {
     buildGrid();
   }
 
-  // ── Grid squares ───────────────────────────────────────────
-  const SQUARE_SIZE = 4;
-  const GRID_GAP    = 6;
-  const STEP        = SQUARE_SIZE + GRID_GAP;
+  // ── Grid config — matching MagicUI FlickeringGrid props ───
+  const SQUARE_SIZE    = 4;    // squareSize={4}
+  const GRID_GAP       = 6;    // gridGap={6}
+  const STEP           = SQUARE_SIZE + GRID_GAP;
+  const MAX_OPACITY    = 0.5;  // maxOpacity={0.5}
+  const FLICKER_CHANCE = 0.1;  // flickerChance={0.1} — 10% chance per frame per square
+
   let squares = [];
 
   function buildGrid() {
@@ -872,137 +870,47 @@ function initFooterFX() {
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         squares.push({
-          x:       c * STEP,
-          y:       r * STEP,
-          opacity: Math.random() * 0.3,
-          target:  Math.random() * 0.3,
-          speed:   0.02 + Math.random() * 0.05,
-          isGrey:  Math.random() > 0.3, // 70% grey, 30% purple — matches reference
+          x:      c * STEP,
+          y:      r * STEP,
+          op:     Math.random() * MAX_OPACITY, // initial random opacity
+          isGrey: Math.random() > 0.3,         // 70% grey (#a5a5a5), 30% purple
         });
       }
     }
   }
 
-  function updateSquares() {
-    squares.forEach(sq => {
-      sq.opacity += (sq.target - sq.opacity) * sq.speed;
-      if (Math.random() < 0.008) sq.target = Math.random() * 0.3;
-    });
-  }
-
-  function drawGrid() {
+  // ── Single tick: probabilistic instant flicker per square ──
+  function tick() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    squares.forEach(sq => {
-      ctx.fillStyle = sq.isGrey ? greyRgba(sq.opacity) : purpleRgba(sq.opacity);
-      ctx.fillRect(sq.x, sq.y, SQUARE_SIZE, SQUARE_SIZE);
-    });
-  }
-
-  // ── Ripple ─────────────────────────────────────────────────
-  function easeOutQuad(t) { return t * (2 - t); }
-
-  function rippleReveal(callback) {
-    const cx    = canvas.width  / 2;
-    const cy    = canvas.height / 2;
-    const maxR  = Math.sqrt(cx * cx + cy * cy);
-    const DURATION = 800;
-    const start = performance.now();
-
-    function frame(now) {
-      const elapsed  = now - start;
-      const progress = Math.min(elapsed / DURATION, 1);
-      const eased    = easeOutQuad(progress);
-      const radius   = eased * maxR;
-
-      drawGrid();
-
-      // Expanding fill
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-      ctx.fillStyle = purpleRgba(0.18);
-      ctx.fill();
-      // Glowing ring edge
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-      ctx.strokeStyle = purpleRgba(0.55);
-      ctx.lineWidth   = 2;
-      ctx.stroke();
-      ctx.restore();
-
-      if (progress < 1) {
-        requestAnimationFrame(frame);
-      } else {
-        callback();
+    for (let i = 0; i < squares.length; i++) {
+      const sq = squares[i];
+      // MagicUI pattern: each frame, 10% chance to snap to a new random opacity
+      if (Math.random() < FLICKER_CHANCE) {
+        sq.op = Math.random() * MAX_OPACITY;
       }
+      const r = sq.isGrey ? 165 : purple.r;
+      const g = sq.isGrey ? 165 : purple.g;
+      const b = sq.isGrey ? 165 : purple.b;
+      ctx.fillStyle = `rgba(${r},${g},${b},${sq.op})`;
+      ctx.fillRect(sq.x, sq.y, SQUARE_SIZE, SQUARE_SIZE);
     }
-    requestAnimationFrame(frame);
   }
 
-  // ── IntersectionObserver: pause RAF when off-screen ────────
+  // ── IntersectionObserver: skip frames when off-screen ─────
   let isSectionVisible = false;
   new IntersectionObserver(
     (entries) => { isSectionVisible = entries[0].isIntersecting; },
     { threshold: 0 }
   ).observe(section);
 
-  // ── Grid flicker RAF loop ──────────────────────────────────
-  let flickerRafId  = null;
-  let flickerActive = false;
-
-  function startFlicker() {
-    flickerActive = true;
-    function loop() {
-      if (!flickerActive) return;
-      if (isSectionVisible) {
-        updateSquares();
-        drawGrid();
-      }
-      flickerRafId = requestAnimationFrame(loop);
-    }
-    flickerRafId = requestAnimationFrame(loop);
-  }
-
-  function stopFlicker() {
-    flickerActive = false;
-    if (flickerRafId) cancelAnimationFrame(flickerRafId);
-    flickerRafId = null;
-  }
-
-  // ── Animation sequence (loops forever) ────────────────────
-  //  Phase 1: flicker 5s
-  //  Phase 2: ripple → show name
-  //  Phase 3: hold name 2s
-  //  Phase 4: ripple → hide name
-  //  Loop back to Phase 1
-
-  function runSequence() {
-    // Phase 1 — flicker 5 seconds
-    startFlicker();
-    setTimeout(() => {
-      stopFlicker();
-
-      // Phase 2 — ripple reveal → show name
-      rippleReveal(() => {
-        nameEl.style.opacity = '1';
-
-        // Phase 3 — hold name 2 seconds
-        setTimeout(() => {
-
-          // Phase 4 — ripple reveal → hide name → loop
-          rippleReveal(() => {
-            nameEl.style.opacity = '0';
-            runSequence(); // Phase 5 → restart
-          });
-
-        }, 2000);
-      });
-
-    }, 5000);
+  // ── Infinite RAF loop ──────────────────────────────────────
+  function loop() {
+    if (isSectionVisible) tick();
+    requestAnimationFrame(loop);
   }
 
   // ── Bootstrap ─────────────────────────────────────────────
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
-  runSequence();
+  requestAnimationFrame(loop);
 }
