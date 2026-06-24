@@ -599,6 +599,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const closeOverlayBtn = document.getElementById("closeOverlayBtn");
   if (closeOverlayBtn) closeOverlayBtn.addEventListener("click", closeProject);
+
+  // Init footer FX animation
+  initFooterFX();
 });
 
 /* --- CONTACT FORM --- */
@@ -817,3 +820,176 @@ document.addEventListener("keydown", function (e) {
   });
 })();
 
+/* --- FOOTER FX: Flickering Grid + Ripple Name Animation --- */
+function initFooterFX() {
+  const section = document.getElementById('panel-footer-fx');
+  const canvas  = document.getElementById('footer-flicker-canvas');
+  const nameEl  = document.getElementById('footer-name-text');
+  if (!section || !canvas || !nameEl) return;
+
+  const ctx = canvas.getContext('2d');
+
+  // Read --purple from CSS variable (same pattern as initThree)
+  const cssStyle  = getComputedStyle(document.documentElement);
+  const rawPurple = cssStyle.getPropertyValue('--purple').trim();
+
+  function hexToRgb(hex) {
+    const n = parseInt(hex.replace('#', ''), 16);
+    return { r: (n >> 16) & 0xff, g: (n >> 8) & 0xff, b: n & 0xff };
+  }
+  const purple    = hexToRgb(rawPurple);
+  const purpleRgba = (a) => `rgba(${purple.r},${purple.g},${purple.b},${a})`;
+
+  // ── Canvas resize ──────────────────────────────────────────
+  function resizeCanvas() {
+    canvas.width  = section.offsetWidth;
+    canvas.height = section.offsetHeight;
+    buildGrid();
+  }
+
+  // ── Grid squares ───────────────────────────────────────────
+  const SQUARE_SIZE = 4;
+  const GRID_GAP    = 6;
+  const STEP        = SQUARE_SIZE + GRID_GAP;
+  let squares = [];
+
+  function buildGrid() {
+    squares = [];
+    const cols = Math.ceil(canvas.width  / STEP) + 1;
+    const rows = Math.ceil(canvas.height / STEP) + 1;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        squares.push({
+          x:       c * STEP,
+          y:       r * STEP,
+          opacity: Math.random() * 0.6,
+          target:  Math.random() * 0.6,
+          speed:   0.02 + Math.random() * 0.05,
+        });
+      }
+    }
+  }
+
+  function updateSquares() {
+    squares.forEach(sq => {
+      sq.opacity += (sq.target - sq.opacity) * sq.speed;
+      if (Math.random() < 0.008) sq.target = Math.random() * 0.6;
+    });
+  }
+
+  function drawGrid() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    squares.forEach(sq => {
+      ctx.fillStyle = purpleRgba(sq.opacity);
+      ctx.fillRect(sq.x, sq.y, SQUARE_SIZE, SQUARE_SIZE);
+    });
+  }
+
+  // ── Ripple ─────────────────────────────────────────────────
+  function easeOutQuad(t) { return t * (2 - t); }
+
+  function rippleReveal(callback) {
+    const cx    = canvas.width  / 2;
+    const cy    = canvas.height / 2;
+    const maxR  = Math.sqrt(cx * cx + cy * cy);
+    const DURATION = 800;
+    const start = performance.now();
+
+    function frame(now) {
+      const elapsed  = now - start;
+      const progress = Math.min(elapsed / DURATION, 1);
+      const eased    = easeOutQuad(progress);
+      const radius   = eased * maxR;
+
+      drawGrid();
+
+      // Expanding fill
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.fillStyle = purpleRgba(0.18);
+      ctx.fill();
+      // Glowing ring edge
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = purpleRgba(0.55);
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+      ctx.restore();
+
+      if (progress < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        callback();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // ── IntersectionObserver: pause RAF when off-screen ────────
+  let isSectionVisible = false;
+  new IntersectionObserver(
+    (entries) => { isSectionVisible = entries[0].isIntersecting; },
+    { threshold: 0 }
+  ).observe(section);
+
+  // ── Grid flicker RAF loop ──────────────────────────────────
+  let flickerRafId  = null;
+  let flickerActive = false;
+
+  function startFlicker() {
+    flickerActive = true;
+    function loop() {
+      if (!flickerActive) return;
+      if (isSectionVisible) {
+        updateSquares();
+        drawGrid();
+      }
+      flickerRafId = requestAnimationFrame(loop);
+    }
+    flickerRafId = requestAnimationFrame(loop);
+  }
+
+  function stopFlicker() {
+    flickerActive = false;
+    if (flickerRafId) cancelAnimationFrame(flickerRafId);
+    flickerRafId = null;
+  }
+
+  // ── Animation sequence (loops forever) ────────────────────
+  //  Phase 1: flicker 5s
+  //  Phase 2: ripple → show name
+  //  Phase 3: hold name 2s
+  //  Phase 4: ripple → hide name
+  //  Loop back to Phase 1
+
+  function runSequence() {
+    // Phase 1 — flicker 5 seconds
+    startFlicker();
+    setTimeout(() => {
+      stopFlicker();
+
+      // Phase 2 — ripple reveal → show name
+      rippleReveal(() => {
+        nameEl.style.opacity = '1';
+
+        // Phase 3 — hold name 2 seconds
+        setTimeout(() => {
+
+          // Phase 4 — ripple reveal → hide name → loop
+          rippleReveal(() => {
+            nameEl.style.opacity = '0';
+            runSequence(); // Phase 5 → restart
+          });
+
+        }, 2000);
+      });
+
+    }, 5000);
+  }
+
+  // ── Bootstrap ─────────────────────────────────────────────
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+  runSequence();
+}
