@@ -297,19 +297,6 @@ let isCanvasVisible = true;
   }
   animate();
 
-  // Fade out 3D background when scrolling to footer FX to prevent overlap
-  const footerFx = document.getElementById('panel-footer-fx');
-  if (footerFx) {
-    window.addEventListener('scroll', () => {
-      const rect = footerFx.getBoundingClientRect();
-      const overlap = window.innerHeight - rect.top;
-      if (overlap > 0) {
-        canvas.style.opacity = Math.max(0, 1 - overlap / 350);
-      } else {
-        canvas.style.opacity = 1;
-      }
-    }, { passive: true });
-  }
 
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -619,8 +606,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeOverlayBtn = document.getElementById("closeOverlayBtn");
   if (closeOverlayBtn) closeOverlayBtn.addEventListener("click", closeProject);
 
-  // Init footer FX animation
-  initFooterFX();
 });
 
 /* --- CONTACT FORM --- */
@@ -839,136 +824,28 @@ document.addEventListener("keydown", function (e) {
   });
 })();
 
-/* --- FOOTER FX: MagicUI-style Flickering Grid --- */
-function initFooterFX() {
-  const section = document.getElementById('panel-footer-fx');
-  const canvas  = document.getElementById('footer-flicker-canvas');
-  if (!section || !canvas) return;
 
-  const ctx = canvas.getContext('2d');
+// ── Kinetic Text: skew-on-mousemove ───────────────────────
+{
+  const kineticText = document.getElementById('kineticText');
+  let currentSkew = 0;
+  let targetSkew = 0;
+  let lastX = 0;
 
-  // ── Live color reading — re-reads on theme toggle ──────────
-  function hexToRgb(hex) {
-    const n = parseInt(hex.replace('#', ''), 16);
-    return { r: (n >> 16) & 0xff, g: (n >> 8) & 0xff, b: n & 0xff };
-  }
-
-  let purple = { r: 101, g: 82, b: 208 }; // fallback #6552d0
-  function refreshColors() {
-    const raw = getComputedStyle(document.documentElement).getPropertyValue('--purple').trim();
-    if (raw) purple = hexToRgb(raw);
-  }
-  refreshColors();
-
-  // Re-read accent color whenever theme changes
-  new MutationObserver(refreshColors).observe(
-    document.documentElement,
-    { attributes: true, attributeFilter: ['data-theme'] }
-  );
-
-  // ── Canvas resize ──────────────────────────────────────────
-  function resizeCanvas() {
-    canvas.width  = section.offsetWidth;
-    canvas.height = section.offsetHeight;
-    buildGrid();
-  }
-
-  // ── Grid config — matching MagicUI FlickeringGrid props ───
-  const SQUARE_SIZE    = 4;    // squareSize={4}
-  const GRID_GAP       = 6;    // gridGap={6}
-  const STEP           = SQUARE_SIZE + GRID_GAP;
-  const MAX_OPACITY    = 0.5;  // maxOpacity={0.5}
-  const FLICKER_CHANCE = 0.02; // slower flicker (2% chance per frame)
-
-  let squares = [];
-
-  function buildGrid() {
-    squares = [];
-    const cols = Math.ceil(canvas.width  / STEP) + 1;
-    const rows = Math.ceil(canvas.height / STEP) + 1;
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        squares.push({
-          x:      c * STEP,
-          y:      r * STEP,
-          op:     Math.random() * MAX_OPACITY, // initial random opacity
-          isGrey: Math.random() > 0.3,         // 70% grey (#a5a5a5), 30% purple
-          hoverIntensity: 0,                   // hover trail intensity
-        });
-      }
-    }
-  }
-
-  let mouseX = -9999;
-  let mouseY = -9999;
-
-  section.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
+  document.addEventListener('mousemove', (e) => {
+    const velocity = e.clientX - lastX;
+    lastX = e.clientX;
+    targetSkew = Math.max(-15, Math.min(15, velocity * 0.4));
   });
 
-  section.addEventListener('mouseleave', () => {
-    mouseX = -9999;
-    mouseY = -9999;
-  });
-
-  // ── Single tick: probabilistic instant flicker per square ──
-  function tick() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < squares.length; i++) {
-      const sq = squares[i];
-      // MagicUI pattern: each frame, 10% chance to snap to a new random opacity
-      if (Math.random() < FLICKER_CHANCE) {
-        sq.op = Math.random() * MAX_OPACITY;
-      }
-      
-      let finalOp = sq.op;
-      let r = sq.isGrey ? 165 : purple.r;
-      let g = sq.isGrey ? 165 : purple.g;
-      let b = sq.isGrey ? 165 : purple.b;
-
-      // Mouse hover reaction - decaying trail
-      sq.hoverIntensity *= 0.95; // fade out by 5% each frame
-
-      const dx = mouseX - (sq.x + SQUARE_SIZE / 2);
-      const dy = mouseY - (sq.y + SQUARE_SIZE / 2);
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      
-      const HOVER_RADIUS = 60; // reduced radius
-      if (dist < HOVER_RADIUS) {
-        // Boost intensity when mouse is close
-        const factor = 1 - (dist / HOVER_RADIUS);
-        sq.hoverIntensity = Math.max(sq.hoverIntensity, factor);
-      }
-
-      if (sq.hoverIntensity > 0.01) {
-        finalOp = Math.max(sq.op, sq.hoverIntensity * 0.8);
-        r = purple.r;
-        g = purple.g;
-        b = purple.b;
-      }
-
-      ctx.fillStyle = `rgba(${r},${g},${b},${finalOp})`;
-      ctx.fillRect(sq.x, sq.y, SQUARE_SIZE, SQUARE_SIZE);
+  function animateKinetic() {
+    currentSkew += (targetSkew - currentSkew) * 0.08;
+    targetSkew  += (0 - targetSkew) * 0.05;
+    if (kineticText) {
+      kineticText.style.transform = `skewX(${currentSkew}deg)`;
     }
+    requestAnimationFrame(animateKinetic);
   }
 
-  // ── IntersectionObserver: skip frames when off-screen ─────
-  let isSectionVisible = false;
-  new IntersectionObserver(
-    (entries) => { isSectionVisible = entries[0].isIntersecting; },
-    { threshold: 0 }
-  ).observe(section);
-
-  // ── Infinite RAF loop ──────────────────────────────────────
-  function loop() {
-    if (isSectionVisible) tick();
-    requestAnimationFrame(loop);
-  }
-
-  // ── Bootstrap ─────────────────────────────────────────────
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-  requestAnimationFrame(loop);
+  animateKinetic();
 }
