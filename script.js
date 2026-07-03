@@ -823,3 +823,88 @@ document.addEventListener("keydown", function (e) {
     }
   });
 })();
+
+// ── Kinetic Text: rAF loop for distance-based animation ───────────────────────
+(function () {
+    const wrap = document.getElementById('kineticText');
+    if (!wrap) return;
+
+    const chars = Array.from(wrap.querySelectorAll('.kinetic-char'));
+    const count = chars.length;
+
+    // Current animated values per letter
+    const weights = new Float32Array(count).fill(300);
+    const scales = new Float32Array(count).fill(1);
+    const glows = new Float32Array(count).fill(0);
+
+    // Target values per letter
+    const targetWeights = new Float32Array(count).fill(300);
+    const targetScales = new Float32Array(count).fill(1);
+    const targetGlows = new Float32Array(count).fill(0);
+
+    let mouseX = -9999;
+    let mouseY = -9999;
+
+    // Track mouse globally — avoids gap-between-spans problem
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    document.addEventListener('mouseleave', () => {
+        mouseX = -9999;
+        mouseY = -9999;
+    });
+
+    function lerp(a, b, t) {
+        return a + (b - a) * t;
+    }
+
+    function clamp(val, min, max) {
+        return Math.max(min, Math.min(max, val));
+    }
+
+    function tick() {
+        // Get bounding rect of each char this frame
+        chars.forEach((char, i) => {
+            const rect = char.getBoundingClientRect();
+            const charCenterX = rect.left + rect.width / 2;
+            const charCenterY = rect.top + rect.height / 2;
+
+            // Distance from cursor to this letter's center
+            const dx = mouseX - charCenterX;
+            const dy = mouseY - charCenterY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            // Influence radius — letters within 140px feel the effect
+            const radius = 140;
+            const proximity = clamp(1 - dist / radius, 0, 1);
+
+            // Eased proximity (quadratic) for smoother falloff
+            const eased = proximity * proximity;
+
+            // Set targets based on proximity
+            targetWeights[i] = lerp(300, 900, eased);
+            targetScales[i] = lerp(1, 1.15, eased);
+            targetGlows[i] = lerp(0, 0.4, eased);
+        });
+
+        // Lerp current values toward targets every frame
+        chars.forEach((char, i) => {
+            // Different lerp speeds for staggered feel
+            weights[i] = lerp(weights[i], targetWeights[i], 0.12);
+            scales[i] = lerp(scales[i], targetScales[i], 0.16);
+            glows[i] = lerp(glows[i], targetGlows[i], 0.14);
+
+            // Apply
+            const roundedWeight = Math.round(weights[i] / 50) * 50;
+            char.style.fontWeight = roundedWeight;
+            char.style.transform = `scale(${scales[i].toFixed(4)})`;
+            char.style.textShadow = `0 0 20px rgba(255, 255, 255, ${glows[i].toFixed(3)})`;
+        });
+
+        requestAnimationFrame(tick);
+    }
+
+    tick();
+})();

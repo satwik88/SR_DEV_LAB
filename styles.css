@@ -2584,11 +2584,13 @@ a {
   align-items: center;
   justify-content: center;
   cursor: default;
+  gap: 0;
 }
 
 .kinetic-text-inner {
   display: flex;
   align-items: center;
+  gap: 0;
 }
 
 .kinetic-char {
@@ -2600,44 +2602,18 @@ a {
   display: inline-block;
   color: var(--text, #e5e7eb);
   
-  /* Smooth transition for all kinetic properties */
-  transition: 
-    font-weight 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-    transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-    margin 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-    text-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    
-  will-change: font-weight, transform, margin, text-shadow;
-}
-
-/* 1. The Hovered Letter */
-.kinetic-char:hover {
-  font-weight: 900;
-  transform: scale(1.1);
-  margin: 0 0.15em;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-}
-
-/* 2. Immediate Neighbors (Distance 1) */
-.kinetic-char:hover + .kinetic-char,
-.kinetic-char:has(+ .kinetic-char:hover) {
-  font-weight: 600;
-  transform: scale(1.04);
-}
-
-/* 3. Outer Neighbors (Distance 2) */
-.kinetic-char:hover + .kinetic-char + .kinetic-char,
-.kinetic-char:has(+ .kinetic-char + .kinetic-char:hover) {
-  font-weight: 400;
-  transform: scale(1.01);
+  will-change: transform, font-weight, text-shadow;
+  
+  /* CRITICAL: fixed width prevents reflow when font-weight changes */
+  width: 0.62em;
+  text-align: center;
+  
+  /* Initial JS state - no transition properties here */
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0);
 }
 
 /* Light mode adjustments */
 [data-theme="light"] .kinetic-char {
   color: var(--text, #111827);
-}
-
-[data-theme="light"] .kinetic-char:hover {
-  text-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
