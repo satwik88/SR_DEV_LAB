@@ -2598,16 +2598,14 @@ a {
   text-transform: uppercase;
   font-family: inherit;
   display: inline-block;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(139, 92, 246, 0.4);
+  color: var(--text, #e5e7eb);
   
   /* Smooth transition for all kinetic properties */
   transition: 
     font-weight 0.4s cubic-bezier(0.25, 1, 0.5, 1),
     transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
     margin 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-    text-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-    -webkit-text-stroke 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    text-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     
   will-change: font-weight, transform, margin, text-shadow;
 }
@@ -2617,8 +2615,7 @@ a {
   font-weight: 900;
   transform: scale(1.1);
   margin: 0 0.15em;
-  -webkit-text-stroke: 1.5px rgba(139, 92, 246, 0.9);
-  text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
 /* 2. Immediate Neighbors (Distance 1) */
@@ -2637,11 +2634,10 @@ a {
 
 /* Light mode adjustments */
 [data-theme="light"] .kinetic-char {
-  -webkit-text-stroke: 1.5px rgba(109, 40, 217, 0.35);
+  color: var(--text, #111827);
 }
 
 [data-theme="light"] .kinetic-char:hover {
-  -webkit-text-stroke: 1.5px rgba(109, 40, 217, 0.85);
-  text-shadow: 0 0 20px rgba(109, 40, 217, 0.3);
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
