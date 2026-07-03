@@ -2537,7 +2537,7 @@ a {
 #panel-contact {
   background: var(--contact-bg);
   padding-bottom: 0;
-  min-height: auto;
+  min-height: 0;
   position: relative;
   z-index: 2; /* Ensure contact form elements remain clickable over the footer fx */
 }
@@ -2563,6 +2563,7 @@ a {
   align-items: center;
   padding: 0 0 1rem;
   margin-top: 1rem;
+  -webkit-user-select: none;
   user-select: none;
 }
 

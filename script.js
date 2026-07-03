@@ -17,10 +17,20 @@
     if (window.__threeSetBg) window.__threeSetBg(dark ? BG_DARK : BG_LIGHT);
   }
 
-  /* --- Restore saved preference --- */
-  let dark = localStorage.getItem("theme") === "dark";
-  applyTheme(dark);
+  /* --- Restore saved preference or use time-based default --- */
+  let savedTheme = localStorage.getItem("theme");
+  let dark = false;
 
+  if (savedTheme) {
+    dark = savedTheme === "dark";
+  } else {
+    const hour = new Date().getHours();
+    // Light mode from 6 AM (6) to 5:59 PM (17)
+    // Dark mode from 6 PM (18) to 5:59 AM (5)
+    dark = (hour >= 18 || hour < 6);
+  }
+
+  applyTheme(dark);
   window.__applyTheme = applyTheme;
   window.__isDark = () => dark;
 
@@ -829,6 +839,31 @@ document.addEventListener("keydown", function (e) {
     const wrap = document.getElementById('kineticText');
     if (!wrap) return;
 
+    // Auto-generate spans from data-text attribute
+    const text = wrap.getAttribute('data-text') || 'SATWIK';
+    
+    // Create screen-reader version
+    const srSpan = document.createElement('span');
+    srSpan.className = 'sr-only';
+    srSpan.textContent = text;
+    wrap.appendChild(srSpan);
+    wrap.setAttribute('aria-label', text);
+    
+    // Create kinetic characters wrapper
+    const innerDiv = document.createElement('div');
+    innerDiv.className = 'kinetic-text-inner';
+    innerDiv.setAttribute('aria-hidden', 'true');
+    
+    text.split('').forEach(char => {
+        const charSpan = document.createElement('span');
+        charSpan.className = 'kinetic-char';
+        charSpan.setAttribute('data-char', char);
+        charSpan.innerHTML = char === ' ' ? '&nbsp;' : char;
+        innerDiv.appendChild(charSpan);
+    });
+    
+    wrap.appendChild(innerDiv);
+
     const chars = Array.from(wrap.querySelectorAll('.kinetic-char'));
     const count = chars.length;
 
@@ -836,11 +871,15 @@ document.addEventListener("keydown", function (e) {
     const weights = new Float32Array(count).fill(300);
     const scales = new Float32Array(count).fill(1);
     const glows = new Float32Array(count).fill(0);
+    const currentX = new Float32Array(count).fill(0);
+    const currentY = new Float32Array(count).fill(0);
 
     // Target values per letter
     const targetWeights = new Float32Array(count).fill(300);
     const targetScales = new Float32Array(count).fill(1);
     const targetGlows = new Float32Array(count).fill(0);
+    const targetX = new Float32Array(count).fill(0);
+    const targetY = new Float32Array(count).fill(0);
 
     let mouseX = -9999;
     let mouseY = -9999;
@@ -887,6 +926,16 @@ document.addEventListener("keydown", function (e) {
             targetWeights[i] = lerp(300, 900, eased);
             targetScales[i] = lerp(1, 1.15, eased);
             targetGlows[i] = lerp(0, 0.4, eased);
+
+            // Magnetic Repulsion Effect
+            const pushForce = Math.sin(proximity * Math.PI) * -35; 
+            if (dist > 0 && proximity > 0) {
+                targetX[i] = (dx / dist) * pushForce;
+                targetY[i] = (dy / dist) * pushForce;
+            } else {
+                targetX[i] = 0;
+                targetY[i] = 0;
+            }
         });
 
         // Lerp current values toward targets every frame
@@ -895,11 +944,13 @@ document.addEventListener("keydown", function (e) {
             weights[i] = lerp(weights[i], targetWeights[i], 0.12);
             scales[i] = lerp(scales[i], targetScales[i], 0.16);
             glows[i] = lerp(glows[i], targetGlows[i], 0.14);
+            currentX[i] = lerp(currentX[i], targetX[i], 0.12);
+            currentY[i] = lerp(currentY[i], targetY[i], 0.12);
 
             // Apply
             const roundedWeight = Math.round(weights[i] / 50) * 50;
             char.style.fontWeight = roundedWeight;
-            char.style.transform = `scale(${scales[i].toFixed(4)})`;
+            char.style.transform = `translate(${currentX[i].toFixed(2)}px, ${currentY[i].toFixed(2)}px) scale(${scales[i].toFixed(4)})`;
             char.style.textShadow = `0 0 20px rgba(255, 255, 255, ${glows[i].toFixed(3)})`;
         });
 
