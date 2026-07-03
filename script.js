@@ -823,29 +823,3 @@ document.addEventListener("keydown", function (e) {
     }
   });
 })();
-
-
-// ── Kinetic Text: skew-on-mousemove ───────────────────────
-{
-  const kineticText = document.getElementById('kineticText');
-  let currentSkew = 0;
-  let targetSkew = 0;
-  let lastX = 0;
-
-  document.addEventListener('mousemove', (e) => {
-    const velocity = e.clientX - lastX;
-    lastX = e.clientX;
-    targetSkew = Math.max(-15, Math.min(15, velocity * 0.4));
-  });
-
-  function animateKinetic() {
-    currentSkew += (targetSkew - currentSkew) * 0.08;
-    targetSkew  += (0 - targetSkew) * 0.05;
-    if (kineticText) {
-      kineticText.style.transform = `skewX(${currentSkew}deg)`;
-    }
-    requestAnimationFrame(animateKinetic);
-  }
-
-  animateKinetic();
-}
