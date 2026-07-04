@@ -24,6 +24,8 @@
   --contact-bg: rgba(165, 165, 165, 0.15);
   --mono: "JetBrains Mono", monospace;
   --sans: "Space Grotesk", sans-serif;
+  --tp-blend: multiply;
+  --tp-fill: white;
 }
 
 [data-theme="dark"] {
@@ -38,6 +40,8 @@
   --border: rgba(255, 255, 255, 0.12);
   --card: rgba(20, 20, 32, 0.85);
   --contact-bg: rgba(167, 139, 250, 0.04);
+  --tp-blend: screen;
+  --tp-fill: black;
 }
 
 /* ── 3. BASE / GLOBAL ─────────────────────────────────────── */
@@ -2617,4 +2621,13 @@ a {
 [data-theme="light"] .kinetic-char {
   color: var(--text, #111827);
 }
-
+
+/* ScrollFloat Text Animation */
+.scroll-float { overflow: hidden; }
+.scroll-float-text { display: inline-block; }
+.char { display: inline-block; }
+
+/* ScrollFloat Text Animation */
+.scroll-float { overflow: hidden; }
+.scroll-float-text { display: inline-block; }
+.char { display: inline-block; }

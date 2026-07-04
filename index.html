@@ -62,6 +62,9 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap"
     rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap"
+    rel="stylesheet" />
 
   <!-- Styles, PWA & Favicon -->
   <link rel="stylesheet" href="styles.css?v=48" />
@@ -526,9 +529,9 @@
           </form>
         </div>
 
-        <!-- Kinetic Text -->
-        <div class="kinetic-text-wrap">
-          <h1 class="kinetic-text" id="kineticText" data-text="SATWIK"></h1>
+        <!-- TextPressure Container -->
+        <div class="kinetic-text-wrap" id="textPressureContainer" style="position: relative; height: 300px;">
+          <h1 class="kinetic-text" id="textPressureTitle" data-text="Satwik Raj"></h1>
         </div>
       </div>
     </section>
@@ -537,6 +540,22 @@
       &copy; 2026 Satwik Raj &mdash; Built with HTML, CSS &amp; JS
     </footer>
   </main>
+
+  <!-- ═══════════════════════════════════════════
+    SVG FILTER FOR HOLLOW STROKE
+  ═══════════════════════════════════════════ -->
+  <svg width="0" height="0" style="position: absolute; pointer-events: none;">
+    <filter id="hollow-stroke">
+      <feMorphology in="SourceAlpha" result="DILATED" operator="dilate" radius="1.5"></feMorphology>
+      <feComposite in="DILATED" in2="SourceAlpha" operator="out" result="OUTLINE"></feComposite>
+      <!-- The stroke color is injected via CSS --text variable -->
+      <feFlood flood-color="var(--text, #fff)" flood-opacity="1" result="COLOR"></feFlood>
+      <feComposite in="COLOR" in2="OUTLINE" operator="in" result="COLORED_OUTLINE"></feComposite>
+      <feMerge>
+        <feMergeNode in="COLORED_OUTLINE"></feMergeNode>
+      </feMerge>
+    </filter>
+  </svg>
 
   <!-- ═══════════════════════════════════════════
     PROJECT DETAIL OVERLAY
@@ -564,6 +583,8 @@
 
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GSAP ScrollTrigger for ScrollFloat component -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="script.js?v=33"></script>
   <!-- React + Framer Motion Projects Stacking Component (plain ES module, no Babel) -->
   <script type="module" src="projects-component.js"></script>

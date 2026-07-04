@@ -834,128 +834,170 @@ document.addEventListener("keydown", function (e) {
   });
 })();
 
-// ── Kinetic Text: rAF loop for distance-based animation ───────────────────────
-(function () {
-    const wrap = document.getElementById('kineticText');
-    if (!wrap) return;
+// ── TextPressure: distance-based font variation ───────────────────────
+(function initTextPressure() {
+    const container = document.getElementById('textPressureContainer');
+    const title = document.getElementById('textPressureTitle');
+    if (!container || !title) return;
 
-    // Auto-generate spans from data-text attribute
-    const text = wrap.getAttribute('data-text') || 'SATWIK';
+    const text = title.getAttribute('data-text') || 'SATWIK';
+    title.innerHTML = '';
     
-    // Create screen-reader version
-    const srSpan = document.createElement('span');
-    srSpan.className = 'sr-only';
-    srSpan.textContent = text;
-    wrap.appendChild(srSpan);
-    wrap.setAttribute('aria-label', text);
+    // Config matching the React component default props + user's snippet
+    const config = {
+        width: true,
+        weight: true,
+        italic: false, // user set to false
+        alpha: false,  // user set to false
+        stroke: true, 
+        scale: false,
+        textColor: 'transparent',
+        strokeColor: 'var(--text)',
+        minFontSize: 36
+    };
+
+    // Apply styles to container/title
+    title.style.fontFamily = "'Roboto Flex', sans-serif";
+    title.style.textTransform = "uppercase";
+    title.style.margin = "0";
+    title.style.textAlign = "center";
+    title.style.userSelect = "none";
+    title.style.whiteSpace = "nowrap";
+    title.style.fontWeight = "100";
+    title.style.width = "100%";
+    title.style.color = config.textColor;
+    title.style.display = "flex";
+    title.style.justifyContent = "space-between";
+
+    const spans = [];
+    const chars = text.split('');
     
-    // Create kinetic characters wrapper
-    const innerDiv = document.createElement('div');
-    innerDiv.className = 'kinetic-text-inner';
-    innerDiv.setAttribute('aria-hidden', 'true');
-    
-    text.split('').forEach(char => {
-        const charSpan = document.createElement('span');
-        charSpan.className = 'kinetic-char';
-        charSpan.setAttribute('data-char', char);
-        charSpan.innerHTML = char === ' ' ? '&nbsp;' : char;
-        innerDiv.appendChild(charSpan);
-    });
-    
-    wrap.appendChild(innerDiv);
-
-    const chars = Array.from(wrap.querySelectorAll('.kinetic-char'));
-    const count = chars.length;
-
-    // Current animated values per letter
-    const weights = new Float32Array(count).fill(300);
-    const scales = new Float32Array(count).fill(1);
-    const glows = new Float32Array(count).fill(0);
-    const currentX = new Float32Array(count).fill(0);
-    const currentY = new Float32Array(count).fill(0);
-
-    // Target values per letter
-    const targetWeights = new Float32Array(count).fill(300);
-    const targetScales = new Float32Array(count).fill(1);
-    const targetGlows = new Float32Array(count).fill(0);
-    const targetX = new Float32Array(count).fill(0);
-    const targetY = new Float32Array(count).fill(0);
-
-    let mouseX = -9999;
-    let mouseY = -9999;
-
-    // Track mouse globally — avoids gap-between-spans problem
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    document.addEventListener('mouseleave', () => {
-        mouseX = -9999;
-        mouseY = -9999;
-    });
-
-    function lerp(a, b, t) {
-        return a + (b - a) * t;
+    // Apply SVG filter to the container to stroke the alpha mask
+    if (config.stroke) {
+        container.style.filter = "url(#hollow-stroke)";
     }
 
-    function clamp(val, min, max) {
-        return Math.max(min, Math.min(max, val));
-    }
+    chars.forEach((char) => {
+        const span = document.createElement('span');
+        span.setAttribute('data-char', char);
+        span.textContent = char;
+        span.style.display = 'inline-block';
+        // We render it completely opaque so the SVG filter can extract its alpha mask
+        span.style.color = config.stroke ? 'var(--text)' : config.textColor;
+        title.appendChild(span);
+        spans.push(span);
+    });
 
-    function tick() {
-        // Get bounding rect of each char this frame
-        chars.forEach((char, i) => {
-            const rect = char.getBoundingClientRect();
-            const charCenterX = rect.left + rect.width / 2;
-            const charCenterY = rect.top + rect.height / 2;
+    let fontSize = config.minFontSize;
+    let scaleY = 1;
+    let lineHeight = 1;
 
-            // Distance from cursor to this letter's center
-            const dx = mouseX - charCenterX;
-            const dy = mouseY - charCenterY;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+    let mouse = { x: 0, y: 0 };
+    let cursor = { x: 0, y: 0 };
 
-            // Influence radius — letters within 140px feel the effect
-            const radius = 140;
-            const proximity = clamp(1 - dist / radius, 0, 1);
+    const handleMouseMove = (e) => {
+        cursor.x = e.clientX;
+        cursor.y = e.clientY;
+    };
+    
+    const handleTouchMove = (e) => {
+        const t = e.touches[0];
+        cursor.x = t.clientX;
+        cursor.y = t.clientY;
+    };
 
-            // Eased proximity (quadratic) for smoother falloff
-            const eased = proximity * proximity;
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
 
-            // Set targets based on proximity
-            targetWeights[i] = lerp(300, 900, eased);
-            targetScales[i] = lerp(1, 1.15, eased);
-            targetGlows[i] = lerp(0, 0.4, eased);
+    // Initial mouse pos
+    const updateInitialPos = () => {
+        const rect = container.getBoundingClientRect();
+        mouse.x = rect.left + rect.width / 2;
+        mouse.y = rect.top + rect.height / 2;
+        cursor.x = mouse.x;
+        cursor.y = mouse.y;
+    };
+    updateInitialPos();
 
-            // Magnetic Repulsion Effect
-            const pushForce = Math.sin(proximity * Math.PI) * -35; 
-            if (dist > 0 && proximity > 0) {
-                targetX[i] = (dx / dist) * pushForce;
-                targetY[i] = (dy / dist) * pushForce;
-            } else {
-                targetX[i] = 0;
-                targetY[i] = 0;
+    const setSize = () => {
+        const rect = container.getBoundingClientRect();
+        let newFontSize = rect.width / (chars.length / 2);
+        newFontSize = Math.max(newFontSize, config.minFontSize);
+        
+        fontSize = newFontSize;
+        scaleY = 1;
+        lineHeight = 1;
+        
+        title.style.fontSize = `${fontSize}px`;
+        title.style.lineHeight = lineHeight;
+        title.style.transform = `scale(1, ${scaleY})`;
+        
+        requestAnimationFrame(() => {
+            const textRect = title.getBoundingClientRect();
+            if (config.scale && textRect.height > 0) {
+                const yRatio = rect.height / textRect.height;
+                scaleY = yRatio;
+                lineHeight = yRatio;
+                title.style.lineHeight = lineHeight;
+                title.style.transform = `scale(1, ${scaleY})`;
+            }
+        });
+    };
+
+    let timeoutId;
+    const debouncedSetSize = () => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(setSize, 100);
+    };
+
+    debouncedSetSize();
+    window.addEventListener('resize', debouncedSetSize);
+
+    const dist = (a, b) => {
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    };
+
+    const getAttr = (distance, maxDist, minVal, maxVal) => {
+        const val = maxVal - Math.abs((maxVal * distance) / maxDist);
+        return Math.max(minVal, val + minVal);
+    };
+
+    let rafId;
+    const animate = () => {
+        mouse.x += (cursor.x - mouse.x) / 15;
+        mouse.y += (cursor.y - mouse.y) / 15;
+
+        const titleRect = title.getBoundingClientRect();
+        const maxDist = titleRect.width / 2;
+
+        spans.forEach(span => {
+            const rect = span.getBoundingClientRect();
+            const charCenter = {
+                x: rect.x + rect.width / 2,
+                y: rect.y + rect.height / 2
+            };
+
+            const d = dist(mouse, charCenter);
+
+            const wdth = config.width ? Math.floor(getAttr(d, maxDist, 5, 200)) : 100;
+            const wght = config.weight ? Math.floor(getAttr(d, maxDist, 100, 900)) : 400;
+            const italVal = config.italic ? getAttr(d, maxDist, 0, 1).toFixed(2) : 0;
+            const alphaVal = config.alpha ? getAttr(d, maxDist, 0, 1).toFixed(2) : 1;
+
+            const newSettings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
+
+            if (span.style.fontVariationSettings !== newSettings) {
+                span.style.fontVariationSettings = newSettings;
+            }
+            if (config.alpha && span.style.opacity !== alphaVal) {
+                span.style.opacity = alphaVal;
             }
         });
 
-        // Lerp current values toward targets every frame
-        chars.forEach((char, i) => {
-            // Different lerp speeds for staggered feel
-            weights[i] = lerp(weights[i], targetWeights[i], 0.12);
-            scales[i] = lerp(scales[i], targetScales[i], 0.16);
-            glows[i] = lerp(glows[i], targetGlows[i], 0.14);
-            currentX[i] = lerp(currentX[i], targetX[i], 0.12);
-            currentY[i] = lerp(currentY[i], targetY[i], 0.12);
+        rafId = requestAnimationFrame(animate);
+    };
 
-            // Apply
-            const roundedWeight = Math.round(weights[i] / 50) * 50;
-            char.style.fontWeight = roundedWeight;
-            char.style.transform = `translate(${currentX[i].toFixed(2)}px, ${currentY[i].toFixed(2)}px) scale(${scales[i].toFixed(4)})`;
-            char.style.textShadow = `0 0 20px rgba(255, 255, 255, ${glows[i].toFixed(3)})`;
-        });
-
-        requestAnimationFrame(tick);
-    }
-
-    tick();
+    animate();
 })();
