@@ -2627,6 +2627,17 @@ a {
 .scroll-float-text { display: inline-block; }
 .char { display: inline-block; }
 
+/* Inline Style Replacements */
+#textPressureContainer {
+  position: relative;
+  height: 300px;
+}
+
+#hollow-stroke-svg {
+  position: absolute;
+  pointer-events: none;
+}
+
 /* ScrollFloat Text Animation */
 .scroll-float { overflow: hidden; }
 .scroll-float-text { display: inline-block; }

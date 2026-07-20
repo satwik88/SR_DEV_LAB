@@ -530,7 +530,7 @@
         </div>
 
         <!-- TextPressure Container -->
-        <div class="kinetic-text-wrap" id="textPressureContainer" style="position: relative; height: 300px;">
+        <div class="kinetic-text-wrap" id="textPressureContainer">
           <h1 class="kinetic-text" id="textPressureTitle" data-text="Satwik Raj"></h1>
         </div>
       </div>
@@ -544,7 +544,7 @@
   <!-- ═══════════════════════════════════════════
     SVG FILTER FOR HOLLOW STROKE
   ═══════════════════════════════════════════ -->
-  <svg width="0" height="0" style="position: absolute; pointer-events: none;">
+  <svg width="0" height="0" id="hollow-stroke-svg">
     <filter id="hollow-stroke">
       <feMorphology in="SourceAlpha" result="DILATED" operator="dilate" radius="1.5"></feMorphology>
       <feComposite in="DILATED" in2="SourceAlpha" operator="out" result="OUTLINE"></feComposite>
