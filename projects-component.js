@@ -18,19 +18,6 @@ const projects = [
   {
     number: "01",
     category: "Personal",
-    name: "Personal Website",
-    image: "assets/portfolio.png",
-    bullets: [
-      "Interactive developer portfolio with a reactive 3D WebGL particle field using Three.js",
-      "Glassmorphism UI with dark/light mode toggle and smooth circle-wipe transition animation",
-      "Smooth single-page panel architecture with custom navigation and scroll progress",
-    ],
-    tech: ["HTML5", "CSS3", "Vanilla JS", "Three.js", "UI/UX"],
-    github: "https://github.com/satwik88/SR_DEV_LAB",
-  },
-  {
-    number: "02",
-    category: "Personal",
     name: "The Global Grid",
     image: "assets/global_grid.png",
     bullets: [
@@ -41,7 +28,7 @@ const projects = [
     live: "https://the-global-grid.vercel.app/",
   },
   {
-    number: "03",
+    number: "02",
     category: "Personal",
     name: "Smart Delivery System",
     image: "assets/smart_delivery.png",
@@ -53,7 +40,7 @@ const projects = [
     live: "https://smart-delivery-system-beta.vercel.app",
   },
   {
-    number: "04",
+    number: "03",
     category: "Personal",
     name: "Food Ordering System",
     image: "assets/food_ordering.png",
