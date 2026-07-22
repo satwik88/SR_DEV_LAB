@@ -1,7 +1,6 @@
-const CACHE_NAME = 'SR-DEV-LAB-v3';
+const CACHE_NAME = 'SR-DEV-LAB-v4';
 const ASSETS_TO_CACHE = [
   '/',
-  '/index.html',
   '/styles.css',
   '/script.js',
   '/projects-component.js',
