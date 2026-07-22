@@ -1,4 +1,4 @@
-const CACHE_NAME = 'portfolio-v2';
+const CACHE_NAME = 'portfolio-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -15,7 +15,13 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(ASSETS_TO_CACHE))
+      .then(cache => {
+        return Promise.all(
+          ASSETS_TO_CACHE.map(url => 
+            cache.add(url).catch(err => console.error('[SW] Failed to cache:', url, err))
+          )
+        );
+      })
       .then(() => self.skipWaiting())
   );
 });
@@ -35,30 +41,21 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // Cache-First Strategy
   event.respondWith(
     caches.match(event.request)
       .then(cachedResponse => {
         if (cachedResponse) {
           return cachedResponse;
         }
-        
         return fetch(event.request).then(networkResponse => {
-          // Only cache valid basic responses (not third party APIs, etc. unless needed)
-          // We check scheme to avoid caching chrome-extension:// etc.
           if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic' || !event.request.url.startsWith('http')) {
             return networkResponse;
           }
-          
           const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME)
-            .then(cache => {
-              cache.put(event.request, responseToCache);
-            });
-            
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseToCache));
           return networkResponse;
         }).catch(() => {
-          // Optional: Return a fallback offline page if needed here
+          return new Response('', { status: 408, statusText: 'Offline - resource not cached' });
         });
       })
   );
