@@ -1001,3 +1001,16 @@ document.addEventListener("keydown", function (e) {
 
     animate();
 })();
+
+/* --- SERVICE WORKER REGISTRATION --- */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(registration => {
+      console.log('[SW] Registration successful with scope:', registration.scope);
+    }).catch(err => {
+      console.error('[SW] Registration failed:', err);
+    });
+  });
+} else {
+  console.warn('[SW] Service Workers are not supported in this browser.');
+}
