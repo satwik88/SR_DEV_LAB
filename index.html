@@ -588,6 +588,23 @@
   <script src="script.js?v=33"></script>
   <!-- React + Framer Motion Projects Stacking Component (plain ES module, no Babel) -->
   <script type="module" src="projects-component.js"></script>
+
+  <!-- ═══════════════════════════════════════════
+    SERVICE WORKER REGISTRATION
+  ═══════════════════════════════════════════ -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+          console.log('[SW] Registration successful with scope:', registration.scope);
+        }).catch(err => {
+          console.error('[SW] Registration failed:', err);
+        });
+      });
+    } else {
+      console.warn('[SW] Service Workers are not supported in this browser.');
+    }
+  </script>
 </body>
 
 </html>
