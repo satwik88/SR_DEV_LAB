@@ -1,4 +1,4 @@
-const CACHE_NAME = 'portfolio-v1';
+const CACHE_NAME = 'portfolio-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -7,7 +7,6 @@ const ASSETS_TO_CACHE = [
   '/projects-component.js',
   '/site.webmanifest',
   '/assets/logo.png',
-  '/assets/resume.pdf',
   '/assets/portfolio.png',
   '/assets/icon-192.png',
   '/assets/icon-512.png'
