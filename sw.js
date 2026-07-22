@@ -1,4 +1,4 @@
-const CACHE_NAME = 'portfolio-v3';
+const CACHE_NAME = 'SR-DEV-LAB-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -17,7 +17,7 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         return Promise.all(
-          ASSETS_TO_CACHE.map(url => 
+          ASSETS_TO_CACHE.map(url =>
             cache.add(url).catch(err => console.error('[SW] Failed to cache:', url, err))
           )
         );
