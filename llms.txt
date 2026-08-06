@@ -3,7 +3,8 @@ CSE student and developer
 Portfolio site
 
 Tech Stack:
-Vanilla HTML, CSS, JavaScript
+HTML, CSS, JavaScript
+React (used for the Projects stacking component)
 Three.js (WebGL background)
 GSAP (Animations)
 
