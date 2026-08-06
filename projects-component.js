@@ -20,6 +20,8 @@ const projects = [
     category: "Personal",
     name: "The Global Grid",
     image: "assets/global_grid.png",
+    imgWidth: 1024,
+    imgHeight: 436,
     bullets: [
       "A premium international digital newspaper site blending traditional print journalism with modern web technology — category sections, a daily print-style front page, searchable archive, bookmarks, and downloadable PDF editions."
     ],
@@ -32,6 +34,8 @@ const projects = [
     category: "Personal",
     name: "Smart Delivery System",
     image: "assets/smart_delivery.png",
+    imgWidth: 1024,
+    imgHeight: 432,
     bullets: [
       "A full-stack logistics platform implementing 13 classic algorithms (Dijkstra, Floyd-Warshall, Knapsack, Kruskal/Prim, N-Queens & more) to optimize delivery routing, resource allocation, and network topography — with live order tracking and an admin panel."
     ],
@@ -44,6 +48,8 @@ const projects = [
     category: "Personal",
     name: "Food Ordering System",
     image: "assets/food_ordering.png",
+    imgWidth: 1903,
+    imgHeight: 950,
     bullets: [
       "CLI-based food ordering app in Python with full MySQL persistence",
       "Handles menu browsing, order placement, and order history end-to-end",
@@ -60,6 +66,8 @@ const Card = ({
   category,
   name,
   image,
+  imgWidth,
+  imgHeight,
   bullets,
   tech,
   github,
@@ -196,6 +204,8 @@ const Card = ({
               e("img", {
                 src: image,
                 alt: name,
+                width: imgWidth,
+                height: imgHeight,
                 className: "card-screenshot",
                 onError: handleImageError,
               })

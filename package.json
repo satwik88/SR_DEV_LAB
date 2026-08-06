@@ -4,7 +4,8 @@
   "description": "Welcome to the source code for my personal developer portfolio and laboratory interface.",
   "main": "404.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "minify": "terser script.js --compress --mangle -o script.min.js && cleancss -O1 -o styles.min.css styles.css"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,8 @@
     "three": "^0.184.0"
   },
   "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "terser": "^5.49.2",
     "vite": "^8.0.16"
   }
 }
