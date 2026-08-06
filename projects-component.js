@@ -191,12 +191,15 @@ const Card = ({
           e(
             "div",
             { className: "card-img-wrap" },
-            e("img", {
-              src: image,
-              alt: name,
-              className: "card-screenshot",
-              onError: handleImageError,
-            }),
+            e("picture", null,
+              e("source", { srcSet: image.replace('.png', '.webp'), type: "image/webp" }),
+              e("img", {
+                src: image,
+                alt: name,
+                className: "card-screenshot",
+                onError: handleImageError,
+              })
+            ),
             e("div", {
               className: "card-fallback-img",
               style: {

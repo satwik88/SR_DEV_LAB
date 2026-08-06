@@ -520,6 +520,10 @@ function openProject(i) {
   document.getElementById("overlayDesc").textContent = p.desc;
   document.getElementById("overlayImg").src = p.img;
   document.getElementById("overlayImg").alt = p.title;
+  const webpSource = document.getElementById("overlayImgWebp");
+  if (webpSource) {
+    webpSource.srcset = p.img.replace('.png', '.webp');
+  }
 
   const techEl = document.getElementById("overlayTech");
   techEl.textContent = "";
