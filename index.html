@@ -22,7 +22,7 @@
   <meta property="og:title" content="Satwik Raj — Developer Portfolio" />
   <meta property="og:description"
     content="CSE Student & Developer building web apps, IoT systems, and Python automation. Explore my projects and skills." />
-  <meta property="og:image" content="https://satwik23.vercel.app/assets/portfolio.png" />
+  <meta property="og:image" content="https://satwik23.vercel.app/assets/portfolio.webp" />
   <meta property="og:image:alt" content="Satwik Raj Developer Portfolio Preview" />
   <meta property="og:site_name" content="Satwik Raj Dev Lab" />
   <meta property="og:locale" content="en_US" />
@@ -33,7 +33,7 @@
   <meta name="twitter:title" content="Satwik Raj — Developer Portfolio" />
   <meta name="twitter:description"
     content="CSE Student & Developer building web apps, IoT systems, and Python automation." />
-  <meta name="twitter:image" content="https://satwik23.vercel.app/assets/portfolio.png" />
+  <meta name="twitter:image" content="https://satwik23.vercel.app/assets/portfolio.webp" />
   <meta name="twitter:image:alt" content="Satwik Raj Developer Portfolio Preview" />
 
   <!-- JSON-LD Structured Data: Person -->
@@ -43,7 +43,7 @@
     "@type": "Person",
     "name": "Satwik Raj",
     "url": "https://satwik23.vercel.app/",
-    "image": "https://satwik23.vercel.app/assets/logo.png",
+    "image": "https://satwik23.vercel.app/assets/logo.webp",
     "jobTitle": "CSE Student & Developer",
     "description": "Computer Science & Engineering student passionate about web development, IoT systems, and Python automation.",
     "sameAs": [
@@ -67,14 +67,14 @@
     rel="stylesheet" />
 
   <!-- Styles, PWA & Favicon -->
-  <link rel="stylesheet" href="styles.css?v=48" />
+  <link rel="stylesheet" href="styles.min.css?v=48" />
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#7c3aed" />
-  <link rel="icon" type="image/png" href="./assets/logo.png" />
-  <link rel="apple-touch-icon" href="/assets/logo.png" />
+  <link rel="icon" type="image/png" href="./assets/logo.webp" />
+  <link rel="apple-touch-icon" href="/assets/logo.webp" />
 
   <!-- GSAP for Staggered Menu Animations -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  
 </head>
 
 <body>
@@ -94,7 +94,7 @@
   <nav class="main-nav" id="mainNav">
     <div class="nav-brand cursor-pointer" id="navBrandBtn" role="button" tabindex="0" title="Go to Home"
       aria-label="Go to Home">
-      <img src="assets/logo.png" alt="Satwik Raj Logo" class="nav-logo-img" />
+      <img src="assets/logo.webp" alt="Satwik Raj Logo" class="nav-logo-img" width="476" height="476" />
     </div>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
       <!-- Moon: shown in light mode -->
@@ -378,15 +378,15 @@
           <!-- Cert 01 -->
           <div class="cert-row">
             <div class="cert-row-left">
-              <div class="cert-row-img-wrap cert-lightbox-trigger" data-cert="assets/agentic_ai_cert.jpg.jpeg"
+              <div class="cert-row-img-wrap cert-lightbox-trigger" data-cert="assets/agentic_ai_cert.jpg.webp"
                 role="button" tabindex="0" title="Click to view full certificate" aria-label="View full certificate">
-                <img src="assets/agentic_ai_cert.jpg.jpeg"
+                <img src="assets/agentic_ai_cert.jpg.webp"
                   alt="Agentic AI Saksham Certificate issued by CAPABL and RV Institute of Management"
-                  class="cert-row-img" loading="lazy" />
+                  class="cert-row-img" loading="lazy" width="1600" height="1122" />
                 <div class="cert-img-hover-hint">🔍 View Full</div>
               </div>
               <div class="proj-row-actions mt-4">
-                <button class="proj-action-btn cert-lightbox-trigger" data-cert="assets/agentic_ai_cert.jpg.jpeg">
+                <button class="proj-action-btn cert-lightbox-trigger" data-cert="assets/agentic_ai_cert.jpg.webp">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="3" width="18" height="18" rx="2"></rect>
@@ -584,11 +584,11 @@
   <!-- Full-page theme transition overlay (must be before scripts) -->
   <div id="theme-transition-overlay"></div>
 
-  <!-- Three.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GSAP -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <!-- GSAP ScrollTrigger for ScrollFloat component -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="script.js?v=33"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script type="module" src="script.min.js?v=33"></script>
   <!-- React + Framer Motion Projects Stacking Component (plain ES module, no Babel) -->
   <script type="module" src="projects-component.js"></script>
 </body>
