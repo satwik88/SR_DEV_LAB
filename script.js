@@ -485,7 +485,7 @@ const projects = [
     title: "PERSONAL_WEBSITE",
     desc: "My personal developer portfolio and interactive laboratory. Built from scratch with Vanilla JS, Glassmorphism UI, a reactive 3D WebGL particle field using Three.js, and smooth continuous scroll architectures.",
     tech: ["HTML5", "CSS3", "JavaScript", "Three.js", "UI/UX"],
-    img: "assets/portfolio.png",
+    img: "assets/portfolio.webp",
     github: "https://github.com/satwik88/SR_DEV_LAB",
     demo: "https://satwik88.github.io/SR_DEV_LAB",
   },
@@ -494,7 +494,7 @@ const projects = [
     title: "FOOD_ORDERING_SYSTEM",
     desc: "Built a CLI-based food ordering app in Python with full MySQL persistence. Handles menu browsing, order placement, and order history. Designed the full database schema — tables for users, menu items, orders, and order items with relational integrity.",
     tech: ["Python", "MySQL", "CLI", "DBMS", "OOP"],
-    img: "assets/food_ordering.png",
+    img: "assets/food_ordering.webp",
     github: "https://github.com/satwik88/Food-Ordering-System",
     demo: null,
   },
@@ -503,7 +503,7 @@ const projects = [
     title: "SNAKE_GAME",
     desc: "Browser Snake clone built in vanilla JS — no frameworks. Features neon UI, local high score storage, and 3 difficulty speeds. Focused on clean game loop logic and smooth canvas rendering.",
     tech: ["HTML5", "CSS3", "JavaScript", "Canvas API", "localStorage"],
-    img: "assets/snake_game.png",
+    img: "assets/snake_game.webp",
     github: "https://github.com/satwik88/Snake",
     demo: "https://satwik88.github.io/Snake",
   },
@@ -520,10 +520,7 @@ function openProject(i) {
   document.getElementById("overlayDesc").textContent = p.desc;
   document.getElementById("overlayImg").src = p.img;
   document.getElementById("overlayImg").alt = p.title;
-  const webpSource = document.getElementById("overlayImgWebp");
-  if (webpSource) {
-    webpSource.srcset = p.img.replace('.png', '.webp');
-  }
+
 
   const techEl = document.getElementById("overlayTech");
   techEl.textContent = "";

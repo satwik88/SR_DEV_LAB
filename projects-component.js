@@ -17,7 +17,7 @@ const projects = [
     number: "01",
     category: "Personal",
     name: "The Global Grid",
-    image: "assets/global_grid.png",
+    image: "assets/global_grid.webp",
     imgWidth: 1024,
     imgHeight: 436,
     bullets: [
@@ -31,7 +31,7 @@ const projects = [
     number: "02",
     category: "Personal",
     name: "Smart Delivery System",
-    image: "assets/smart_delivery.png",
+    image: "assets/smart_delivery.webp",
     imgWidth: 1024,
     imgHeight: 432,
     bullets: [
@@ -45,7 +45,7 @@ const projects = [
     number: "03",
     category: "Personal",
     name: "Food Ordering System",
-    image: "assets/food_ordering.png",
+    image: "assets/food_ordering.webp",
     imgWidth: 1903,
     imgHeight: 950,
     bullets: [
@@ -197,17 +197,14 @@ const Card = ({
           e(
             "div",
             { className: "card-img-wrap" },
-            e("picture", null,
-              e("source", { srcSet: image.replace('.png', '.webp'), type: "image/webp" }),
-              e("img", {
-                src: image,
-                alt: name,
-                width: imgWidth,
-                height: imgHeight,
-                className: "card-screenshot",
-                onError: handleImageError,
-              })
-            ),
+            e("img", {
+              src: image,
+              alt: name,
+              width: imgWidth,
+              height: imgHeight,
+              className: "card-screenshot",
+              onError: handleImageError,
+            }),
             e("div", {
               className: "card-fallback-img",
               style: {
