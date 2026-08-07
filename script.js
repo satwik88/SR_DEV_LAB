@@ -478,109 +478,6 @@ function animateBars() {
   });
 }
 
-/* --- PROJECT DATA --- */
-const projects = [
-  {
-    pre: "// PROJECT_001 — WEB / LIVE",
-    title: "PERSONAL_WEBSITE",
-    desc: "My personal developer portfolio and interactive laboratory. Built from scratch with Vanilla JS, Glassmorphism UI, a reactive 3D WebGL particle field using Three.js, and smooth continuous scroll architectures.",
-    tech: ["HTML5", "CSS3", "JavaScript", "Three.js", "UI/UX"],
-    img: "assets/portfolio.webp",
-    github: "https://github.com/satwik88/SR_DEV_LAB",
-    demo: "https://satwik88.github.io/SR_DEV_LAB",
-  },
-  {
-    pre: "// PROJECT_002 — PYTHON",
-    title: "FOOD_ORDERING_SYSTEM",
-    desc: "Built a CLI-based food ordering app in Python with full MySQL persistence. Handles menu browsing, order placement, and order history. Designed the full database schema — tables for users, menu items, orders, and order items with relational integrity.",
-    tech: ["Python", "MySQL", "CLI", "DBMS", "OOP"],
-    img: "assets/food_ordering.webp",
-    github: "https://github.com/satwik88/Food-Ordering-System",
-    demo: null,
-  },
-  {
-    pre: "// PROJECT_003 — WEB / LIVE",
-    title: "SNAKE_GAME",
-    desc: "Browser Snake clone built in vanilla JS — no frameworks. Features neon UI, local high score storage, and 3 difficulty speeds. Focused on clean game loop logic and smooth canvas rendering.",
-    tech: ["HTML5", "CSS3", "JavaScript", "Canvas API", "localStorage"],
-    img: "assets/snake_game.webp",
-    github: "https://github.com/satwik88/Snake",
-    demo: "https://satwik88.github.io/Snake",
-  },
-];
-
-let _projectOverlayTrigger = null; // Prompt 3: track triggering element for focus restore
-
-function openProject(i) {
-  _projectOverlayTrigger = document.activeElement; // Prompt 3: save focus origin
-  const p = projects[i];
-  const overlay = document.getElementById("projectOverlay");
-  document.getElementById("overlayPre").textContent = p.pre;
-  document.getElementById("overlayTitle").textContent = p.title;
-  document.getElementById("overlayDesc").textContent = p.desc;
-  document.getElementById("overlayImg").src = p.img;
-  document.getElementById("overlayImg").alt = p.title;
-
-
-  const techEl = document.getElementById("overlayTech");
-  techEl.textContent = "";
-  p.tech.forEach((t) => {
-    const span = document.createElement("span");
-    span.textContent = t;
-    techEl.appendChild(span);
-  });
-
-  const linksEl = document.getElementById("overlayLinks");
-  linksEl.textContent = "";
-  
-  const createBracket = (text) => {
-    const span = document.createElement("span");
-    span.className = "btn-bracket";
-    span.textContent = text;
-    return span;
-  };
-
-  const githubLink = document.createElement("a");
-  githubLink.href = p.github;
-  githubLink.target = "_blank";
-  githubLink.className = "action-btn";
-  githubLink.appendChild(createBracket("["));
-  githubLink.appendChild(document.createTextNode(" GITHUB "));
-  githubLink.appendChild(createBracket("]"));
-  linksEl.appendChild(githubLink);
-
-  if (p.demo) {
-    const demoLink = document.createElement("a");
-    demoLink.href = p.demo;
-    demoLink.target = "_blank";
-    demoLink.className = "action-btn action-ghost";
-    demoLink.appendChild(createBracket("["));
-    demoLink.appendChild(document.createTextNode(" LIVE DEMO "));
-    demoLink.appendChild(createBracket("]"));
-    linksEl.appendChild(demoLink);
-  }
-
-  overlay.classList.add("open");
-  document.body.style.overflow = "hidden";
-  // Prompt 3: trap focus inside project overlay panel
-  const panel = overlay.querySelector(".project-overlay-panel") || overlay;
-  trapFocus(panel);
-}
-
-function closeProject() {
-  document.getElementById("projectOverlay").classList.remove("open");
-  document.body.style.overflow = "";
-  // Prompt 3: restore focus to triggering element
-  if (_projectOverlayTrigger && typeof _projectOverlayTrigger.focus === 'function') {
-    _projectOverlayTrigger.focus();
-    _projectOverlayTrigger = null;
-  }
-}
-
-// Close on escape
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeProject();
-});
 
 /* --- INLINE EVENT HANDLERS REPLACEMENT --- */
 document.addEventListener("DOMContentLoaded", () => {
@@ -614,8 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const certLightboxCloseBtn = document.getElementById("certLightboxCloseBtn");
   if (certLightboxCloseBtn) certLightboxCloseBtn.addEventListener("click", closeCertLightbox);
 
-  const closeOverlayBtn = document.getElementById("closeOverlayBtn");
-  if (closeOverlayBtn) closeOverlayBtn.addEventListener("click", closeProject);
+
 
 });
 
