@@ -4,13 +4,10 @@
  * Loaded as a native ES module directly in the browser.
  */
 
-import React, { useRef } from "https://esm.sh/react@18";
-import ReactDOM from "https://esm.sh/react-dom@18/client";
-import {
-  motion,
-  useScroll,
-  useTransform,
-} from "https://esm.sh/framer-motion@10";
+const React = window.React;
+const { useRef } = React;
+const ReactDOM = window.ReactDOM;
+const { motion, useScroll, useTransform } = window.Motion;
 
 const e = React.createElement;
 
