@@ -1,14 +1,14 @@
-const CACHE_NAME = 'SR-DEV-LAB-v4';
+const CACHE_NAME = 'SR-DEV-LAB-v5';
 const ASSETS_TO_CACHE = [
   '/',
-  '/styles.css',
-  '/script.js',
+  '/styles.min.css',
+  '/script.min.js',
   '/projects-component.js',
   '/site.webmanifest',
-  '/assets/logo.png',
-  '/assets/portfolio.png',
-  '/assets/icon-192.png',
-  '/assets/icon-512.png'
+  '/assets/logo.webp',
+  '/assets/portfolio.webp',
+  '/assets/icon-192.webp',
+  '/assets/icon-512.webp'
 ];
 
 self.addEventListener('install', event => {
