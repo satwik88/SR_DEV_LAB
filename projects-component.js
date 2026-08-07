@@ -1,3 +1,4 @@
+(() => {
 /**
  * Projects Stacking Cards Component
  * Written in plain React.createElement — no JSX, no Babel required.
@@ -312,3 +313,5 @@ if (container) {
   const root = ReactDOM.createRoot(container);
   root.render(e(React.StrictMode, null, e(ProjectsSection, null)));
 }
+
+})();
