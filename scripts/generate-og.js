@@ -1,4 +1,5 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
+const chromium = require('@sparticuz/chromium').default || require('@sparticuz/chromium');
 const path = require('path');
 
 async function generateOG() {
@@ -7,7 +8,10 @@ async function generateOG() {
   let browser;
   try {
     browser = await puppeteer.launch({
-      headless: "new"
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
     });
     
     const page = await browser.newPage();
