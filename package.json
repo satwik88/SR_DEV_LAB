@@ -5,7 +5,9 @@
   "main": "404.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "minify": "terser script.js --compress --mangle -o script.min.js && cleancss -O1 -o styles.min.css styles.css"
+    "minify": "terser script.js --compress --mangle -o script.min.js && cleancss -O1 -o styles.min.css styles.css",
+    "prebuild": "node scripts/generate-og.js",
+    "build": "npm run minify"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "clean-css-cli": "^5.6.3",
+    "puppeteer": "^25.5.0",
     "terser": "^5.49.2",
     "vite": "^8.0.16"
   }
