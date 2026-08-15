@@ -102,8 +102,14 @@ let isCanvasVisible = true;
     document.body.classList.add('no-webgl');
     return;
   }
+  // Desktop only: load Three.js dynamically, then init the scene
+  const _threeScript = document.createElement('script');
+  _threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+  _threeScript.onload = runThree;
+  document.head.appendChild(_threeScript);
 
-  // Prompt 5: Sync Three.js accent color from CSS variable
+  function runThree() {
+  // Sync Three.js accent color from CSS variable
   const style = getComputedStyle(document.documentElement);
   const accentColor = style.getPropertyValue('--purple').trim();
   const threeColor = parseInt(accentColor.replace('#', ''), 16);
@@ -330,6 +336,7 @@ let isCanvasVisible = true;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
+  } // end runThree
 })();
 
 /* --- HUD CLOCK --- */
