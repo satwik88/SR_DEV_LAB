@@ -46,8 +46,8 @@ const projects = [
     category: "Personal",
     name: "Food Ordering System",
     image: "assets/food_ordering.webp",
-    imgWidth: 1903,
-    imgHeight: 950,
+    imgWidth: 1400,
+    imgHeight: 700,
     bullets: [
       "CLI-based food ordering app in Python with full MySQL persistence",
       "Handles menu browsing, order placement, and order history end-to-end",
