@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://satwik23.vercel.app/sitemap.xml
+Sitemap: https://satwik.is-a.dev/sitemap.xml
