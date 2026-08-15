@@ -96,6 +96,13 @@
 let isCanvasVisible = true;
 
 (function initThree() {
+  // Skip WebGL entirely on mobile — too expensive, body bg-color handles the visual
+  const isMobile = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    document.body.classList.add('no-webgl');
+    return;
+  }
+
   // Prompt 5: Sync Three.js accent color from CSS variable
   const style = getComputedStyle(document.documentElement);
   const accentColor = style.getPropertyValue('--purple').trim();
@@ -122,6 +129,11 @@ let isCanvasVisible = true;
     (entries) => { isCanvasVisible = entries[0].isIntersecting; },
     { threshold: 0 }
   ).observe(observeTarget);
+
+  // Pause rendering when the tab is hidden (Page Visibility API)
+  document.addEventListener('visibilitychange', () => {
+    isCanvasVisible = !document.hidden && observeTarget.getBoundingClientRect().height > 0;
+  });
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
@@ -249,11 +261,16 @@ let isCanvasVisible = true;
     frameCount = 0;
   const fpsEl = document.getElementById("hudFrames");
 
-  /* --- Animate --- */
+  /* --- Animate — capped at 30fps --- */
+  const FRAME_INTERVAL = 1000 / 30; // ~33ms
+  let lastFrameTime = 0;
   let t = 0;
-  function animate() {
-    // Prompt 1: Skip expensive rendering when canvas is not visible
+  function animate(now) {
+    // Skip expensive rendering when canvas is not visible
     if (!isCanvasVisible) { requestAnimationFrame(animate); return; }
+    // 30fps cap: skip frames that arrive faster than 33ms
+    if (now - lastFrameTime < FRAME_INTERVAL) { requestAnimationFrame(animate); return; }
+    lastFrameTime = now;
     requestAnimationFrame(animate);
     t += 0.003;
 
@@ -296,16 +313,16 @@ let isCanvasVisible = true;
 
     // FPS
     frameCount++;
-    const now = performance.now();
-    if (now - lastTime >= 1000) {
+    const fpsNow = now;
+    if (fpsNow - lastTime >= 1000) {
       if (fpsEl) fpsEl.textContent = `FPS: ${frameCount}`;
       frameCount = 0;
-      lastTime = now;
+      lastTime = fpsNow;
     }
 
     renderer.render(scene, camera);
   }
-  animate();
+  animate(performance.now());
 
 
   window.addEventListener("resize", () => {
