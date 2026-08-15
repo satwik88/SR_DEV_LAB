@@ -17,6 +17,6 @@ Certificate
 Contact
 
 Links:
-Live Site: https://satwik23.vercel.app
+Live Site: https://satwik.is-a.dev
 GitHub Repo: https://github.com/satwik88/SR_DEV_LAB
-Sitemap: https://satwik23.vercel.app/sitemap.xml
+Sitemap: https://satwik.is-a.dev/sitemap.xml
