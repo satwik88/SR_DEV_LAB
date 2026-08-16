@@ -733,12 +733,12 @@ document.addEventListener("keydown", function (e) {
   navLinks.forEach(link => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      const targetId = link.getAttribute("href").substring(1);
+      const n = link.dataset.section;
       closeMenu();
       
       // Delay scroll until menu animation mostly finishes
       setTimeout(() => {
-        switchSection(targetId);
+        switchSection(n);
       }, 600);
     });
   });
