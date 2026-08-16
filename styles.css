@@ -2563,19 +2563,7 @@ body.no-webgl #bg-canvas {
 }
 
 
-/* ── 18. KINETIC TEXT ─────────────────────────────────────── */
-.kinetic-text-wrap {
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 0 1rem;
-  margin-top: 1rem;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
+/* -- 18. UTILITY ------------------------------------------------- */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -2586,61 +2574,6 @@ body.no-webgl #bg-canvas {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
-}
-
-.kinetic-text {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: default;
-  gap: 0;
-}
-
-.kinetic-text-inner {
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-
-.kinetic-char {
-  font-size: clamp(4rem, 16vw, 10rem);
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  font-family: inherit;
-  display: inline-block;
-  color: var(--text, #e5e7eb);
-  
-  will-change: transform, font-weight, text-shadow;
-  
-  /* CRITICAL: fixed width prevents reflow when font-weight changes */
-  width: 0.62em;
-  text-align: center;
-  
-  /* Initial JS state - no transition properties here */
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0);
-}
-
-/* Light mode adjustments */
-[data-theme="light"] .kinetic-char {
-  color: var(--text, #111827);
-}
-
-/* ScrollFloat Text Animation */
-.scroll-float { overflow: hidden; }
-.scroll-float-text { display: inline-block; }
-.char { display: inline-block; }
-
-/* Inline Style Replacements */
-#textPressureContainer {
-  position: relative;
-  height: 300px;
-}
-
-#hollow-stroke-svg {
-  position: absolute;
-  pointer-events: none;
 }
 
 /* ScrollFloat Text Animation */
