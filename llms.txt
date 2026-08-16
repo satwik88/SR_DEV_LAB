@@ -1,22 +1,22 @@
-Satwik Raj
+# Satwik Raj — Developer Portfolio
+
 CSE student and developer
-Portfolio site
 
-Tech Stack:
-HTML, CSS, JavaScript
-React (used for the Projects stacking component)
-Three.js (WebGL background)
-GSAP (Animations)
+## Tech Stack:
+- HTML, CSS, JavaScript
+- React (used for the Projects stacking component)
+- Three.js (WebGL background)
+- GSAP (Animations)
 
-Main Sections:
-Home
-About
-Skills
-Projects
-Certificate
-Contact
+## Main Sections:
+- Home
+- About
+- Skills
+- Projects
+- Certificate
+- Contact
 
-Links:
-Live Site: https://satwik.is-a.dev
-GitHub Repo: https://github.com/satwik88/SR_DEV_LAB
-Sitemap: https://satwik.is-a.dev/sitemap.xml
+## Links:
+- [Live Site](https://satwik.is-a.dev)
+- [GitHub Repo](https://github.com/satwik88/SR_DEV_LAB)
+- [Sitemap](https://satwik.is-a.dev/sitemap.xml)

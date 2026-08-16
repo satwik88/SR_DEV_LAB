@@ -768,3 +768,5 @@ if ('serviceWorker' in navigator) {
 } else {
   console.warn('[SW] Service Workers are not supported in this browser.');
 }
+
+window.addEventListener('load', () => { const fontLink = document.getElementById('google-fonts-css'); if (fontLink) fontLink.media = 'all'; });
