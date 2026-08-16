@@ -2580,3 +2580,6 @@ body.no-webgl #bg-canvas {
 .scroll-float { overflow: hidden; }
 .scroll-float-text { display: inline-block; }
 .char { display: inline-block; }
+
+.skip-link { position: absolute; top: -100px; left: 0; padding: 10px; background: var(--purple); color: white; z-index: 999999; text-decoration: none; font-family: var(--mono); font-weight: 700; transition: top 0.2s ease; }
+.skip-link:focus { top: 0; }
