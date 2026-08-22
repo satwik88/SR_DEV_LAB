@@ -647,6 +647,14 @@ body.no-webgl #bg-canvas {
   transform: translateY(0);
 }
 
+/* Home panel paints immediately — never gate the LCP hero text behind the
+   deferred JS reveal (script.min.js loads after React/Framer/GSAP). The hero
+   children keep their own fadeUp entrance animations. */
+#panel-home .panel-inner {
+  opacity: 1;
+  transform: none;
+}
+
 /* Section tints */
 #panel-about {
   background: rgba(165, 165, 165, 0.15);
