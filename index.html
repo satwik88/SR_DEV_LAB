@@ -67,7 +67,7 @@
 
 
   <!-- Styles, PWA & Favicon -->
-  <link rel="stylesheet" href="styles.min.css?v=48" />
+  <link rel="stylesheet" href="styles.min.css?v=49" />
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#7c3aed" />
   <link rel="icon" type="image/png" href="./assets/logo.webp" />
@@ -205,7 +205,7 @@
         </h1>
         <div class="role-line">
           <span class="bracket">[</span>
-          <span class="typed-out" id="typedRole"></span>
+          <span class="typed-out" id="typedRole">CSE STUDENT</span>
           <span class="typed-cursor">_</span>
           <span class="bracket">]</span>
         </div>
@@ -545,18 +545,15 @@
   <div id="theme-transition-overlay"></div>
 
   <!-- Three.js loaded dynamically by script.js (desktop only) -->
-  <!-- React & ReactDOM -->
-  <script defer src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script defer src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <!-- Framer Motion (Global exported as window.Motion) -->
-  <script defer src="https://unpkg.com/framer-motion@10.12.16/dist/framer-motion.js"></script>
   <!-- GSAP -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <!-- GSAP ScrollTrigger for ScrollFloat component -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <!-- Main Scripts -->
-  <script defer src="script.min.js?v=33"></script>
-  <script defer src="projects-component.js"></script>
+  <script defer src="script.min.js?v=34"></script>
+  <!-- React + ReactDOM + Framer Motion + projects section load after first paint
+       (off the LCP critical path) — see lazy-projects.js -->
+  <script defer src="lazy-projects.js?v=1"></script>
 </body>
 
 </html>

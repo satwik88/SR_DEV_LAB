@@ -364,8 +364,8 @@ let isCanvasVisible = true;
     "AI ENTHUSIAST",
   ];
   let pi = 0,
-    ci = 0,
-    del = false;
+    ci = phrases[0].length,
+    del = true;
   const els = document.querySelectorAll("#typedRole, #typedRole-mobile");
   if (els.length === 0) return;
   function tick() {
@@ -383,7 +383,9 @@ let isCanvasVisible = true;
     }
     setTimeout(tick, del ? 55 : 100);
   }
-  tick();
+  // Hold the pre-filled first phrase (baked into index.html so .role-line paints
+  // as an instant LCP element), then begin the delete→retype cycle — no reflow.
+  setTimeout(tick, 1800);
 })();
 
 /* --- NAVIGATION — smooth scroll --- */
