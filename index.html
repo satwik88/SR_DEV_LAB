@@ -67,8 +67,9 @@
 
 
   <!-- Styles, PWA & Favicon -->
-  <link rel="stylesheet" href="styles.min.css?v=48" />
+  <link rel="stylesheet" href="styles.min.css?v=49" />
   <link rel="manifest" href="/site.webmanifest" />
+  <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#7c3aed" />
   <link rel="icon" type="image/png" href="./assets/logo.webp" />
   <link rel="apple-touch-icon" href="/assets/logo.webp" />
@@ -508,25 +509,25 @@
           </div>
           <form class="contact-form" id="contactForm">
             <div class="form-field">
-              <input type="text" id="formName" class="form-input" placeholder=" " required />
+              <input type="text" id="formName" name="name" autocomplete="name" class="form-input" placeholder=" " required />
               <label for="formName" class="form-label">// NAME</label>
               <span class="form-line"></span>
             </div>
 
             <div class="form-field">
-              <input type="email" id="formEmail" class="form-input" placeholder=" " required />
+              <input type="email" id="formEmail" name="email" autocomplete="email" spellcheck="false" autocapitalize="off" autocorrect="off" class="form-input" placeholder=" " required />
               <label for="formEmail" class="form-label">// EMAIL</label>
               <span class="form-line"></span>
             </div>
 
             <div class="form-field">
-              <textarea id="formMessage" class="form-input form-textarea" placeholder=" " required></textarea>
+              <textarea id="formMessage" name="message" class="form-input form-textarea" placeholder=" " required></textarea>
               <label for="formMessage" class="form-label">// MESSAGE</label>
               <span class="form-line"></span>
             </div>
 
             <button type="submit" class="form-submit" id="formSubmitBtn">[ TRANSMIT MESSAGE ]</button>
-            <p class="form-note" id="formNote"></p>
+            <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
           </form>
         </div>
 
@@ -555,7 +556,7 @@
   <!-- GSAP ScrollTrigger for ScrollFloat component -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <!-- Main Scripts -->
-  <script defer src="script.min.js?v=33"></script>
+  <script defer src="script.min.js?v=34"></script>
   <script defer src="projects-component.js"></script>
 </body>
 

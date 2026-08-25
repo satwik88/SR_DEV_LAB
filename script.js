@@ -11,8 +11,10 @@
   function applyTheme(dark) {
     if (dark) {
       root.setAttribute("data-theme", "dark");
+      document.querySelector('meta[name="theme-color"]').setAttribute("content", "#0d0d12");
     } else {
       root.removeAttribute("data-theme");
+      document.querySelector('meta[name="theme-color"]').setAttribute("content", "#f4f4f5");
     }
     if (window.__threeSetBg) window.__threeSetBg(dark ? BG_DARK : BG_LIGHT);
   }
@@ -91,6 +93,8 @@
   }
 })();
 
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 /* --- THREE.JS PARTICLE BACKGROUND --- */
 // Prompt 1: IntersectionObserver to pause rendering when canvas is offscreen
 let isCanvasVisible = true;
@@ -98,7 +102,7 @@ let isCanvasVisible = true;
 (function initThree() {
   // Skip WebGL entirely on mobile — too expensive, body bg-color handles the visual
   const isMobile = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
-  if (isMobile) {
+  if (isMobile || REDUCED) {
     document.body.classList.add('no-webgl');
     return;
   }
@@ -368,6 +372,10 @@ let isCanvasVisible = true;
     del = false;
   const els = document.querySelectorAll("#typedRole, #typedRole-mobile");
   if (els.length === 0) return;
+  if (REDUCED) {
+    els.forEach(el => el.textContent = phrases[0]);
+    return;
+  }
   function tick() {
     const cur = phrases[pi];
     const text = del ? cur.slice(0, --ci) : cur.slice(0, ++ci);
@@ -549,7 +557,7 @@ document.querySelectorAll("#contactForm, #contactForm-mobile").forEach(form => f
   const email = this.querySelector("[id^=formEmail]").value.trim();
   const message = this.querySelector("[id^=formMessage]").value.trim();
 
-  btn.textContent = "[ TRANSMITTING... ]";
+  btn.textContent = "[ TRANSMITTING… ]";
   btn.disabled = true;
 
   fetch('https://formspree.io/f/xgojolwr', {
@@ -626,6 +634,16 @@ function openCertLightbox(src) {
   const lb = document.getElementById("certLightbox");
   const img = document.getElementById("certLightboxImg");
   img.src = src;
+  
+  let altText = "Certificate — full view";
+  if (_certLightboxTrigger) {
+    const thumbImg = _certLightboxTrigger.querySelector("img");
+    if (thumbImg && thumbImg.alt) {
+      altText = thumbImg.alt;
+    }
+  }
+  img.alt = altText;
+  
   lb.classList.add("open");
   document.body.style.overflow = "hidden";
   // Prompt 3: trap focus inside lightbox
