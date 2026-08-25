@@ -423,7 +423,7 @@ body.no-webgl #bg-canvas {
   color: var(--muted);
   padding: 0.55rem 1.1rem;
   border-radius: 100px;
-  transition: all 0.25s ease;
+  transition: color 0.25s ease, background-color 0.25s ease;
 }
 
 @media (max-width: 768px) {
@@ -695,7 +695,7 @@ body.no-webgl #bg-canvas {
   padding: 0.7rem 1.4rem;
   border-radius: 100px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -1008,7 +1008,7 @@ body.no-webgl #bg-canvas {
   border-radius: 100px;
   padding: 0.3rem 0.6rem;
   color: var(--muted);
-  transition: all 0.2s;
+  transition: border-color 0.2s, color 0.2s;
   background: transparent;
 }
 
@@ -1109,7 +1109,7 @@ body.no-webgl #bg-canvas {
   color: var(--text);
   background: var(--card);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
 }
 
 .proj-action-btn:hover {
@@ -1195,7 +1195,7 @@ body.no-webgl #bg-canvas {
   color: var(--text);
   font-size: 0.85rem;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
   background: rgba(255, 255, 255, 0.02);
 }
 
@@ -1619,7 +1619,7 @@ body.no-webgl #bg-canvas {
   color: var(--proj-muted);
   background: var(--proj-pill-bg);
   font-family: var(--mono);
-  transition: all 0.25s ease;
+  transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
 }
 
 .card-tech-pill:hover {
@@ -1648,7 +1648,7 @@ body.no-webgl #bg-canvas {
   font-weight: 700;
   color: var(--proj-text);
   background: transparent;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   cursor: pointer;
   text-decoration: none;
 }
@@ -2016,7 +2016,7 @@ body.no-webgl #bg-canvas {
   padding: 12px 28px;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
 
 .form-submit:hover {
@@ -2607,4 +2607,13 @@ body.no-webgl #bg-canvas {
   overflow: visible;
   clip: auto;
   white-space: normal;
+}
+
+/* ── REDUCED MOTION PREFERENCES ── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  .typed-cursor, .cursor-blink, .cursor-blink-react, .scroll-hint span { animation: none !important; }
+  .panel-inner { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .bar-fill { animation: none !important; width: 100% !important; }
+  .action-btn, .github-ghost-btn, .form-submit, .theme-toggle, .cert-row-img-wrap, .dot, .nav-btn .pill-circle, .nav-btn .pill-dot, .cert-row-img { transition-duration: 0.01ms !important; transform: none !important; animation: none !important; }
 }
