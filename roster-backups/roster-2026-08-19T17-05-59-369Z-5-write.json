@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "savedAt": "2026-08-19T17:05:58.760Z",
+  "agents": [
+    {
+      "id": "god",
+      "name": "Michael",
+      "character": "michael",
+      "accent": "lemon",
+      "description": "god — runs the floor, triages requests, escalates only critical calls to you",
+      "project": "hive",
+      "tmuxTarget": "",
+      "cwd": "C:\\Users\\satwi\\WEBSITE",
+      "status": "idle",
+      "action": "running the floor",
+      "progress": 0,
+      "currentStation": "desk",
+      "ptyId": "pty-god",
+      "command": "claude --model claude-opus-4-8[1m] --permission-mode bypassPermissions",
+      "provider": "claude",
+      "model": "claude-opus-4-8[1m]",
+      "isGod": true
+    }
+  ],
+  "archived": [
+    {
+      "id": "michael-msyn4f2f",
+      "name": "Michael",
+      "character": "michael",
+      "accent": "lemon",
+      "description": "on standby",
+      "project": "C:\\Users\\satwi\\WEBSITE",
+      "tmuxTarget": "",
+      "cwd": "C:\\Users\\satwi\\WEBSITE",
+      "status": "idle",
+      "action": "archived",
+      "progress": 0,
+      "command": "claude --model claude-fable-5 --permission-mode bypassPermissions",
+      "provider": "claude",
+      "model": "claude-fable-5",
+      "lastPrompt": "/lo",
+      "archived": true
+    }
+  ],
+  "restorable": [],
+  "queues": {
+    "god": [
+      {
+        "id": "q-1787159158245-1",
+        "text": "You have new hive inbox message(s) — read your inbox, act on them now, and move handled ones to inbox/.done/. Act autonomously; only message god if you genuinely need a decision.",
+        "ts": 1787159158245
+      }
+    ]
+  },
+  "selectedId": "god"
+}

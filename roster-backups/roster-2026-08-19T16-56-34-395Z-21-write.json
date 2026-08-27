@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "savedAt": "2026-08-19T16:56:33.888Z",
+  "agents": [
+    {
+      "id": "god",
+      "name": "Michael",
+      "character": "michael",
+      "accent": "lemon",
+      "description": "god — runs the floor, triages requests, escalates only critical calls to you",
+      "project": "hive",
+      "tmuxTarget": "",
+      "cwd": "C:\\Users\\satwi\\WEBSITE",
+      "status": "idle",
+      "action": "running the floor",
+      "progress": 0,
+      "currentStation": "desk",
+      "ptyId": "pty-god",
+      "command": "claude --model claude-opus-4-8[1m] --permission-mode bypassPermissions",
+      "provider": "claude",
+      "model": "claude-opus-4-8[1m]",
+      "isGod": true
+    },
+    {
+      "id": "michael-msyn4f2f",
+      "name": "Michael",
+      "character": "michael",
+      "accent": "lemon",
+      "description": "on standby",
+      "project": "C:\\Users\\satwi\\WEBSITE",
+      "tmuxTarget": "",
+      "cwd": "C:\\Users\\satwi\\WEBSITE",
+      "status": "idle",
+      "action": "awaiting",
+      "progress": 0,
+      "currentStation": "desk",
+      "ptyId": "pty-michael-msyn4f2f",
+      "command": "claude --model claude-fable-5 --permission-mode bypassPermissions",
+      "provider": "claude",
+      "model": "claude-fable-5",
+      "lastPrompt": "/lo",
+      "archived": false
+    }
+  ],
+  "archived": [],
+  "restorable": [],
+  "queues": {},
+  "selectedId": "michael-msyn4f2f"
+}
