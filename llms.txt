@@ -1,22 +1,22 @@
 # Satwik Raj — Developer Portfolio
 
-CSE student and developer
+**Satwik Raj** is a Computer Science & Engineering student and developer based in India, passionate about turning ideas into real software. His work spans backend Python scripts, IoT hardware, CLI tools, and browser games, with a current focus on AI & automation and the intersection of hardware and software.
 
-## Tech Stack:
-- HTML, CSS, JavaScript
-- React (used for the Projects stacking component)
-- Three.js (WebGL background)
-- GSAP (Animations)
+## When to use this site
+- Check Satwik's background, skills, and projects before an interview or collaboration.
+- Find his GitHub, LinkedIn, Instagram, and contact information.
+- View his certifications, including the Agentic AI Saksham workshop.
 
-## Main Sections:
-- Home
-- About
-- Skills
-- Projects
-- Certificate
-- Contact
+## Key Sections
+- [About](/#panel-about)
+- [Skills](/#panel-skills)
+- [Projects](/#panel-projects)
+- [Certificates](/#panel-certs)
+- [Contact](/#panel-contact)
 
-## Links:
-- [Live Site](https://satwik.is-a.dev)
-- [GitHub Repo](https://github.com/satwik88/SR_DEV_LAB)
-- [Sitemap](https://satwik.is-a.dev/sitemap.xml)
+## Links
+- **Live Site**: https://satwik.is-a.dev
+- **GitHub**: https://github.com/satwik88
+- **LinkedIn**: https://linkedin.com/in/satwikraj
+- **Resume**: [/assets/resume.pdf](/assets/resume.pdf)
+- **Sitemap**: [/sitemap.xml](/sitemap.xml)

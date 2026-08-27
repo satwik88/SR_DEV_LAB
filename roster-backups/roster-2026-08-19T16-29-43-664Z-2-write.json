@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "savedAt": "2026-08-19T16:29:42.572Z",
+  "agents": [],
+  "archived": [],
+  "restorable": [
+    {
+      "id": "michael-msyn4f2f",
+      "name": "Michael",
+      "character": "michael",
+      "accent": "lemon",
+      "description": "on standby",
+      "project": "C:\\Users\\satwi\\WEBSITE",
+      "tmuxTarget": "",
+      "cwd": "C:\\Users\\satwi\\WEBSITE",
+      "status": "idle",
+      "action": "reconnecting…",
+      "progress": 0,
+      "ptyId": "pty-michael-msyn4f2f",
+      "command": "claude --model claude-fable-5 --permission-mode bypassPermissions",
+      "provider": "claude",
+      "model": "claude-fable-5",
+      "lastPrompt": "/login"
+    }
+  ],
+  "queues": {},
+  "selectedId": null
+}
