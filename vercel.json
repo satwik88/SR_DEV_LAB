@@ -7,8 +7,8 @@
       "has": [
         {
           "type": "header",
-          "key": "accept",
-          "value": "text/markdown"
+          "key": "x-markdown",
+          "value": "true"
         }
       ],
       "destination": "/index.md"
@@ -18,8 +18,8 @@
       "has": [
         {
           "type": "header",
-          "key": "accept",
-          "value": "text/markdown"
+          "key": "x-markdown",
+          "value": "true"
         }
       ],
       "destination": "/:path.md"
