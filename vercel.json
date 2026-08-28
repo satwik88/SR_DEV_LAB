@@ -7,8 +7,8 @@
       "has": [
         {
           "type": "header",
-          "key": "Accept",
-          "value": "(?<accept>.*text/markdown.*)"
+          "key": "accept",
+          "value": "text/markdown"
         }
       ],
       "destination": "/index.md"
@@ -18,8 +18,8 @@
       "has": [
         {
           "type": "header",
-          "key": "Accept",
-          "value": "(?<accept>.*text/markdown.*)"
+          "key": "accept",
+          "value": "text/markdown"
         }
       ],
       "destination": "/:path.md"
