@@ -2072,6 +2072,31 @@ body.no-webgl #bg-canvas {
   color: #f87171;
 }
 
+/* Standalone Pages Utility Classes */
+.nav-solid-bg { background: rgba(13, 13, 18, 0.8); }
+.nav-brand-link { text-decoration: none; }
+.panel-standalone { padding: 120px 20px 60px; }
+.panel-static { position: relative; padding: 0; min-height: auto; }
+.panel-inner-standalone { max-width: 800px; margin: 0 auto; width: 100%; }
+.back-btn { margin-bottom: 2rem; display: inline-flex; }
+
+.contact-text { font-family: var(--mono); color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem; }
+.contact-text-p-mt { margin-top: 1rem; }
+.privacy-text { font-family: var(--mono); color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+.privacy-heading { color: var(--text); font-size: 1.2rem; margin: 1.5rem 0 0.5rem; font-family: var(--sans); }
+.about-text { margin-top: 1.5rem; color: var(--text-muted); font-family: var(--mono); line-height: 1.6; }
+
+/* 404 Page Extensions */
+.not-found-container-padded { padding-top: 120px; }
+.not-found-desc-mb { margin-bottom: 2rem; }
+.not-found-links-box { font-family: var(--mono); color: var(--text-muted); font-size: 0.9rem; text-align: left; max-width: 400px; margin: 0 auto 3rem auto; background: rgba(0, 0, 0, 0.2); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05); }
+.not-found-links-title { margin-bottom: 0.75rem; color: var(--text); }
+.not-found-links-list { list-style: none; padding-left: 0; margin: 0; }
+.not-found-links-item { margin-bottom: 0.5rem; }
+.accent-star { color: var(--accent); }
+.not-found-link { color: var(--text-muted); text-decoration: underline; }
+.action-btn-inline { display: inline-flex; }
+
 /* ── 15. FOOTER ───────────────────────────────────────────── */
 .site-footer {
   width: 100%;
