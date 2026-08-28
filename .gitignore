@@ -2,3 +2,7 @@ node_modules/
 dist/
 
 .claude/
+index.md
+about.md
+contact.md
+privacy.md
