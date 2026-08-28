@@ -8,7 +8,7 @@
         {
           "type": "header",
           "key": "Accept",
-          "value": "(.*text/markdown.*)"
+          "value": "(?<accept>.*text/markdown.*)"
         }
       ],
       "destination": "/index.md"
@@ -19,7 +19,7 @@
         {
           "type": "header",
           "key": "Accept",
-          "value": "(.*text/markdown.*)"
+          "value": "(?<accept>.*text/markdown.*)"
         }
       ],
       "destination": "/:path.md"
