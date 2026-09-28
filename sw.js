@@ -1,9 +1,10 @@
-const CACHE_NAME = 'SR-DEV-LAB-v5';
+const CACHE_NAME = 'SR-DEV-LAB-v6';
 const ASSETS_TO_CACHE = [
   '/',
   '/styles.min.css',
   '/script.min.js',
   '/projects-component.js',
+  '/js/pullcord-mount.js',
   '/site.webmanifest',
   '/assets/logo.webp',
   '/assets/portfolio.webp',

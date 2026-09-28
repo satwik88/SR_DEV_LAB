@@ -11,6 +11,9 @@
 
 /* ── 2. CSS VARIABLES ─────────────────────────────────────── */
 :root {
+  --pullcord-top: -1rem;
+  --pullcord-right: 1.25rem;
+  --pullcord-ink: #0d0d12;
   --bg: #f4f4f5;
   --bg2: #a5a5a5;
   --surface: #ffffff;
@@ -29,6 +32,7 @@
 }
 
 [data-theme="dark"] {
+  --pullcord-ink: #f4f4f5;
   --bg: #0d0d12;
   --bg2: #1e1e2e;
   --surface: #13131a;
@@ -2666,3 +2670,29 @@ body.no-webgl #bg-canvas {
 .accent-star { color: var(--accent); }
 .not-found-link { color: var(--text-muted); text-decoration: underline; }
 .action-btn-inline { display: inline-flex; }
+
+#pullcord-root {
+  position: fixed;
+  inset: 0;
+  z-index: 19;
+  pointer-events: none;
+  clip-path: inset(3.8rem 0 0 0);
+}
+#pullcord-root > * {
+  pointer-events: auto;
+}
+
+/* ── PULLCORD MOBILE HIDDEN ───────────────────────────────── */
+@media (max-width: 768px) {
+  #pullcord-root {
+    clip-path: inset(3.2rem 0 0 0);
+  }
+  :root {
+    --pullcord-top: -1.5rem;
+    --pullcord-right: 0.85rem;
+  }
+}
+
+
+
+

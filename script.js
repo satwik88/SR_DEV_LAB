@@ -108,7 +108,7 @@ let isCanvasVisible = true;
   }
   // Desktop only: load Three.js dynamically, then init the scene
   const _threeScript = document.createElement('script');
-  _threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+  _threeScript.src = '/js/vendor/three.min.js';
   _threeScript.onload = runThree;
   document.head.appendChild(_threeScript);
 
